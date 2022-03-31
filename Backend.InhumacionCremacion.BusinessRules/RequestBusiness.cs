@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion;
 using System.Linq.Expressions;
+using Newtonsoft.Json.Linq;
 
 namespace Backend.InhumacionCremacion.BusinessRules
 {
@@ -899,12 +900,15 @@ namespace Backend.InhumacionCremacion.BusinessRules
                      PrimerApellido = sel.PrimerApellido,
                      SegundoApellido = sel.SegundoApellido,
                      NumeroIdentificacion = sel.NumeroIdentificacion,
+                     TipoIdentificacion = sel.TipoIdentificacion,
                      IdSolicitudNavigation = new Solicitud {NumeroCertificado = sel.IdSolicitudNavigation.NumeroCertificado,
-                        IdTipoMuerte = sel.IdSolicitudNavigation.IdTipoMuerte
+                        IdTipoMuerte = sel.IdSolicitudNavigation.IdTipoMuerte,
+                        IdTramite = sel.IdSolicitudNavigation.IdTramite
                      ,                        
                         IdDatosCementerioNavigation = new DatosCementerio { Cementerio = sel.IdSolicitudNavigation.IdDatosCementerioNavigation.Cementerio},
                         IdInstitucionCertificaFallecimientoNavigation = new InstitucionCertificaFallecimiento { RazonSocial = sel.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.RazonSocial ,
-                            IdInstitucionCertificaFallecimiento = sel.IdSolicitudNavigation.IdInstitucionCertificaFallecimiento
+                            NumeroIdentificacion = sel.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.NumeroIdentificacion
+                            
                             }
                         
                      }
@@ -914,9 +918,32 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSolicitudNavigation.IdTipoMuerte),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
 
-                result.TipoMuerte = tipoMuerte.Descripcion;
-                //Console.Write(result.First());
-                var variable1 = " ";
+                var tipoTramite = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSolicitudNavigation.IdTramite),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
+                
+                var tipoIdentificacio = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.TipoIdentificacion),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
+
+
+                string TipoMuerte = tipoMuerte.Descripcion;
+                string TipoTramite = tipoTramite.Descripcion;
+                string IdentificacionText = tipoIdentificacio.Descripcion;
+                Task<string> posicion = GetMaxNumInhLicencias();
+                string temporal = await posicion;
+                dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(temporal);
+
+                //var valor = data.GetValue(posicion, null);
+                string QueryToExec = "INSERT INTO USR_OFERTA.MUERTOS_APP(FETAL_Y_NO_FETAL, INH_FEC_LICENCIA, INH_NUM_LICENCIA, PRIMER_NOMBRE, SEGUNDO_NOMBRE, PRIMER_APELLIDO, SEGUNDO_APELLIDO, NROIDENT, NUM_CERTIFICADO_DEFUNCION, CEMENTERIO, TIPO_MUERTE, TIPO_IDENT, COD_INST, RADICADO, RAZON_INST, ORIGEN_APP) " +
+                    " VALUES('" + TipoTramite + "',SYSDATE," + data[0].DATO + ",'" + result.PrimerNombre + "','" + result.SegundoNombre + "','" +
+                    result.PrimerApellido + "','" + result.SegundoApellido + "'," + result.NumeroIdentificacion + "," + result.IdSolicitudNavigation.NumeroCertificado +
+                    ",'" + result.IdSolicitudNavigation.IdDatosCementerioNavigation.Cementerio + "','" + TipoMuerte + "','" +
+                    IdentificacionText + "',"+result.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.NumeroIdentificacion+",0,'" +
+                    result.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.RazonSocial + "','WEB_AZURE')";
+
+
+
+                var execute = await OracleContext.ExecuteQuery<dynamic>(QueryToExec);
+
+                Console.WriteLine("Numero Columnas →" + execute);
+
                 if (result == null)
                 {
                     return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Datos no encontrados");
@@ -941,29 +968,29 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// Gets MaxNumInhLicencias.
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseBase<dynamic>> GetMaxNumInhLicencias()
+        public async Task<string> GetMaxNumInhLicencias()
         {
             try
             {
-                var result = await OracleContext.ExecuteQuery<dynamic>("SELECT MAX(INH_NUM_LICENCIA) +1 from V_MUERTOS WHERE  INH_FEC_LICENCIA > TIMESTAMP '2022-01-01 00:00:00.000000'");
+                var result = await OracleContext.ExecuteQuery<dynamic>("SELECT MAX(INH_NUM_LICENCIA) +1 as dato from V_MUERTOS WHERE  INH_FEC_LICENCIA > TIMESTAMP '2022-01-01 00:00:00.000000'");
 
 
                 Console.Write(result.First());
                 var variable1 = " ";
                 if (result == null)
                 {
-                    return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Datos no encontrados");
+                    return "Datos no encontrados";
                 }
                 else
                 {
-                    return new Entities.Responses.ResponseBase<dynamic>(HttpStatusCode.OK, Middle.Messages.GetOk, result.FirstOrDefault());
+                    return  Newtonsoft.Json.JsonConvert.SerializeObject(result);
                 }
 
             }
             catch (Exception ex)
             {
                 _telemetryException.RegisterException(ex);
-                return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
+                return  Middle.Messages.ServerError;
             }
         }
         #endregion

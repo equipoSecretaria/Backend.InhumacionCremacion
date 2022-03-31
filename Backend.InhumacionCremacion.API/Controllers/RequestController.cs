@@ -155,17 +155,17 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
-        /// <summary>
-        /// Get Maximo Num. Inh-Licencias
-        /// </summary>
-        /// <param name="requestDTO">The request dto.</param>
-        /// <returns></returns>
-        [HttpGet("GetMaxNumInhLicencias")]
-        public async Task<ActionResult> MaxNumInhLicencias()
-        {
-            var result = await RequestBusiness.GetMaxNumInhLicencias();
-            return StatusCode(result.Code, result);
-        }
+        ///// <summary>
+        ///// Get Maximo Num. Inh-Licencias
+        ///// </summary>
+        ///// <param name="requestDTO">The request dto.</param>
+        ///// <returns></returns>
+        //[HttpGet("GetMaxNumInhLicencias")]
+        //public async Task<ActionResult> MaxNumInhLicencias()
+        //{
+        //    var result = await RequestBusiness.GetMaxNumInhLicencias();
+        //    return StatusCode(result.Code, result);
+        //}
 
         /// <summary>
         /// Execute a Query into SQL Database
