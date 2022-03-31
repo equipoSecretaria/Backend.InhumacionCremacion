@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion;
-using System.Linq.Expressions;
 
 namespace Backend.InhumacionCremacion.BusinessRules
 {
@@ -45,11 +44,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> _repositoryDatosCementerio;
 
         /// <summary>
-        /// The repository datos cementerio
-        /// </summary>
-        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> _repositoryDatosFuneraria;
-
-        /// <summary>
         /// The repository institucion certifica fallecimiento
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> _repositoryInstitucionCertificaFallecimiento;
@@ -72,15 +66,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte> _repositoryEstadoDocumentosSoporte;
 
-      /// <summary>
+
+        /// <summary>
         /// The repository Resumen Solicitud
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> _repositoryResumenSolicitud;
-       /// <summary>
-        /// The oracle context
-        /// </summary>
-        private readonly Repositories.Context.OracleContext OracleContext;
-
 
         #endregion
 
@@ -96,26 +86,21 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <param name="repositoryLugarDefuncion"></param>
         /// <param name="repositoryPersona"></param>
         /// <param name="repositoryUbicacionPersona"></param>
-        /// <param name="oracleContext"></param>
-        /// <param name="inhumacionCremacionContext"></param>
         public RequestBusiness(ITelemetryException telemetryException,
                                Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> repositorySolicitud,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio,
-                               Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> repositoryDatosFuneraria,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> repositoryInstitucionCertificaFallecimiento,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.LugarDefuncion> repositoryLugarDefuncion,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Persona> repositoryPersona,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.UbicacionPersona> repositoryUbicacionPersona,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> repositoryResumenSolicitud,
-                               Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte> repositoryEstadoDocumentosSoporte,
-							   Repositories.Context.OracleContext oracleContext
+                               Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte> repositoryEstadoDocumentosSoporte
             )
         {
             _telemetryException = telemetryException;
             _repositorySolicitud = repositorySolicitud;
             _repositoryDatosCementerio = repositoryDatosCementerio;
-            _repositoryDatosFuneraria = repositoryDatosFuneraria;
             _repositoryInstitucionCertificaFallecimiento = repositoryInstitucionCertificaFallecimiento;
             _repositoryLugarDefuncion = repositoryLugarDefuncion;
             _repositoryPersona = repositoryPersona;
@@ -123,12 +108,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _repositoryDominio = repositoryDominio;
             _repositoryResumenSolicitud = repositoryResumenSolicitud;
             _repositoryEstadoDocumentosSoporte = repositoryEstadoDocumentosSoporte;
-			 OracleContext = oracleContext;
             
         }
         #endregion
 
-        #region Methods InhumacionCremacion
+        #region Methods
         /// <summary>
         /// Adds the request.
         /// </summary>
@@ -144,7 +128,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     Guid IdEstadoDocumento = Guid.NewGuid();
                     await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
-                        IdEstadoDocumento = IdEstadoDocumento,                        
+                        IdEstadoDocumento = IdEstadoDocumento,
                         IdSolicitud = requestGestionDTO.estado.IdSolicitud,
                         IdDocumentoSoporte = requestGestionDTO.estado.IdDocumentoSoporte,
                         Path = requestGestionDTO.estado.Path,
@@ -170,28 +154,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
-                //datos funeraria
-                Guid IdSolicitud = Guid.NewGuid();
-                /*
-                Guid IdDatosFuneraria = Guid.NewGuid();
-                await _repositoryDatosFuneraria.AddAsync(new Entities.Models.InhumacionCremacion.DatosFuneraria
-                {
-                    
-                    IdDatosFuneraria = IdDatosFuneraria,
-                    EnBogota = requestDTO.Solicitud.DatosFuneraria.EnBogota,
-                    FueraBogota = requestDTO.Solicitud.DatosFuneraria.FueraBogota,
-                    FueraPais = requestDTO.Solicitud.DatosFuneraria.FueraPais,
-                    Funeraria = requestDTO.Solicitud.DatosFuneraria.Funeraria,
-                    OtroSitio = requestDTO.Solicitud.DatosFuneraria.OtroSitio,
-                    Ciudad = requestDTO.Solicitud.DatosFuneraria.Ciudad,
-                    IdPais = requestDTO.Solicitud.DatosFuneraria.IdPais,
-                    IdDepartamento = requestDTO.Solicitud.DatosFuneraria.IdDepartamento,
-                    IdMunicipio = requestDTO.Solicitud.DatosFuneraria.IdMunicipio,
-                    IdSolicitud= IdSolicitud
-                    
-
-                });
-                    */
                 //datos cementerio
                 Guid IdDatosCementerio = Guid.NewGuid();
                 await _repositoryDatosCementerio.AddAsync(new Entities.Models.InhumacionCremacion.DatosCementerio
@@ -239,7 +201,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 });
 
                 //almacenamiento datos de la solicitud
-                
+                Guid IdSolicitud = Guid.NewGuid();
                 await _repositorySolicitud.AddAsync(new Entities.Models.InhumacionCremacion.Solicitud
                 {
                     IdSolicitud = IdSolicitud,
@@ -256,7 +218,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     IdLugarDefuncion = IdLugarDefuncion,
                     IdTipoMuerte = requestDTO.Solicitud.IdTipoMuerte,
                     IdDatosCementerio = IdDatosCementerio,
-                    
                     IdInstitucionCertificaFallecimiento = IdInstitucionCertificaFallecimiento
                 });
 
@@ -410,7 +371,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             try
             {
                 var resultSolicitud = await _repositorySolicitud.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)), include: inc => inc
-                                                                                                                                   .Include(i => i.IdDatosCementerioNavigation)                                                                                                                                   
+                                                                                                                                   .Include(i => i.IdDatosCementerioNavigation)
                                                                                                                                    .Include(i => i.IdInstitucionCertificaFallecimientoNavigation)
                                                                                                                                    .Include(i => i.Persona)
                                                                                                                                    );
@@ -645,7 +606,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 var resultSolicitud = await _repositorySolicitud.GetAllAsync(
                     predicate: p => p.EstadoSolicitud.Equals(Guid.Parse(idEstado)), include: inc => inc
                         .Include(i => i.IdDatosCementerioNavigation)
-                        
                         .Include(i => i.IdInstitucionCertificaFallecimientoNavigation)
                         .Include(i => i.Persona));
 
@@ -674,6 +634,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         FechaSolicitud = item.FechaSolicitud,
                         EstadoSolicitud = item.EstadoSolicitud,
                         IdTramite = item.IdTramite,
+
+
                         Persona = new List<Entities.DTOs.PersonaDTO>(),
 
                     };
@@ -722,7 +684,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 var resultSolicitud = await _repositorySolicitud.GetAllAsync(
                     predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)), include: inc => inc
                         .Include(i => i.IdDatosCementerioNavigation)
-                        
                         .Include(i => i.IdInstitucionCertificaFallecimientoNavigation)
                         .Include(i => i.Persona));
 
@@ -887,117 +848,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
 
         }
-        public async Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud)
-        {
-            try
-            {
-                var result = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
-
-                if (result == null)
-                {
-                    return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.OK, message: "No se encontraron registros");
-                }
-                else
-                {
-                    return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.OK, message: Middle.Messages.GetOk, data: result.ToList(), count: result.Count());
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _telemetryException.RegisterException(ex);
-                return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
-            }
-
-        }
         
-        /// <summary>
-        /// Gets Data from InhumacionCremacion.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ResponseBase<dynamic>> GetDataFromInhumacionQuery(string idSolicitud,string idTipoPersona)
-        {
-            try
-            {
-                // var result = await inhumacionContext.ExecuteQuery<dynamic>("select p.PrimerNombre, p.SegundoNombre, p.PrimerApellido, p.SegundoApellido, p.NumeroIdentificacion,  i.IdInstitucionCertificaFallecimiento, i.RazonSocial, s.NumeroCertificado, c.Cementerio from inhumacioncremacion.Persona as p inner join inhumacioncremacion.Solicitud s on p.IdSolicitud = s.IdSolicitud inner join inhumacioncremacion.DatosCementerio c on s.IdDatosCementerio = c.IdDatosCementerio inner join inhumacioncremacion.InstitucionCertificaFallecimiento i on s.IdInstitucionCertificaFallecimiento = i.IdInstitucionCertificaFallecimiento where s.IdSolicitud = 'B9170E67-4FE4-4942-BB27-3F82B55C9DF1' and p.IdTipoPersona = '01F64F02-373B-49D4-8CB1-CB677F74292C'");
-                var result = await _repositoryPersona.GetAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)), include: inc =>
-                 inc.Include(i => i.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation)
-                 //.Include(i=>i.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.RazonSocial)
-                 .Include(i => i.IdSolicitudNavigation),orderBy: null,
-                 selector: sel => new Entities.Models.InhumacionCremacion.Persona {
-                     PrimerNombre = sel.PrimerNombre,
-                     SegundoNombre = sel.SegundoNombre,
-                     PrimerApellido = sel.PrimerApellido,
-                     SegundoApellido = sel.SegundoApellido,
-                     NumeroIdentificacion = sel.NumeroIdentificacion,
-                     IdSolicitudNavigation = new Solicitud {NumeroCertificado = sel.IdSolicitudNavigation.NumeroCertificado,
-                        IdTipoMuerte = sel.IdSolicitudNavigation.IdTipoMuerte
-                     ,                        
-                        IdDatosCementerioNavigation = new DatosCementerio { Cementerio = sel.IdSolicitudNavigation.IdDatosCementerioNavigation.Cementerio},
-                        IdInstitucionCertificaFallecimientoNavigation = new InstitucionCertificaFallecimiento { RazonSocial = sel.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.RazonSocial ,
-                            IdInstitucionCertificaFallecimiento = sel.IdSolicitudNavigation.IdInstitucionCertificaFallecimiento
-                            }
 
-                     }
-
-                 });
-                //.Include(i => i.IdSolicitudNavigation.IdDatosCementerioNavigation.Cementerio));
-
-                var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSolicitudNavigation.IdTipoMuerte),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
-
-                result.TipoMuerte = tipoMuerte.Descripcion;
-                //Console.Write(result.First());
-                var variable1 = " ";
-                if (result == null)
-                {
-                    return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Datos no encontrados");
-                }
-                else
-                {
-                    return new Entities.Responses.ResponseBase<dynamic>(HttpStatusCode.OK, Middle.Messages.GetOk, result);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _telemetryException.RegisterException(ex);
-                return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
-            }
-        }
-
-        #endregion
-
-        #region Methods in Oracle
-        /// <summary>
-        /// Gets MaxNumInhLicencias.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ResponseBase<dynamic>> GetMaxNumInhLicencias()
-        {
-            try
-            {
-                var result = await OracleContext.ExecuteQuery<dynamic>("SELECT MAX(INH_NUM_LICENCIA) +1 from V_MUERTOS WHERE  INH_FEC_LICENCIA > TIMESTAMP '2022-01-01 00:00:00.000000'");
-
-
-                Console.Write(result.First());
-                var variable1 = " ";
-                if (result == null)
-                {
-                    return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Datos no encontrados");
-                }
-                else
-                {
-                    return new Entities.Responses.ResponseBase<dynamic>(HttpStatusCode.OK, Middle.Messages.GetOk, result.FirstOrDefault());
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _telemetryException.RegisterException(ex);
-                return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
-            }
-        }
         #endregion
     }
-
 }
