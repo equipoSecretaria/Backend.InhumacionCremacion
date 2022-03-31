@@ -12,11 +12,6 @@ namespace Backend.InhumacionCremacion.Repositories.Context
     {
         #region Attributes        
         public virtual DbSet<DatosCementerio> DatosCementerio { get; set; }
-<<<<<<< .mine
-        
-=======
-
->>>>>>> .theirs
         public virtual DbSet<DocumentosSoporte> DocumentosSoporte { get; set; }
         public virtual DbSet<InstitucionCertificaFallecimiento> InstitucionCertificaFallecimiento { get; set; }
         public virtual DbSet<LugarDefuncion> LugarDefuncion { get; set; }
@@ -26,8 +21,6 @@ namespace Backend.InhumacionCremacion.Repositories.Context
         public virtual DbSet<Seguimiento> Seguimiento { get; set; }
 		public virtual DbSet<Formatos> Formatos { get; set; }
 		public virtual DbSet<ResumenSolicitud> ResumenSolicitud { get; set; }
-
-        public virtual DbSet<DatosFuneraria> DatosFuneraria { get; set; }
 
         public virtual DbSet<EstadoDocumentosSoporte> EstadoDocumentosSoporte { get; set; }
         #endregion
