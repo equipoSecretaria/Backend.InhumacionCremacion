@@ -93,7 +93,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
-        [HttpGet("GetFuneraria/{idSolicitud}")]
+       
         
 
         /// <summary>

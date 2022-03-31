@@ -103,6 +103,13 @@
             <param name="idSolicitud"></param>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetCodeVentanillaByIdUser(System.String)">
+            <summary>
+                Gets the code ventanilla by identifier user.
+            </summary>
+            <param name="idUser">The identifier user.</param>
+            <returns></returns>
+        </member>
         <!-- Badly formed XML comment ignored for member "M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetFuneraria(System.String)" -->
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetRequestByIdSolicitud(System.String)">
             <summary>
