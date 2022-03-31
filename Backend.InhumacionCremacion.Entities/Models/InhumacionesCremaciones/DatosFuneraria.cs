@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
 {
-    public partial class DatosFuneraria
+    public class DatosFuneraria
     {
-        
+       
+
 
         public Guid IdDatosFuneraria { get; set; }
         public bool? EnBogota { get; set; }
@@ -18,8 +20,6 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public Guid? IdDepartamento { get; set; }
         public Guid? IdMunicipio { get; set; }
 
-        public Guid? IdSolicitud { get; set; }
-
-
+       
     }
 }
