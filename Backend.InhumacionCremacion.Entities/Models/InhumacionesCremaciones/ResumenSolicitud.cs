@@ -27,5 +27,6 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public string NumeroDocumentoSolicitante { get; set; }
         public Guid TipoDocumentoSolicitante { get; set; }
 
+        public string FechaLicencia { get; set; }
     }
 }

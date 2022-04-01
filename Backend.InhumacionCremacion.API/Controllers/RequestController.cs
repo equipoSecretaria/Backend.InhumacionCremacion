@@ -4,6 +4,7 @@ using Backend.InhumacionCremacion.Entities.DTOs;
 using Backend.InhumacionCremacion.Entities.Interface.Business;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion;
 
 namespace Backend.InhumacionCremacion.API.Controllers
 {
@@ -179,6 +180,19 @@ namespace Backend.InhumacionCremacion.API.Controllers
             var result = await RequestBusiness.GetDataFromInhumacionQuery(idSolicitud,idTipoPersona);
             return StatusCode(result.Code, result);
         }
+
+
+        ///// <summary>
+        ///// Execute a Query into SQL Database
+        ///// </summary>
+        ///// <param name="idSolicitud">The request dto.</param>
+        ///// <returns></returns>
+        //[HttpPut("UpdateRsumenSolicitud")]
+        //public async Task<ActionResult> UpdateRsumenSolicitud(ResumenSolicitud idSolicitud)
+        //{
+        //    var result = await RequestBusiness.UpdateRsumenSolicitud(idSolicitud);
+        //    return StatusCode(result.Code, result);
+        //}
 
         #endregion
     }

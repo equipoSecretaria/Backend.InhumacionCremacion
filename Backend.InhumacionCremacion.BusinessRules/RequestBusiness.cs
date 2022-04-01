@@ -890,7 +890,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             try
             {
                 // var result = await inhumacionContext.ExecuteQuery<dynamic>("select p.PrimerNombre, p.SegundoNombre, p.PrimerApellido, p.SegundoApellido, p.NumeroIdentificacion,  i.IdInstitucionCertificaFallecimiento, i.RazonSocial, s.NumeroCertificado, c.Cementerio from inhumacioncremacion.Persona as p inner join inhumacioncremacion.Solicitud s on p.IdSolicitud = s.IdSolicitud inner join inhumacioncremacion.DatosCementerio c on s.IdDatosCementerio = c.IdDatosCementerio inner join inhumacioncremacion.InstitucionCertificaFallecimiento i on s.IdInstitucionCertificaFallecimiento = i.IdInstitucionCertificaFallecimiento where s.IdSolicitud = 'B9170E67-4FE4-4942-BB27-3F82B55C9DF1' and p.IdTipoPersona = '01F64F02-373B-49D4-8CB1-CB677F74292C'");
-                var result = await _repositoryPersona.GetAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)), include: inc =>
+                var result = await _repositoryPersona.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)), include: inc =>
                  inc.Include(i => i.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation)
                  //.Include(i=>i.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.RazonSocial)
                  .Include(i => i.IdSolicitudNavigation),orderBy: null,
@@ -901,6 +901,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                      SegundoApellido = sel.SegundoApellido,
                      NumeroIdentificacion = sel.NumeroIdentificacion,
                      TipoIdentificacion = sel.TipoIdentificacion,
+                     IdTipoPersona = sel.IdTipoPersona,
                      IdSolicitudNavigation = new Solicitud {NumeroCertificado = sel.IdSolicitudNavigation.NumeroCertificado,
                         IdTipoMuerte = sel.IdSolicitudNavigation.IdTipoMuerte,
                         IdTramite = sel.IdSolicitudNavigation.IdTramite
@@ -915,12 +916,19 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 
                  });
                 //.Include(i => i.IdSolicitudNavigation.IdDatosCementerioNavigation.Cementerio));
+                Persona fallecido = new Persona();
+                foreach (var item in result)
+                {
+                    if (item.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")))
+                    {
+                        fallecido = item;
+                    }
+                }
+                var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(fallecido.IdSolicitudNavigation.IdTipoMuerte),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
 
-                var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSolicitudNavigation.IdTipoMuerte),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
-
-                var tipoTramite = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSolicitudNavigation.IdTramite),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
+                var tipoTramite = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(fallecido.IdSolicitudNavigation.IdTramite),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
                 
-                var tipoIdentificacio = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.TipoIdentificacion),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
+                var tipoIdentificacio = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(fallecido.TipoIdentificacion),selector: sel => new Entities.Models.Commons.Dominio { Descripcion = sel.Descripcion});
 
 
                 string TipoMuerte = tipoMuerte.Descripcion;
@@ -932,16 +940,21 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 //var valor = data.GetValue(posicion, null);
                 string QueryToExec = "INSERT INTO USR_OFERTA.MUERTOS_APP(FETAL_Y_NO_FETAL, INH_FEC_LICENCIA, INH_NUM_LICENCIA, PRIMER_NOMBRE, SEGUNDO_NOMBRE, PRIMER_APELLIDO, SEGUNDO_APELLIDO, NROIDENT, NUM_CERTIFICADO_DEFUNCION, CEMENTERIO, TIPO_MUERTE, TIPO_IDENT, COD_INST, RADICADO, RAZON_INST, ORIGEN_APP) " +
-                    " VALUES('" + TipoTramite + "',SYSDATE," + data[0].DATO + ",'" + result.PrimerNombre + "','" + result.SegundoNombre + "','" +
-                    result.PrimerApellido + "','" + result.SegundoApellido + "'," + result.NumeroIdentificacion + "," + result.IdSolicitudNavigation.NumeroCertificado +
-                    ",'" + result.IdSolicitudNavigation.IdDatosCementerioNavigation.Cementerio + "','" + TipoMuerte + "','" +
-                    IdentificacionText + "',"+result.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.NumeroIdentificacion+",0,'" +
-                    result.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.RazonSocial + "','WEB_AZURE')";
+                    " VALUES('" + TipoTramite + "',SYSDATE," + data[0].DATO + ",'" + fallecido.PrimerNombre + "','" + fallecido.SegundoNombre + "','" +
+                    fallecido.PrimerApellido + "','" + fallecido.SegundoApellido + "'," + fallecido.NumeroIdentificacion + "," + fallecido.IdSolicitudNavigation.NumeroCertificado +
+                    ",'" + fallecido.IdSolicitudNavigation.IdDatosCementerioNavigation.Cementerio + "','" + TipoMuerte + "','" +
+                    IdentificacionText + "',"+ fallecido.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.NumeroIdentificacion+",0,'" +
+                    fallecido.IdSolicitudNavigation.IdInstitucionCertificaFallecimientoNavigation.RazonSocial + "','WEB_AZURE')";
 
 
 
                 var execute = await OracleContext.ExecuteQuery<dynamic>(QueryToExec);
 
+                ResumenSolicitud toUpdate = new ResumenSolicitud();
+
+                toUpdate.IdSolicitud = Guid.Parse(idSolicitud);
+                toUpdate.NumeroLicencia = data[0].DATO;
+                Task<string> Update = UpdateRsumenSolicitud(toUpdate);
                 Console.WriteLine("Numero Columnas →" + execute);
 
                 if (result == null)
@@ -959,6 +972,39 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 _telemetryException.RegisterException(ex);
                 return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
             }
+        }
+
+        public async Task<string> UpdateRsumenSolicitud(ResumenSolicitud idSolicitud)
+        {
+            try
+            {
+
+                var datos = await _repositoryResumenSolicitud.GetAsync(x =>
+                    x.IdSolicitud.Equals(idSolicitud.IdSolicitud));
+
+                if (datos == null)
+                {
+                    return "No se encontro el codigo para actualizar";
+                }
+
+
+
+                datos.NumeroLicencia = idSolicitud.NumeroLicencia;
+                datos.TipoSeguimiento = "Aprobado";
+                datos.FechaLicencia = System.DateTime.Now.ToString();
+
+                await _repositoryResumenSolicitud.UpdateAsync(datos);
+
+                return Newtonsoft.Json.JsonConvert.SerializeObject(datos);
+
+
+            }
+            catch (System.Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return ex.Message;
+            }
+
         }
 
         #endregion
