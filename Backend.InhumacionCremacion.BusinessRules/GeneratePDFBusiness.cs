@@ -92,6 +92,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 //numero de documento
                 //edad
 
+
                 const string idInhumacionIndividual = "A289C362-E576-4962-962B-1C208AFA0273";
                 const string idInhumacionFetal = "AD5EA0CB-1FA2-4933-A175-E93F2F8C0060";
                 const string idCremacionIndividual = "E69BDA86-2572-45DB-90DC-B40BE14FE020";
@@ -117,8 +118,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Persona datosMedico;
                 Solicitud solicitud = new Solicitud();
 
-                var datoSolitud = await _repositorySolicitud.GetAsync(w => w.IdSolicitud.Equals(System.Guid.Parse(idSolicitud)));
+               Solicitud datoSolitud = null;
 
+               datoSolitud = await _repositorySolicitud.GetAsync(w => w.IdSolicitud.Equals(System.Guid.Parse(idSolicitud)));
+
+                // System.Threading.Thread.Sleep(5000);
+                /*
                 switch (datoSolitud.IdTramite.ToString().ToUpper())
                 {
                     case idInhumacionIndividual:
@@ -133,15 +138,17 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     case idCremacionFetal:
                         HTML_PDF = GetFormatoByTipoPlantilla(LicenciaCremacionFetal);
                         break;
+                    default:
+                        break;
                 }
+                */
 
                 if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")) || datoSolitud.IdTramite.Equals(Guid.Parse("E69BDA86-2572-45DB-90DC-B40BE14FE020")))
                 {
+                    Console.WriteLine("ingrese 1");
 
                     datosPersonaFallecida = await _repositoryPersona.GetAsync(w => w.IdSolicitud.Equals(System.Guid.Parse(idSolicitud)) && w.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")));
-
                     datosMedico = await _repositoryPersona.GetAsync(w => w.IdSolicitud.Equals(System.Guid.Parse(idSolicitud)) && w.IdTipoPersona.Equals(Guid.Parse("d8b0250b-2991-42a0-a672-8e3e45985500")));
-
                     var data = new Entities.DTOs.DetallePdfDto
                     {
                         //proceso individual
@@ -156,9 +163,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         FullNameTramitador = "por definir",
                         FullNameMedico = datosMedico.PrimerNombre + " " + datosMedico.SegundoNombre + " " + datosMedico.PrimerApellido + " " + datosMedico.SegundoApellido
                     };
+                    Console.WriteLine("ingrese 2.1.1.1");
 
 
-                    if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273"))){
+                    if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
+                    {
+                        Console.WriteLine("ingrese 2.1");
 
                         string[] datosDinamicosInhumacionIndividual = {data.FechaActual,
                         "numero de la licencia",data.CertificadoDefuncion, "~:~funeraria~:~",
@@ -168,8 +178,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         "~:~nombre_completo_del_cementerio~:~", "~:~nombre_de_quien_autoriza_la_cremacion~:~", "~:~parentesco_de_quien_autoriza_la_cremacion~:~",
                         "~:~firma_del_aprobador~:~", "~:~firma_del_validador~:~"};
 
-                        //var pdf = await _generatePdf.GetByteArray("Views/Report.cshtml", data);
-                        var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+                        //var pdf = _generatePdf.GetPDF("Views/Report.cshtml");
+                        //var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+
+                        var pdf = await _generatePdf.GetByteArray("Views/InhumacionIndividual.cshtml", datosDinamicosInhumacionIndividual);
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -182,6 +194,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     }
                     else
                     {
+                        Console.WriteLine("ingrese 2.2");
                         string[] datosDinamicosInhumacionIndividual = {data.FechaActual,
                         "numero de la licencia",data.CertificadoDefuncion, "~:~funeraria~:~",
                         data.FechaActual,"~:~nombre_completo_del_tramitador~:~", data.FullNameFallecido,
@@ -190,9 +203,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         "~:~nombre_completo_del_cementerio~:~", "~:~nombre_de_quien_autoriza_la_cremacion~:~", "~:~parentesco_de_quien_autoriza_la_cremacion~:~",
                         "~:~firma_del_aprobador~:~", "~:~firma_del_validador~:~"};
 
-                        //var pdf = await _generatePdf.GetByteArray("Views/Report.cshtml", data);
-                        var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
-
+                        //var pdf = _generatePdf.GetPDF("Views/Report.cshtml");
+                        //var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+                        var pdf = await _generatePdf.GetByteArray("Views/CremacionIndividual.cshtml", datosDinamicosInhumacionIndividual);
                         var pdfStream = new System.IO.MemoryStream();
 
                         pdfStream.Write(pdf, 0, pdf.Length);
@@ -205,7 +218,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
                 else
                 {  //proceso fetal
-                    
+                    Console.WriteLine("madre 3");
+
 
                     datosPersonaFallecida = await _repositoryPersona.GetAsync(w => w.IdSolicitud.Equals(System.Guid.Parse(idSolicitud)) && w.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")));
 
@@ -226,6 +240,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     };
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("AD5EA0CB-1FA2-4933-A175-E93F2F8C0060"))){
+                        Console.WriteLine("ingrese 4");
 
                         string[] datosDinamicosInhumacionIndividual = {data.FechaActual,
                         "numero de la licencia",data.CertificadoDefuncion, "~:~funeraria~:~",
@@ -235,8 +250,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         "~:~nombre_completo_del_cementerio~:~", "~:~nombre_de_quien_autoriza_la_cremacion~:~", "~:~parentesco_de_quien_autoriza_la_cremacion~:~",
                         "~:~firma_del_aprobador~:~", "~:~firma_del_validador~:~"};
 
-                        //var pdf = await _generatePdf.GetByteArray("Views/Report.cshtml", data);
-                        var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+                        //var pdf = _generatePdf.GetPDF("Views/Report.cshtml");
+                        // var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+                        var pdf = await _generatePdf.GetByteArray("Views/InhumacionFetal.cshtml", datosDinamicosInhumacionIndividual);
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -257,8 +273,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         "~:~nombre_completo_del_cementerio~:~", "~:~nombre_de_quien_autoriza_la_cremacion~:~", "~:~parentesco_de_quien_autoriza_la_cremacion~:~",
                         "~:~firma_del_aprobador~:~", "~:~firma_del_validador~:~"};
 
-                        //var pdf = await _generatePdf.GetByteArray("Views/Report.cshtml", data);
-                        var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+                        var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", datosDinamicosInhumacionIndividual);
+                        //var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -268,32 +284,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                         return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Solicitud OK", data: pdfStream);
                     }
-
-                    /*
-
-                    string[] datosDinamicosInhumacionIndividual = {data.FechaActual,
-                        "numero de la licencia",data.CertificadoDefuncion, "~:~funeraria~:~",
-                        data.FechaActual,"~:~nombre_completo_del_tramitador~:~", data.FullNameFallecido,
-                        "~:~nacionalidad~:~", "~:~fecha_fallecido~:~, ~:~hora_fallecido~:~","~:~genero_fallecido~:~", "~:~tipo_de_identificacion~:~",
-                    "~:~numero_de_identificacion~:~", "~:~tipo_de_muerte~:~", "~:~años_del_fallecido~:~", "~:~nombre_completo_del_medico~:~",
-                        "~:~nombre_completo_del_cementerio~:~", "~:~nombre_de_quien_autoriza_la_cremacion~:~", "~:~parentesco_de_quien_autoriza_la_cremacion~:~",
-                        "~:~firma_del_aprobador~:~", "~:~firma_del_validador~:~"};
-
-                    //var pdf = await _generatePdf.GetByteArray("Views/Fetal.cshtml", data);
-
-                    //var pdf = _generatePdf.GetPDF(HTML_PDF.Result);
-
-                    var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
-
-
-                    var pdfStream = new System.IO.MemoryStream();
-
-                    pdfStream.Write(pdf, 0, pdf.Length);
-
-                    pdfStream.Position = 0;
-
-                    return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Solicitud OK", data: pdfStream);
-                    */
+                
 
                 }
 
@@ -309,14 +300,16 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
-                var result = await _repositoryFormato.GetAsync(p => p.IdPlantilla.Equals(Guid.Parse(IdPlantilla)));
+                var result = await _repositoryFormato.GetAllAsync(p => p.IdPlantilla.Equals(Guid.Parse(IdPlantilla)));
                 if (result == null)
                 {
                     return null;
 
                 }
+                Formatos nuevo = new Formatos();
+                nuevo = result[0];
 
-                return result.valor;
+                return nuevo.valor;
 
             }
             catch (Exception ex)

@@ -24,11 +24,13 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public Guid IdLugarDefuncion { get; set; }
         public Guid IdTipoMuerte { get; set; }
         public Guid IdDatosCementerio { get; set; }
+       
         public Guid IdInstitucionCertificaFallecimiento { get; set; }
         //verificar no mapeo
         //public Guid IdUbicacionPersona { get; set; }
 
         public virtual DatosCementerio IdDatosCementerioNavigation { get; set; }
+      
 
         public virtual InstitucionCertificaFallecimiento IdInstitucionCertificaFallecimientoNavigation { get; set;}
 

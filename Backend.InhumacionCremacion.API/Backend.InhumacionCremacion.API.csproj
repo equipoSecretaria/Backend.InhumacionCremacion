@@ -15,9 +15,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="Views\CremacionFetal.cshtml" />
+      <Content Remove="Views\InhumacionFetal.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="Views\InhumacionFetal.cshtml" />
+        <None Include="Views\CremacionFetal.cshtml" />
         <None Include="Views\Test.cshtml" />
         <None Include="Views\TestBootstrapSSL.cshtml" />
-        <None Include="Views\Report.cshtml" />
+        <None Include="Views\InhumacionIndividual.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

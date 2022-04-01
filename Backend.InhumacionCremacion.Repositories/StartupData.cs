@@ -28,6 +28,7 @@ namespace Backend.InhumacionCremacion
                     sqlOptions =>
                     {
                         sqlOptions.CommandTimeout(TIMEOUT_SECONDS);
+                        
 
                     });
             });
