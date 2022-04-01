@@ -19,6 +19,7 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public Guid? IdPais { get; set; }
         public Guid? IdDepartamento { get; set; }
         public Guid? IdMunicipio { get; set; }
+        public Guid? IdSolicitud { get; set; }
 
        
     }

@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion;
 using Newtonsoft.Json.Linq;
+using Backend.InhumacionCremacion.Repositories.Context;
 
 namespace Backend.InhumacionCremacion.BusinessRules
 {
@@ -72,6 +73,20 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// The repository Resumen Solicitud
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> _repositoryResumenSolicitud;
+        
+        /// <summary>
+        /// The repository Datos Funeraria
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> _repositoryDatosFuneraria;
+               
+                
+        /// <summary>
+        /// The Oracle Context
+        /// </summary>
+        private readonly Repositories.Context.OracleContext _oracleContext;
+               
+
+
 
         #endregion
 
@@ -96,6 +111,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Persona> repositoryPersona,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.UbicacionPersona> repositoryUbicacionPersona,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> repositoryResumenSolicitud,
+                               Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> repositoryDatosFuneraria,
+                               Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte> repositoryEstadoDocumentosSoporte,
 							   Repositories.Context.OracleContext oracleContext
             )
         {
@@ -109,7 +126,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _repositoryDominio = repositoryDominio;
             _repositoryResumenSolicitud = repositoryResumenSolicitud;
             _repositoryEstadoDocumentosSoporte = repositoryEstadoDocumentosSoporte;
-            
+            _repositoryDatosFuneraria = repositoryDatosFuneraria;
+            _repositoryEstadoDocumentosSoporte = repositoryEstadoDocumentosSoporte;
+            _oracleContext = oracleContext;
         }
         #endregion
 
@@ -918,7 +937,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
 
-                var execute = await OracleContext.ExecuteQuery<dynamic>(QueryToExec);
+                var execute = await _oracleContext.ExecuteQuery<dynamic>(QueryToExec);
 
                 ResumenSolicitud toUpdate = new ResumenSolicitud();
 
@@ -942,6 +961,30 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 _telemetryException.RegisterException(ex);
                 return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
             }
+        }
+
+        public async Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud)
+        {
+            try
+            {
+                var result = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+                if (result == null)
+                {
+                    return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.OK, message: "No se encontraron registros");
+                }
+                else
+                {
+                    return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.OK, message: Middle.Messages.GetOk, data: result.ToList(), count: result.Count());
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
+            }
+
         }
 
         public async Task<string> UpdateRsumenSolicitud(ResumenSolicitud idSolicitud)
@@ -978,11 +1021,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         }
 
         #endregion
-<<<<<<< .mine
 
-=======
-
->>>>>>> .theirs
         #region Methods in Oracle
         /// <summary>
         /// Gets MaxNumInhLicencias.
@@ -992,7 +1031,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
-                var result = await OracleContext.ExecuteQuery<dynamic>("SELECT MAX(INH_NUM_LICENCIA) +1 as dato from V_MUERTOS WHERE  INH_FEC_LICENCIA > TIMESTAMP '2022-01-01 00:00:00.000000'");
+                var result = await _oracleContext.ExecuteQuery<dynamic>("SELECT MAX(INH_NUM_LICENCIA) +1 as dato from V_MUERTOS WHERE  INH_FEC_LICENCIA > TIMESTAMP '2022-01-01 00:00:00.000000'");
 
 
                 Console.Write(result.First());

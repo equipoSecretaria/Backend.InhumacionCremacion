@@ -79,10 +79,9 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
 		Task<ResponseBase<dynamic>> GetDataFromInhumacionQuery(string idSolicitud, string idTipoPersona);     
 
         Task<string> UpdateRsumenSolicitud(ResumenSolicitud idSolicitud);
-		Task<ResponseBase<dynamic>> GetDataFromInhumacionQuery(string idSolicitud, string idTipoPersona);    
 
 
-
+        Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud);
 
 
 

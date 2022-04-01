@@ -12,17 +12,14 @@
 
     <ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-<<<<<<< .mine
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 
 
 
-=======
       <Compile Include="..\Backend.InhumacionCremacion.Repositories\Config\DatosFunerariaConfig.cs" Link="DatosFunerariaConfig.cs" />
     </ItemGroup>
 
     <ItemGroup>
->>>>>>> .theirs
+        <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.1" />
         <PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
     </ItemGroup>
 
