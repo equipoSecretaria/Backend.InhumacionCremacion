@@ -22,6 +22,8 @@ namespace Backend.InhumacionCremacion.Repositories.Context
 		public virtual DbSet<Formatos> Formatos { get; set; }
 		public virtual DbSet<ResumenSolicitud> ResumenSolicitud { get; set; }
 
+        public virtual DbSet<DatosFuneraria> DatosFuneraria { get; set; }
+
         public virtual DbSet<EstadoDocumentosSoporte> EstadoDocumentosSoporte { get; set; }
         #endregion
 
@@ -55,6 +57,7 @@ namespace Backend.InhumacionCremacion.Repositories.Context
             modelBuilder.AddFormatos();
 			modelBuilder.AddResumenSolicitud();
             modelBuilder.AddEstadoDocumentosSoporte();
+            modelBuilder.AddDatosFuneraria();
         }
         #endregion
     }

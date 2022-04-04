@@ -82,6 +82,19 @@ namespace Backend.InhumacionCremacion.API.Controllers
         }
 
         /// <summary>
+        ///     GetRequestByIdUser
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpGet("GetByIdUser/{idUser}")]
+        public async Task<ActionResult> GetByIdUser(string idUser)
+        {
+            var result = await RequestBusiness.GetByIdUser(idUser);
+            return StatusCode(result.Code, result);
+        }
+
+
+        /// <summary>
         ///     GetRequestByIdEstado
         /// </summary>
         /// <param name="idSolicitud"></param>
@@ -112,13 +125,14 @@ namespace Backend.InhumacionCremacion.API.Controllers
         ///     GetFuneraria
         /// </summary>
         /// <returns></returns>
+        /*
         [HttpGet("GetFunerariabyidSolicitud/{idSolicitud}")]
         public async Task<ActionResult> GetFuneraria(string idSolicitud)
         {
             var result = await RequestBusiness.GetFuneraria(idSolicitud);
             return StatusCode(result.Code, result);
         }
-
+        */
 
         /// <summary>
         ///     GetRequestByIdSolicitud
@@ -174,26 +188,18 @@ namespace Backend.InhumacionCremacion.API.Controllers
         /// </summary>
         /// <param name="requestDTO">The request dto.</param>
         /// <returns></returns>
-        [HttpGet("GetMaxNumInhLicencias")]
-        public async Task<ActionResult> MaxNumInhLicencias()
-        {
-            var result = await RequestBusiness.GetMaxNumInhLicencias();
-            return StatusCode(result.Code, result);
-        }
+        /// 
 
-        /// <summary>
-        /// Execute a Query into SQL Database
+        // <summary>
+        ///     GetFuneraria
         /// </summary>
-        /// <param name="idSolicitud">The request dto.</param>
-        /// <param name="idTipoPersona">The request dto.</param>
         /// <returns></returns>
-        [HttpGet("GetDataFromQuery")]
-        public async Task<ActionResult> GetDataFromInhumacionQuery(string idSolicitud, string idTipoPersona)
+        [HttpGet("GetFunerariabyidSolicitud/{idSolicitud}")]
+        public async Task<ActionResult> GetFuneraria(string idSolicitud)
         {
-            var result = await RequestBusiness.GetDataFromInhumacionQuery(idSolicitud,idTipoPersona);
+            var result = await RequestBusiness.GetFuneraria(idSolicitud);
             return StatusCode(result.Code, result);
         }
-
 
 
 

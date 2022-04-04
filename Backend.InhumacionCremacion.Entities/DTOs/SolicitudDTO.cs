@@ -30,6 +30,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public virtual Entities.DTOs.LugarDefuncionDTO LugarDefuncion { get; set; }
         public virtual Entities.DTOs.UbicacionPersonaDTO UbicacionPersona { get; set; }
         public virtual Entities.DTOs.DatosCementerioDTO DatosCementerio { get; set; }
+
+        public virtual Entities.DTOs.DatosFunerariaDTO DatosFuneraria { get; set; }
         public virtual Entities.DTOs.InstitucionCertificaFallecimientoDTO InstitucionCertificaFallecimiento { get; set; }
         public virtual Entities.DTOs.ResumenSolicitudDTO ResumenSolicitud { get; set; }
         //public virtual List<Entities.DTOs.DocumentosSoporteDTO> DocumentosSoporte { get; set; }
