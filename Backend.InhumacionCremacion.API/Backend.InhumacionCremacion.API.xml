@@ -96,9 +96,23 @@
             <param name="idUser"></param>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetByIdUser(System.String)">
+            <summary>
+                GetRequestByIdUser
+            </summary>
+            <param name="idUser"></param>
+            <returns></returns>
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetRequestByIdEstado(System.String)">
             <summary>
                 GetRequestByIdEstado
+            </summary>
+            <param name="idSolicitud"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetRequestById(System.String)">
+            <summary>
+            GetRequestById
             </summary>
             <param name="idSolicitud"></param>
             <returns></returns>
@@ -110,7 +124,6 @@
             <param name="idUser">The identifier user.</param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetFuneraria(System.String)" -->
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetRequestByIdSolicitud(System.String)">
             <summary>
                 GetRequestByIdSolicitud
@@ -136,21 +149,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.MaxNumInhLicencias">
-            <summary>
-            Get Maximo Num. Inh-Licencias
-            </summary>
-            <param name="requestDTO">The request dto.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetDataFromInhumacionQuery(System.String,System.String)">
-            <summary>
-            Execute a Query into SQL Database
-            </summary>
-            <param name="idSolicitud">The request dto.</param>
-            <param name="idTipoPersona">The request dto.</param>
-            <returns></returns>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetFuneraria(System.String)" -->
         <member name="T:Backend.InhumacionCremacion.API.Controllers.SeguimientoController">
             <summary>
                 SeguimientoController

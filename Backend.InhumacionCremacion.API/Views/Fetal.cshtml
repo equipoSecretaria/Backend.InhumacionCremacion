@@ -1,0 +1,241 @@
+﻿@model Backend.InhumacionCremacion.Entities.DTOs.DetallePdfDto
+@*@model Backend.InhumacionCremacion.Entities.DTOs.TesData*@
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="Generator" content="Microsoft Word 15 (filtered)">
+    <style>
+    </style>
+
+</head>
+
+<body lang="EN-US" style="word-wrap:break-word">
+
+<div class="WordSection1">
+
+<p class="MsoNormal" align="center" style="margin-bottom:0in;text-align:center; line-height:normal">
+    <span lang="ES-CO" style="font-size:20.0pt">
+        LICENCIAS
+        INHUMACION / CREMACION FETAL
+    </span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<div style="border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 5.0pt 4.0pt">
+
+    <p class="MsoNormal" style="margin-bottom:0in;line-height:normal;border:none; padding:0in">
+        <b>
+            <span lang="ES-CO" style="font-size:12.0pt">
+                SECRETARIA DISTRITAL
+                DE SALUD DE BOGOTÁ DC COLOMBIA @Model.FechaActual, @Model.Hora
+            </span>
+        </b>
+    </p>
+
+</div>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO" style="font-size:12.0pt">
+            LICENCIA DE CREMACION FETAL N° 1254
+            CERTIFICADO DE DEFUNCION N° @Model.NumeroLicencia
+        </span>
+    </b>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">Se concede Licencia a</span>
+    </b><span lang="ES-CO">: </span>
+    <b>
+        <span lang="ES-CO" style="font-size:12.0pt">FUNERARIA GAVIRIA </span>
+    </b>
+    <span lang="ES-CO">
+        <b>Fecha</b>:
+        @Model.FechaActual, @Model.Hora
+    </span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">En calidad de</span>
+    </b><span lang="ES-CO">: @Model.FullNameTramitador</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <u>
+            <span lang="ES-CO">DATOS DEL FALLECIDOS</span>
+        </u>
+    </b><span lang="ES-CO">:</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">Nombres Apellidos</span> <span lang="ES-CO">HIJO DE:</span>
+    </b>
+    <span lang="ES-CO">
+        :@Model.FullNameFallecido <span lang="ES-CO">Género:</span>
+        <b>Nacionalidad</b>: COLOMBIA
+    </span>
+</p>
+
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">DATOS DE QUIEN CERTIFICA DEFUNCION</span>
+    </b>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">Nombre(s):</span> <span LANG="ES-CO">Apellidos:</span>
+    </b>
+    <span lang="ES-CO">: @Model.FullNameMedico </span>
+</p>
+
+
+@*@foreach (var x in Request.ServerVariables) {<li>@x</li>}*@
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">MEDICO</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">&nbsp;</span>
+    </b>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">Se concede permito Cementerio</span>
+    </b>
+    <span lang="ES-CO">
+        NORTE-CHAPINERO
+    </span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">Autorización de Cremación por: </span>
+    </b>
+    <span lang="ES-CO">
+        : PEÑA CAÑAS JAVIER EDUARDO <b>Parentesco</b>: MADRE
+    </span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">
+            Aprobado por: FIRMA Validado Por:
+            FIRMA
+        </span>
+    </b>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">DORA DUARTE PRADA</span>
+    </b>
+    <span lang="ES-CO">
+        <b>
+            Nubia I.
+            Hernandez S.
+        </b>
+    </span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <b>
+        <span lang="ES-CO">Subdirectora Inspección Vigilancia y Control de Servicios de S</span>
+    </b>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;line-height:normal">
+    <span lang="ES-CO">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;text-align:justify;line-height:
+normal">
+    <span lang="ES-CO" style="font-size:8.0pt">
+        De conformidad con el Decreto
+        201 de 1996, La Resolución 5194 del 2010 y las demás disposiciones que los modifiquen,
+        adiciones o sustituyan; el administrador del cementerio no permitirá la
+        CREMACIÓN del cadáver sin la presentación previa de esta Licencia que deberá
+        conservarse cuidadosamente en el archivo de la administración del cementerio,
+        Ley 66 de 1916.
+    </span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;text-align:justify;line-height:
+normal">
+    <span lang="ES-CO" style="font-size:8.0pt">
+        La cremación únicamente debe
+        realizarse después de 24 horas de ocurrido el fallecimiento 14:25 del día
+        11/05/2021.
+    </span>
+</p>
+
+<p class="MsoNormal" style="margin-bottom:0in;text-align:justify;line-height:
+normal">
+    <span lang="ES-CO" style="font-size:8.0pt">&nbsp;</span>
+</p>
+
+<p class="MsoNormal" align="center" style="margin-bottom:0in;text-align:center;
+line-height:normal">
+    <span lang="ES-CO" style="font-size:8.0pt">
+        Carrera 32 No 12 –
+        81 / PBX 3649090 – Bogotá D C – www.saludcapital.gov.co
+    </span>
+</p>
+
+<div style="border:none;border-bottom:solid windowtext 1.0pt;padding:0in 0in 1.0pt 0in">
+
+    <p class="MsoNormal" style="border:none;padding:0in">
+        <span lang="ES-CO">&nbsp;</span>
+    </p>
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>

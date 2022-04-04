@@ -42,6 +42,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// The repository datos cementerio
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> _repositoryDatosCementerio;
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> _repositoryDatosFuneraria;
 
         /// <summary>
         /// The repository institucion certifica fallecimiento
@@ -90,6 +91,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> repositorySolicitud,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio,
+                                                          Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> repositoryDatosFuneraria,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> repositoryInstitucionCertificaFallecimiento,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.LugarDefuncion> repositoryLugarDefuncion,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Persona> repositoryPersona,
@@ -101,6 +103,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _telemetryException = telemetryException;
             _repositorySolicitud = repositorySolicitud;
             _repositoryDatosCementerio = repositoryDatosCementerio;
+            _repositoryDatosFuneraria = repositoryDatosFuneraria;
             _repositoryInstitucionCertificaFallecimiento = repositoryInstitucionCertificaFallecimiento;
             _repositoryLugarDefuncion = repositoryLugarDefuncion;
             _repositoryPersona = repositoryPersona;
@@ -154,6 +157,23 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
+                //datos funeraria
+                Guid IdSolicitud = Guid.NewGuid();
+                Guid IdDatosFuneraria = Guid.NewGuid();
+                await _repositoryDatosFuneraria.AddAsync(new Entities.Models.InhumacionCremacion.DatosFuneraria
+                {
+                    IdDatosFuneraria = IdDatosFuneraria,
+                    EnBogota = requestDTO.Solicitud.DatosFuneraria.EnBogota,
+                    FueraBogota = requestDTO.Solicitud.DatosFuneraria.FueraBogota,
+                    Funeraria = requestDTO.Solicitud.DatosFuneraria.Funeraria,
+                    OtroSitio = requestDTO.Solicitud.DatosFuneraria.OtroSitio,
+                    Ciudad = requestDTO.Solicitud.DatosFuneraria.Ciudad,
+                    IdPais = requestDTO.Solicitud.DatosFuneraria.IdPais,
+                    IdDepartamento = requestDTO.Solicitud.DatosFuneraria.IdDepartamento,
+                    IdMunicipio = requestDTO.Solicitud.DatosFuneraria.IdMunicipio,
+                    IdSolicitud= IdSolicitud
+
+                });
                 //datos cementerio
                 Guid IdDatosCementerio = Guid.NewGuid();
                 await _repositoryDatosCementerio.AddAsync(new Entities.Models.InhumacionCremacion.DatosCementerio
@@ -201,7 +221,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 });
 
                 //almacenamiento datos de la solicitud
-                Guid IdSolicitud = Guid.NewGuid();
+                
                 await _repositorySolicitud.AddAsync(new Entities.Models.InhumacionCremacion.Solicitud
                 {
                     IdSolicitud = IdSolicitud,
@@ -386,7 +406,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
 
                 var resultUbicacionPersona = await _repositoryUbicacionPersona.GetAsync(w => w.IdPaisResidencia != Guid.Empty && IdUbicacionPersona.Any(a => a.Equals(w.IdUbicacionPersona)));
-               
 
                 var resultSol = new List<Entities.DTOs.SolicitudDTO>();
 
@@ -460,10 +479,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             SeccionalFiscalia = item.IdInstitucionCertificaFallecimientoNavigation.SeccionalFiscalia,
                             NoFiscal = item.IdInstitucionCertificaFallecimientoNavigation.NoFiscal,
                             IdTipoInstitucion = item.IdInstitucionCertificaFallecimientoNavigation.IdTipoInstitucion
-                        },
-
-
-                        
+                        }
                     };
 
                     resultSol.Add(solicitudDTO);
@@ -549,7 +565,51 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 return new ResponseBase<List<Entities.DTOs.RequestDetailDTO>>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
             }
         }
+        public async Task<ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>> GetByIdUser(string idUser)
+        {
+            try
+            {
+                var resultRequest = await _repositorySolicitud.GetAllAsync(predicate: p => p.IdUsuarioSeguridad.Equals(Guid.Parse(idUser)));
 
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+
+
+                var listadoEstadoSolicitud = await _repositoryDominio.GetAllAsync(predicate: p => p.TipoDominio.Equals(Guid.Parse("C5D41A74-09B6-4A7C-A45D-42792FCB4AC2")));
+
+                var listadoTramites = await _repositoryDominio.GetAllAsync(predicate: p => p.TipoDominio.Equals(Guid.Parse("37A8F600-30E7-4693-81B7-2F1114124834")));
+
+                var listadoResumen = await _repositoryResumenSolicitud.GetAllAsync();
+
+                var resultJoin = (from rr in resultRequest
+                                  join rd in listadoEstadoSolicitud on rr.EstadoSolicitud equals rd.Id
+                                  join lt in listadoTramites on rr.IdTramite equals lt.Id
+                                  join lr in listadoResumen on rr.IdSolicitud equals lr.IdSolicitud
+                                  select new Entities.DTOs.RequestDetailDTOUser
+                                  {
+                                      EstadoSolicitud = rr.EstadoSolicitud.ToString(),
+                                      Tramite = lt.Descripcion,
+                                      Solicitud = rd.Descripcion,
+                                      IdSolicitud = rr.IdSolicitud,
+                                      FechaSolicitud = rr.FechaSolicitud.ToString("dd-MM-yyyy"),
+                                      NumeroCertificado = rr.NumeroCertificado,
+                                      Nombre = lr.NombreSolicitante,
+                                      Apellido = lr.ApellidoSolicitante,
+                                      NumeroIdentificacion = lr.NumeroDocumentoSolicitante
+
+
+                                  }).ToList();
+
+                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.ToList(), count: resultJoin.Count());
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
         /// <summary>
         /// GetAllRequest
         /// </summary>
@@ -690,7 +750,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 var resultLugarDefuncion = await _repositoryLugarDefuncion.GetAsync(predicate: p =>
                     p.IdLugarDefuncion.Equals(Guid.Parse(resultSolicitud.Select(x => x.IdLugarDefuncion)
                         .FirstOrDefault().ToString())));
-               
 
                 List<System.Guid> IdUbicacionPersona = new List<System.Guid>();
 
@@ -776,7 +835,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             SeccionalFiscalia = item.IdInstitucionCertificaFallecimientoNavigation.SeccionalFiscalia,
                             NoFiscal = item.IdInstitucionCertificaFallecimientoNavigation.NoFiscal,
                             IdTipoInstitucion = item.IdInstitucionCertificaFallecimientoNavigation.IdTipoInstitucion
-                        }                       
+                        }
                     };
 
                     resultSol.Add(solicitudDTO);
@@ -835,11 +894,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 {
                     return new Entities.Responses.ResponseBase<List<ResumenSolicitud>>(code: HttpStatusCode.OK, message: "No se encontraron registros");
                 }
-                else
-                {
-                    return new Entities.Responses.ResponseBase<List<ResumenSolicitud>>(code: HttpStatusCode.OK, message: Middle.Messages.GetOk, data: result.ToList(), count: result.Count());
-                }
-                
+                return new Entities.Responses.ResponseBase<List<ResumenSolicitud>>(code: HttpStatusCode.OK, message: Middle.Messages.GetOk, data: result.ToList(), count: result.Count());
             }
             catch (Exception ex)
             {
@@ -848,7 +903,32 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
 
         }
-        
+
+
+        public async Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud)
+        {
+            try
+            {
+                var result = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+                if (result == null)
+                {
+                    return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.OK, message: "No se encontraron registros");
+                }
+                else
+                {
+                    return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.OK, message: Middle.Messages.GetOk, data: result.ToList(), count: result.Count());
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new Entities.Responses.ResponseBase<List<DatosFuneraria>>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
+            }
+
+        }
+
 
         #endregion
     }

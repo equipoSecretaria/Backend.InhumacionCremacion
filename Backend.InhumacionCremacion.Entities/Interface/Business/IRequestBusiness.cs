@@ -29,6 +29,13 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         Task<ResponseBase<List<DTOs.RequestDetailDTO>>> GetRequestByIdUser(string idUser);
 
         /// <summary>
+        /// GetByIdUser
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        Task<ResponseBase<List<DTOs.RequestDetailDTOUser>>> GetByIdUser(string idUser);
+
+        /// <summary>
         /// Gets the code ventanilla by identifier user.
         /// </summary>
         /// <param name="idUser">The identifier user.</param>
@@ -40,7 +47,7 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// </summary>
         /// <param name="idSolicitud">The identifier solicitud.</param>
         /// <returns></returns>
-        ///Task<ResponseBase<List<Entities.DTOs.SolicitudDTO>>> GetRequestById(string idSolicitud);
+        Task<ResponseBase<List<Entities.DTOs.SolicitudDTO>>> GetRequestById(string idSolicitud);
 
         /// <summary>
         /// Gets the request by identifier.
@@ -74,11 +81,11 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// </summary>
         /// <returns></returns>
         Task<ResponseBase<List<ResumenSolicitud>>> GetResumenSolicitud(string idSolicitud);
-		Task<ResponseBase<dynamic>> GetMaxNumInhLicencias();
+	
 
         Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud);
 
-		Task<ResponseBase<dynamic>> GetDataFromInhumacionQuery(string idSolicitud, string idTipoPersona);    
+
 
 
 

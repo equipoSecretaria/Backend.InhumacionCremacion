@@ -15,6 +15,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string FechaNacimiento { get; set; }
         public string Nacionalidad { get; set; }
         public string OtroParentesco { get; set; }
+
+        public bool? Estado { get; set; }
         public Guid? IdEstadoCivil { get; set; }
         public Guid? IdNivelEducativo { get; set; }
         public Guid? IdEtnia { get; set; }
@@ -25,7 +27,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public Guid? IdTipoProfesional { get; set; }
         //validar not mape
         public Guid? IdUbicacionPersona { get; set; }
-        public bool? Estado { get; set; }
+        
         //validar not mape
         public Guid IdSolicitud { get; set; }
     }
