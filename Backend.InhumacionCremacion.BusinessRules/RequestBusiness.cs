@@ -943,6 +943,24 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 toUpdate.IdSolicitud = Guid.Parse(idSolicitud);
                 toUpdate.NumeroLicencia = data[0].DATO;
+
+                var datos = await _repositoryResumenSolicitud.GetAsync(x =>
+                   x.IdSolicitud.Equals(toUpdate.IdSolicitud));
+
+                if (datos == null)
+                {
+                    return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
+                }
+
+
+                datos.NumeroLicencia = toUpdate.NumeroLicencia;
+                datos.TipoSeguimiento = "Aprobado";
+                datos.FechaLicencia = System.DateTime.Now.ToString();
+
+                await _repositoryResumenSolicitud.UpdateAsync(datos);
+
+
+
                 Task<string> Update = UpdateRsumenSolicitud(toUpdate);
                 Console.WriteLine("Numero Columnas →" + execute);
 
