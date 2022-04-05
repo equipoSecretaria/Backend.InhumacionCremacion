@@ -21,6 +21,12 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public Guid IdTramite { get; set; }
         //public Guid IdLugarDefuncion { get; set; }
         public Guid IdTipoMuerte { get; set; }
+
+        public string TipoPersona { get; set; }
+        public string NoIdentificacionSolicitante { get; set; }
+        public string TipoIdentificacionSolicitante { get; set; }
+        public string RazonSocialSolicitante { get; set; }
+
         //public Guid IdDatosCementerio { get; set; }
         //public Guid IdInstitucionCertificaFallecimiento { get; set; }
 
@@ -30,6 +36,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public virtual Entities.DTOs.LugarDefuncionDTO LugarDefuncion { get; set; }
         public virtual Entities.DTOs.UbicacionPersonaDTO UbicacionPersona { get; set; }
         public virtual Entities.DTOs.DatosCementerioDTO DatosCementerio { get; set; }
+        public virtual Entities.DTOs.DatosFunerariaDTO DatosFuneraria { get; set; }
         public virtual Entities.DTOs.InstitucionCertificaFallecimientoDTO InstitucionCertificaFallecimiento { get; set; }
         public virtual Entities.DTOs.ResumenSolicitudDTO ResumenSolicitud { get; set; }
         //public virtual List<Entities.DTOs.DocumentosSoporteDTO> DocumentosSoporte { get; set; }

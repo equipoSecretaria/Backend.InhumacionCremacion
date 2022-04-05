@@ -83,6 +83,18 @@ namespace Backend.InhumacionCremacion.API.Controllers
         }
 
         /// <summary>
+        ///     GetRequestByIdUser
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpGet("GetByIdUser/{idUser}")]
+        public async Task<ActionResult> GetByIdUser(string idUser)
+        {
+            var result = await RequestBusiness.GetByIdUser(idUser);
+            return StatusCode(result.Code, result);
+        }
+
+        /// <summary>
         ///     GetRequestByIdEstado
         /// </summary>
         /// <param name="idSolicitud"></param>
@@ -94,8 +106,18 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
-       
-        
+        /// <summary>
+        /// GetRequestById
+        /// </summary>
+        /// <param name="idSolicitud"></param>
+        /// <returns></returns>
+        [HttpGet("GetRequestById/{idSolicitud}")]
+        public async Task<ActionResult> GetRequestById(string idSolicitud)
+        {
+            var result = await RequestBusiness.GetRequestById(idSolicitud);
+            return StatusCode(result.Code, result);
+        }
+
 
         /// <summary>
         ///     Gets the code ventanilla by identifier user.

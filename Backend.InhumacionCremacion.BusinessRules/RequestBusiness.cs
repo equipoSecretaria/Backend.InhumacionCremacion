@@ -124,8 +124,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _repositoryPersona = repositoryPersona;
             _repositoryUbicacionPersona = repositoryUbicacionPersona;
             _repositoryDominio = repositoryDominio;
-            _repositoryResumenSolicitud = repositoryResumenSolicitud;
-            _repositoryEstadoDocumentosSoporte = repositoryEstadoDocumentosSoporte;
+            _repositoryResumenSolicitud = repositoryResumenSolicitud;         
             _repositoryDatosFuneraria = repositoryDatosFuneraria;
             _repositoryEstadoDocumentosSoporte = repositoryEstadoDocumentosSoporte;
             _oracleContext = oracleContext;
@@ -174,6 +173,23 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
+                //datos funeraria
+                Guid IdSolicitud = Guid.NewGuid();
+                Guid IdDatosFuneraria = Guid.NewGuid();
+                await _repositoryDatosFuneraria.AddAsync(new Entities.Models.InhumacionCremacion.DatosFuneraria
+                {
+                    IdDatosFuneraria = IdDatosFuneraria,
+                    EnBogota = requestDTO.Solicitud.DatosFuneraria.EnBogota,
+                    FueraBogota = requestDTO.Solicitud.DatosFuneraria.FueraBogota,
+                    Funeraria = requestDTO.Solicitud.DatosFuneraria.Funeraria,
+                    OtroSitio = requestDTO.Solicitud.DatosFuneraria.OtroSitio,
+                    Ciudad = requestDTO.Solicitud.DatosFuneraria.Ciudad,
+                    IdPais = requestDTO.Solicitud.DatosFuneraria.IdPais,
+                    IdDepartamento = requestDTO.Solicitud.DatosFuneraria.IdDepartamento,
+                    IdMunicipio = requestDTO.Solicitud.DatosFuneraria.IdMunicipio,
+                    IdSolicitud = IdSolicitud
+
+                });
                 //datos cementerio
                 Guid IdDatosCementerio = Guid.NewGuid();
                 await _repositoryDatosCementerio.AddAsync(new Entities.Models.InhumacionCremacion.DatosCementerio
@@ -221,7 +237,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 });
 
                 //almacenamiento datos de la solicitud
-                Guid IdSolicitud = Guid.NewGuid();
+               
                 await _repositorySolicitud.AddAsync(new Entities.Models.InhumacionCremacion.Solicitud
                 {
                     IdSolicitud = IdSolicitud,
@@ -238,7 +254,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     IdLugarDefuncion = IdLugarDefuncion,
                     IdTipoMuerte = requestDTO.Solicitud.IdTipoMuerte,
                     IdDatosCementerio = IdDatosCementerio,
-                    IdInstitucionCertificaFallecimiento = IdInstitucionCertificaFallecimiento
+                    IdInstitucionCertificaFallecimiento = IdInstitucionCertificaFallecimiento,
+                    TipoPersona=requestDTO.Solicitud.TipoPersona,
+                    TipoIdentificacionSolicitante=requestDTO.Solicitud.TipoIdentificacionSolicitante,
+                    NoIdentificacionSolicitante=requestDTO.Solicitud.NoIdentificacionSolicitante,
+                    RazonSocialSolicitante=requestDTO.Solicitud.RazonSocialSolicitante
+
                 });
 
                 //ubicacion persona
@@ -254,8 +275,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 await _repositoryResumenSolicitud.AddAsync(new Entities.Models.InhumacionCremacion.ResumenSolicitud
                 { 
                     IdSolicitud = IdSolicitud,
-                    NumeroTramite = NumeroTramite,
-                    EstadoSolicitud = EstadoSolicitud,
+                    NumeroTramite = requestDTO.Solicitud.IdTramite,
+                    EstadoSolicitud = requestDTO.Solicitud.EstadoSolicitud,
                     NumeroLicencia = requestDTO.Solicitud.ResumenSolicitud.NumeroLicencia,
                     CorreoSolicitante = requestDTO.Solicitud.ResumenSolicitud.CorreoSolicitante,
                     CorreoFuneraria = requestDTO.Solicitud.ResumenSolicitud.CorreoFuneraria,
@@ -365,6 +386,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
+                
                 var resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.IdUsuarioSeguridad.Equals(Guid.Parse(idUser)),
                                                                         selector: s => new Entities.Models.InhumacionCremacion.Solicitud { IdPersonaVentanilla = s.IdPersonaVentanilla });
                 if (resultRequest == null)
@@ -570,6 +592,53 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
         }
 
+        public async Task<ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>> GetByIdUser(string idUser)
+        {
+            try
+            {
+                Console.WriteLine(idUser);
+                var resultRequest = await _repositorySolicitud.GetAllAsync(predicate: p => p.IdUsuarioSeguridad.Equals(Guid.Parse(idUser)));
+                Console.WriteLine(resultRequest);
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+
+
+                var listadoEstadoSolicitud = await _repositoryDominio.GetAllAsync(predicate: p => p.TipoDominio.Equals(Guid.Parse("C5D41A74-09B6-4A7C-A45D-42792FCB4AC2")));
+
+                var listadoTramites = await _repositoryDominio.GetAllAsync(predicate: p => p.TipoDominio.Equals(Guid.Parse("37A8F600-30E7-4693-81B7-2F1114124834")));
+                Console.WriteLine(listadoTramites);
+                var listadoResumen = await _repositoryResumenSolicitud.GetAllAsync();
+                // Console.WriteLine(listadoResumen);
+                var resultJoin = (from rr in resultRequest
+                                  join rd in listadoEstadoSolicitud on rr.EstadoSolicitud equals rd.Id
+                                  join lt in listadoTramites on rr.IdTramite equals lt.Id
+                                  join lr in listadoResumen on rr.IdSolicitud equals lr.IdSolicitud
+                                  select new Entities.DTOs.RequestDetailDTOUser
+                                  {
+                                      EstadoSolicitud = rr.EstadoSolicitud.ToString(),
+                                      Tramite = lt.Descripcion,
+                                      Solicitud = rd.Descripcion,
+                                      IdSolicitud = rr.IdSolicitud,
+                                      FechaSolicitud = rr.FechaSolicitud.ToString("dd-MM-yyyy"),
+                                      NumeroCertificado = rr.NumeroCertificado,
+                                      RazonSocialSolicitante = rr.RazonSocialSolicitante,
+                                      NoIdentificacionSolicitante = rr.NoIdentificacionSolicitante
+
+
+                                  }).ToList();
+              
+
+                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.ToList(), count: resultJoin.Count());
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
         /// <summary>
         /// GetAllRequest
         /// </summary>
@@ -654,6 +723,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         FechaSolicitud = item.FechaSolicitud,
                         EstadoSolicitud = item.EstadoSolicitud,
                         IdTramite = item.IdTramite,
+                        TipoPersona=item.TipoPersona,
+                        RazonSocialSolicitante=item.RazonSocialSolicitante,
+                        NoIdentificacionSolicitante=item.NoIdentificacionSolicitante,
 
 
                         Persona = new List<Entities.DTOs.PersonaDTO>(),
