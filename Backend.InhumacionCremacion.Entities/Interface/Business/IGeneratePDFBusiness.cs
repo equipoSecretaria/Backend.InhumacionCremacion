@@ -13,6 +13,6 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// </summary>
         /// <param name="idSolicitud"></param>
         /// <returns></returns>
-        Task<ResponseBase<dynamic>> GeneratePDF(string idSolicitud);
+        Task<ResponseBase<dynamic>> GeneratePDF(string idSolicitud, string tramitador);
     }
 }

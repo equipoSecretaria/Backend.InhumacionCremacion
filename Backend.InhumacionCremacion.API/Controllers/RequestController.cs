@@ -118,7 +118,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
         {
             var result = await RequestBusiness.GetFuneraria(idSolicitud);
             return StatusCode(result.Code, result);
-        }
+        }/// 
 
 
         /// <summary>

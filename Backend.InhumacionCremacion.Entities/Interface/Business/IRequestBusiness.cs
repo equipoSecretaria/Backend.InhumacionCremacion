@@ -80,7 +80,6 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
 
         Task<string> UpdateRsumenSolicitud(ResumenSolicitud idSolicitud);
 
-
         Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud);
 
 

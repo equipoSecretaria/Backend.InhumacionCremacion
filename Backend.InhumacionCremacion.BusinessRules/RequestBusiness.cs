@@ -985,7 +985,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
+                //Console.WriteLine(idSolicitud);
                 var result = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+                //Console.WriteLine(result);
 
                 if (result == null)
                 {
