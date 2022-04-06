@@ -236,7 +236,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
         /// <param name="idSolicitud">The request dto.</param>
         /// <param name="idTipoPersona">The request dto.</param>
         /// <returns></returns>
-        [HttpGet("GetInfoFallecido")]
+        [HttpGet("GetInfoFallecido/{idSolicitud}")]
         public async Task<ActionResult> GetInfoFallecidoSolicitud(string idSolicitud)
         {
             var result = await RequestBusiness.GetInfoFallecidoByIdSol(idSolicitud);
