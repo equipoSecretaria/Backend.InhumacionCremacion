@@ -45,7 +45,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
         [HttpGet("VisualizarPDF/{pathPDF}")]
         public ActionResult VisualizarPDF(string pathPDF)
         {
-            string defaultPath = "C:\\Users\\afcan\\Downloads\\";
+            string defaultPath = "C:\\Users\\Andres\\Downloads\\";
 
             defaultPath += pathPDF;
             var pdf = System.IO.File.ReadAllBytes(defaultPath);
