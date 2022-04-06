@@ -30,10 +30,10 @@ namespace Backend.InhumacionCremacion.API.Controllers
         ///     Generates the PDF.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GeneratePDF/{idSolicitud}")]
-        public async Task<ActionResult> GeneratePDF(string idSolicitud)
+        [HttpGet("GeneratePDF/{idSolicitud}/{tramitador}")]
+        public async Task<ActionResult> GeneratePDF(string idSolicitud, string tramitador)
         {
-            var result = await _generatePDFBusiness.GeneratePDF(idSolicitud);
+            var result = await _generatePDFBusiness.GeneratePDF(idSolicitud, tramitador);
 
             return new FileStreamResult(result.Data, "application/pdf");
         }
@@ -45,7 +45,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
         [HttpGet("VisualizarPDF/{pathPDF}")]
         public ActionResult VisualizarPDF(string pathPDF)
         {
-            string defaultPath = "C:\\Users\\afcan\\Downloads\\";
+            string defaultPath = "C:\\Users\\Andres\\Downloads\\";
 
             defaultPath += pathPDF;
             var pdf = System.IO.File.ReadAllBytes(defaultPath);

@@ -46,7 +46,7 @@
             </summary>
             <param name="generatePDFBusiness">The generate PDF business.</param>
         </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.GeneratePDF(System.String)">
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.GeneratePDF(System.String,System.String)">
             <summary>
                 Generates the PDF.
             </summary>
@@ -96,9 +96,23 @@
             <param name="idUser"></param>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetByIdUser(System.String)">
+            <summary>
+                GetRequestByIdUser
+            </summary>
+            <param name="idUser"></param>
+            <returns></returns>
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetRequestByIdEstado(System.String)">
             <summary>
                 GetRequestByIdEstado
+            </summary>
+            <param name="idSolicitud"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetRequestById(System.String)">
+            <summary>
+            GetRequestById
             </summary>
             <param name="idSolicitud"></param>
             <returns></returns>
@@ -112,6 +126,7 @@
         </member>
         <!-- Badly formed XML comment ignored for member "M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetFuneraria(System.String)" -->
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetRequestByIdSolicitud(System.String)">
+            
             <summary>
                 GetRequestByIdSolicitud
             </summary>

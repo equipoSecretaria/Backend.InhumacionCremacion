@@ -8,6 +8,10 @@ namespace Backend.InhumacionCremacion.Repositories.Config
 {
     public static class DatosFunerariaConfig
     {
+        /// <summary>
+        /// Adds the datos cementerio.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
         public static void AddDatosFuneraria(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DatosFuneraria>(entity =>
@@ -17,6 +21,7 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                 entity.ToTable("DatosFuneraria", "inhumacioncremacion");
 
                 entity.Property(e => e.IdDatosFuneraria).ValueGeneratedNever();
+                entity.Property(e => e.IdSolicitud).ValueGeneratedNever();
 
                 entity.Property(e => e.Funeraria).HasMaxLength(200);
 
@@ -25,8 +30,11 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                     .IsUnicode(false);
 
                 entity.Property(e => e.OtroSitio).HasMaxLength(200);
+
+
             });
         }
 
     }
 }
+
