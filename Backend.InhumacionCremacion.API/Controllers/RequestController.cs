@@ -229,6 +229,19 @@ namespace Backend.InhumacionCremacion.API.Controllers
             var result = await RequestBusiness.GetDataFromInhumacionQuery(idSolicitud,idTipoPersona);
             return StatusCode(result.Code, result);
         }
+        
+        /// <summary>
+        /// Execute a Query into SQL Database
+        /// </summary>
+        /// <param name="idSolicitud">The request dto.</param>
+        /// <param name="idTipoPersona">The request dto.</param>
+        /// <returns></returns>
+        [HttpGet("GetInfoFallecido")]
+        public async Task<ActionResult> GetInfoFallecidoSolicitud(string idSolicitud)
+        {
+            var result = await RequestBusiness.GetInfoFallecidoByIdSol(idSolicitud);
+            return StatusCode(result.Code, result);
+        }
 
 
 

@@ -1112,6 +1112,53 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
         }
 
+
+        /// <summary>
+        /// GetInfoFallecido
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        public async Task<ResponseBase<dynamic>> GetInfoFallecidoByIdSol(string idSolicitud)
+        {
+            try
+            {
+                var result = await _repositorySolicitud.GetAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)),selector:
+                    sel => new Solicitud
+                    {
+                        FechaDefuncion = sel.FechaDefuncion,
+                        Hora = sel.Hora,
+                        IdSexo = sel.IdSexo
+                    });
+
+                var fallecido1 = await _repositoryPersona.GetAllAsync(predicate: p=> p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+                Persona fallecido = fallecido1.Where(x => x.IdTipoPersona.Equals(Guid.Parse("01f64f02-373b-49d4-8cb1-cb677f74292c"))).SingleOrDefault();
+                if (result == null)
+                {
+                    return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+                var sexo = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSexo));
+               
+                var tipoID= await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(fallecido.TipoIdentificacion));
+                string years = (result.FechaDefuncion.Year - DateTime.Parse(fallecido.FechaNacimiento).Year).ToString();
+                var fallecidoDTO = new Entities.DTOs.FallecidoDTO
+                {
+                    IdSolicitud = Guid.Parse(idSolicitud),
+                    fechaNacimiento= fallecido.FechaNacimiento,
+                    Hora = result.Hora,
+                    IdSexo = (sexo==null ? "":sexo.Descripcion),
+                    tipoIdentificacion = (tipoID == null ? "" : tipoID.Descripcion),
+                    edadFallecido = years
+                };
+
+                return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Solicitudd Ok", data: fallecidoDTO);
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
         #endregion
 
         #region Methods in Oracle
