@@ -139,6 +139,14 @@
             <param name="solicitudDTO">The solicitud dto.</param>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.UpdateMedico(System.String,System.String,System.String)">
+            <summary>
+                Updates the request.
+            </summary>
+            <param name="solicitudDTO">The solicitud dto.</param>
+            <returns></returns>
+            
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetAllRequest">
             <summary>
             GetAllRequest

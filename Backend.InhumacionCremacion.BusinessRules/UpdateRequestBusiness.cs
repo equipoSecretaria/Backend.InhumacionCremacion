@@ -271,6 +271,51 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
             }
         }
+
+        ///*
+        public async Task<ResponseBase<string>> UpdateMedico(string idMedico, string campo, string cambio)
+        {
+            try
+            {
+
+                var personaDB = await _repositoryPersona.GetAsync(x => x.NumeroIdentificacion == idMedico);
+
+                if (personaDB == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.NotFound, message: "No se encontró el registro para actualizar");
+                }
+                else
+                {
+                    switch (campo) {
+
+                        case "primerNombre":
+                            personaDB.PrimerNombre = cambio;
+                            break;
+                        case "segundoNombre":
+                            personaDB.SegundoNombre = cambio;
+                            break;
+                        case "primerApellido":
+                            personaDB.PrimerApellido = cambio;
+                            break;
+                        case "segundoApellido":
+                            personaDB.SegundoApellido = cambio;
+                            break;
+                        case null:
+                            return new ResponseBase<string>(code: System.Net.HttpStatusCode.NotFound, message: "No se encontró el registro para actualizar, incorrecta llave de actualización");
+                            break;
+                    }
+                    await _repositoryPersona.UpdateAsync(personaDB);
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "registro modificado");
+                } 
+
+            }
+            catch (System.Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: "registro no modificado");
+            }
+        }
+        //*/
         #endregion
     }
 }

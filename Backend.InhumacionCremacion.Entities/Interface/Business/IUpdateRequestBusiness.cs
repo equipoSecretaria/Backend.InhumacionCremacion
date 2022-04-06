@@ -11,5 +11,7 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// <param name="requestDTO"></param>
         /// <returns></returns>
         Task<ResponseBase<string>> UpdateRequest(DTOs.SolicitudDTO requestDTO);
+        Task<ResponseBase<string>> UpdateMedico(string idMedico, string campo, string cambio);
+        
     }
 }

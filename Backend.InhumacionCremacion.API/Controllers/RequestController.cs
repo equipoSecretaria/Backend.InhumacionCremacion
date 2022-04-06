@@ -166,7 +166,20 @@ namespace Backend.InhumacionCremacion.API.Controllers
             var result = await UpdateRequestBusiness.UpdateRequest(solicitudDTO);
             return StatusCode(result.Code, result);
         }
-        
+
+        /// <summary>
+        ///     Updates the request.
+        /// </summary>
+        /// <param name="solicitudDTO">The solicitud dto.</param>
+        /// <returns></returns>
+        /// 
+        [HttpPut("UpdateMedico/{idMedico}/{campo}/{cambio}")]
+        public async Task<ActionResult> UpdateMedico( string idMedico, string campo, string cambio)
+        {
+            var result = await UpdateRequestBusiness.UpdateMedico(idMedico, campo, cambio);
+            return StatusCode(result.Code, result);
+        }
+
 
         /// <summary>
         /// GetAllRequest
