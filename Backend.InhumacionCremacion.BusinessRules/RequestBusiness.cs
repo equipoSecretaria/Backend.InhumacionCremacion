@@ -581,6 +581,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                       IdSolicitud = rr.IdSolicitud,
                                       FechaSolicitud = rr.FechaSolicitud.ToString("dd-MM-yyyy"),
                                       NumeroCertificado = rr.NumeroCertificado,
+
                                   }).ToList();
 
                 return new ResponseBase<List<Entities.DTOs.RequestDetailDTO>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.ToList(), count: resultJoin.Count());
@@ -597,8 +598,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
             try
             {
                 Console.WriteLine(idUser);
-                var resultRequest = await _repositorySolicitud.GetAllAsync(predicate: p => p.IdUsuarioSeguridad.Equals(Guid.Parse(idUser)));
+                var resultRequest = await _repositorySolicitud.GetAllAsync(predicate: p => p.IdUsuarioSeguridad.Equals(Guid.Parse(idUser)),include: inc => inc.Include(i=>i.Persona) );
                 Console.WriteLine(resultRequest);
+
                 if (resultRequest == null)
                 {
                     return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
@@ -608,13 +610,41 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 var listadoEstadoSolicitud = await _repositoryDominio.GetAllAsync(predicate: p => p.TipoDominio.Equals(Guid.Parse("C5D41A74-09B6-4A7C-A45D-42792FCB4AC2")));
 
                 var listadoTramites = await _repositoryDominio.GetAllAsync(predicate: p => p.TipoDominio.Equals(Guid.Parse("37A8F600-30E7-4693-81B7-2F1114124834")));
-                Console.WriteLine(listadoTramites);
+
+                // var listadoPersonas = await _repositoryPersona.GetAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(resultRequest.Select(x => x.IdSolicitud)
+                //       .FirstOrDefault().ToString())));
+                List<Persona> temporal = new List<Persona>();
+                foreach (var sol in resultRequest)
+                {
+                    foreach (var per in sol.Persona)
+                    {
+                        if(per.IdTipoPersona.Equals(Guid.Parse("D8B0250B-2991-42A0-A672-8E3E45985500")) || per.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")))
+                        {
+                            temporal.Add(per);
+                        }
+                            
+                    }    
+                }
+
+               // var listadoPersonas = resultRequest.Where(x => x.Persona.Where(p=> p.IdTipoPersona.Equals(Guid.Parse("D8B0250B-2991-42A0-A672-8E3E45985500"))));
+
+           
+
+
+
+
+
+
+
+
+                Console.WriteLine(temporal);
                 var listadoResumen = await _repositoryResumenSolicitud.GetAllAsync();
                 // Console.WriteLine(listadoResumen);
                 var resultJoin = (from rr in resultRequest
                                   join rd in listadoEstadoSolicitud on rr.EstadoSolicitud equals rd.Id
                                   join lt in listadoTramites on rr.IdTramite equals lt.Id
                                   join lr in listadoResumen on rr.IdSolicitud equals lr.IdSolicitud
+                              
                                   select new Entities.DTOs.RequestDetailDTOUser
                                   {
                                       EstadoSolicitud = rr.EstadoSolicitud.ToString(),
@@ -624,11 +654,19 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                       FechaSolicitud = rr.FechaSolicitud.ToString("dd-MM-yyyy"),
                                       NumeroCertificado = rr.NumeroCertificado,
                                       RazonSocialSolicitante = rr.RazonSocialSolicitante,
-                                      NoIdentificacionSolicitante = rr.NoIdentificacionSolicitante
-
-
+                                      NoIdentificacionSolicitante = rr.NoIdentificacionSolicitante,
+                                      NroIdentificacionFallecido=""
                                   }).ToList();
-              
+                Solicitud busqueda = new Solicitud();
+                Persona fallecido = new Persona();
+                foreach (var final in resultJoin)
+                {
+                    fallecido = temporal.Where(x => x.IdSolicitud.Equals(final.IdSolicitud)).SingleOrDefault();
+                    if(fallecido != null)
+                    {
+                        final.NroIdentificacionFallecido = fallecido.NumeroIdentificacion;
+                    }
+                }
 
                 return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.ToList(), count: resultJoin.Count());
             }
