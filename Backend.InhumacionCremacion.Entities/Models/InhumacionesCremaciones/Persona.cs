@@ -27,6 +27,8 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public Guid? IdUbicacionPersona { get; set; }
         public virtual Solicitud IdSolicitudNavigation { get; set; }
 
+        //public string TipoMuerte { get; set; }
+       // public string TipoMuerte { get; set; }
         //public virtual UbicacionPersona IdUbicacionPersonaNavigation { get; set; }
     }
 }
