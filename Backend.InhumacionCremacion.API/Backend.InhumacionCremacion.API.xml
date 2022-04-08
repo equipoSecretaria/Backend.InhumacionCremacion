@@ -52,6 +52,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.GeneratePDFPrev(System.String,System.String)">
+            <summary>
+                Generates the PDF.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.VisualizarPDF(System.String)">
             <summary>
             Visualizar the PDF.
