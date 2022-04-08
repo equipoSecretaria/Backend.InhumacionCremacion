@@ -146,21 +146,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         //INHUMACION INDIVIDUAL
 
 
-                        //Console.Write(resumen.Result.Data[0].NumeroLicencia);
-                        //Console.Write(funeraria.Result.Data[0].Funeraria);
-                        /*
-                        Console.Write(resumen.Data[0].NumeroLicencia);
-                        Console.Write(funeraria.Data[0].Funeraria);
-                        Console.Write(nacionalidad.Data.Descripcion);
-                        Console.Write(tipoIdentificacion.Data.Descripcion);
-                        Console.Write(tipoMuerte.Data.Descripcion);
-                        Console.Write(cementerio.Data.Cementerio);
-                        */
-
-                        //var CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
-                        //
-                        //Console.WriteLine(firma1);
-
 
 
                         var dataInhumacionIndividual = new Entities.DTOs.DetallePdfInhumacionIndividualDto
@@ -202,22 +187,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     {
                         //CREMACION INDIVIDUAL
 
-                        /*
-                        Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
-                        Console.WriteLine(DateTime.Now.ToString("hh:mm:ss"));
-                        Console.WriteLine(resumen.Data[0].NumeroLicencia);
-                        Console.WriteLine(datoSolitud.NumeroCertificado);
-                        Console.WriteLine(funeraria.Data[0].Funeraria);
-                        Console.WriteLine(tramitador);
-                        Console.WriteLine(datosPersonaFallecida.PrimerNombre);
-                        Console.WriteLine(nacionalidad.Data.Descripcion);
-                        Console.WriteLine(datoSolitud.FechaDefuncion);
-                        Console.WriteLine(tipoIdentificacion.Data.Descripcion);
-                        Console.WriteLine(datosPersonaFallecida.NumeroIdentificacion);
-                        Console.WriteLine(tipoMuerte.Data.Descripcion);
-                        Console.WriteLine(Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)));
-                        */
-
                         var dataCremacionIndividual = new Entities.DTOs.DetallePdfCremacionIndividualDto
                         {
 
@@ -245,9 +214,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                         
 
-
-                        //var pdf = _generatePdf.GetPDF("Views/Report.cshtml");
-                        //var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
                         var pdf = await _generatePdf.GetByteArray("Views/CremacionIndividual.cshtml", dataCremacionIndividual);
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -346,7 +312,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         };
 
                         var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", dataCremacionFetal);
-                        //var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -418,23 +383,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         //INHUMACION INDIVIDUAL
 
 
-                        //Console.Write(resumen.Result.Data[0].NumeroLicencia);
-                        //Console.Write(funeraria.Result.Data[0].Funeraria);
-                        /*
-                        Console.Write(resumen.Data[0].NumeroLicencia);
-                        Console.Write(funeraria.Data[0].Funeraria);
-                        Console.Write(nacionalidad.Data.Descripcion);
-                        Console.Write(tipoIdentificacion.Data.Descripcion);
-                        Console.Write(tipoMuerte.Data.Descripcion);
-                        Console.Write(cementerio.Data.Cementerio);
-                        */
-
-                        //var CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
-                        //
-                        //Console.WriteLine(firma1);
-
-
-
                         var dataInhumacionIndividual = new Entities.DTOs.DetallePdfInhumacionIndividualDto
                         {
 
@@ -474,21 +422,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     {
                         //CREMACION INDIVIDUAL
 
-                        /*
-                        Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
-                        Console.WriteLine(DateTime.Now.ToString("hh:mm:ss"));
-                        Console.WriteLine(resumen.Data[0].NumeroLicencia);
-                        Console.WriteLine(datoSolitud.NumeroCertificado);
-                        Console.WriteLine(funeraria.Data[0].Funeraria);
-                        Console.WriteLine(tramitador);
-                        Console.WriteLine(datosPersonaFallecida.PrimerNombre);
-                        Console.WriteLine(nacionalidad.Data.Descripcion);
-                        Console.WriteLine(datoSolitud.FechaDefuncion);
-                        Console.WriteLine(tipoIdentificacion.Data.Descripcion);
-                        Console.WriteLine(datosPersonaFallecida.NumeroIdentificacion);
-                        Console.WriteLine(tipoMuerte.Data.Descripcion);
-                        Console.WriteLine(Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)));
-                        */
 
                         var dataCremacionIndividual = new Entities.DTOs.DetallePdfCremacionIndividualDto
                         {
@@ -515,11 +448,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FirmaValidador = firmaValidador
                         };
 
-
-
-
-                        //var pdf = _generatePdf.GetPDF("Views/Report.cshtml");
-                        //var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+                       
                         var pdf = await _generatePdf.GetByteArray("Views/CremacionIndividual.cshtml", dataCremacionIndividual);
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -615,8 +544,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FirmaValidador = firmaValidador
                         };
 
-                        var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", dataCremacionFetal);
-                        //var pdf = _generatePdf.GetPDF(agregarValoresDinamicos(HTML_PDF.Result, datosLLavesInhumacionIndividual, datosDinamicosInhumacionIndividual));
+                        var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", dataCremacionFetal);                       
 
                         var pdfStream = new System.IO.MemoryStream();
 
