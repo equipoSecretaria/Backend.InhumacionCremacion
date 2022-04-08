@@ -23,7 +23,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public Guid IdTipoMuerte { get; set; }
 
        
-        public int ID_Control_Tramite { get; set; }
+        public int? ID_Control_Tramite { get; set; }
         public string TipoPersona { get; set; }
         public string NoIdentificacionSolicitante { get; set; }
         public string TipoIdentificacionSolicitante { get; set; }

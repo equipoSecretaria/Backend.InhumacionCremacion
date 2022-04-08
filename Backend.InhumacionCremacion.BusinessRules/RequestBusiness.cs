@@ -272,8 +272,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     TipoPersona=requestDTO.Solicitud.TipoPersona,
                     TipoIdentificacionSolicitante=requestDTO.Solicitud.TipoIdentificacionSolicitante,
                     NoIdentificacionSolicitante=requestDTO.Solicitud.NoIdentificacionSolicitante,
-                    RazonSocialSolicitante=requestDTO.Solicitud.RazonSocialSolicitante,
-                    ID_Control_Tramite=0
+                    RazonSocialSolicitante=requestDTO.Solicitud.RazonSocialSolicitante
+                    
 
                 });;
 
