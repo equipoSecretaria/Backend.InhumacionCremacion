@@ -20,6 +20,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
 
         public string NoIdentificacionSolicitante { get; set; }
 
+        public string NroIdentificacionFallecido { get; set; }
+
         public string RazonSocialSolicitante { get; set; }
     }
 }
