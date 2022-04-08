@@ -25,6 +25,8 @@ namespace Backend.InhumacionCremacion.Repositories.Context
         public virtual DbSet<DatosFuneraria> DatosFuneraria { get; set; }
 
         public virtual DbSet<EstadoDocumentosSoporte> EstadoDocumentosSoporte { get; set; }
+
+        public virtual DbSet<Constante> Constante { get; set; }
         #endregion
 
         #region Constructor                        
@@ -58,6 +60,8 @@ namespace Backend.InhumacionCremacion.Repositories.Context
 			modelBuilder.AddResumenSolicitud();
             modelBuilder.AddEstadoDocumentosSoporte();
             modelBuilder.AddDatosFuneraria();
+            modelBuilder.AddConstante();
+            
         }
         #endregion
     }

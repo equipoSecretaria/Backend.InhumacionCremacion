@@ -61,6 +61,18 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        /// <summary>
+        ///     GetConstante
+        /// </summary>
+        /// <param name="idConstante"></param>
+        /// <returns></returns>
+        [HttpGet("GetCosntante/{idConstante}")]
+        public async Task<ActionResult> GetCosntante(string idConstante)
+        {
+            var result = await SeguimientoBusiness.getConstante(idConstante);
+            return StatusCode(result.Code, result);
+        }
+
         #endregion
     }
 }

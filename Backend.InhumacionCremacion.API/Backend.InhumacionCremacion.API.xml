@@ -206,6 +206,13 @@
             <param name="idSolicitud"></param>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.SeguimientoController.GetCosntante(System.String)">
+            <summary>
+                GetConstante
+            </summary>
+            <param name="idConstante"></param>
+            <returns></returns>
+        </member>
         <member name="T:Backend.InhumacionCremacion.API.Controllers.SupportDocumentsController">
             <summary>
                 SupportDocumentsController
