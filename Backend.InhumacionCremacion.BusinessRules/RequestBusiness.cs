@@ -145,18 +145,32 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
                 
                     Guid IdEstadoDocumento = Guid.NewGuid();
-                    await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
+                Guid seguimiento = Guid.NewGuid();
+                Console.WriteLine("Tipo seguimiento");
+                Console.WriteLine(requestGestionDTO.estado.TipoSeguimiento);
+                await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
                         IdEstadoDocumento = IdEstadoDocumento,
                         IdSolicitud = requestGestionDTO.estado.IdSolicitud,
                         IdDocumentoSoporte = requestGestionDTO.estado.IdDocumentoSoporte,
                         Path = requestGestionDTO.estado.Path,
                         Observaciones = requestGestionDTO.estado.Observaciones,
-                        Estado_Documento = requestGestionDTO.estado.Estado_Documento
+                        Estado_Documento = requestGestionDTO.estado.Estado_Documento,   
+                        TipoSeguimiento= requestGestionDTO.estado.TipoSeguimiento,
+                        
 
-                    });
-                    
-                
+                });;
+               
+               var datos = await _repositorySolicitud.GetAsync(x =>
+                   x.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
+                Console.WriteLine( requestGestionDTO.estado.IdSolicitud);
+               datos.EstadoSolicitud = requestGestionDTO.estado.TipoSeguimiento;
+
+               await _repositorySolicitud.UpdateAsync(datos);
+  
+
+
+
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Solicitud OK");
 
 
@@ -258,9 +272,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     TipoPersona=requestDTO.Solicitud.TipoPersona,
                     TipoIdentificacionSolicitante=requestDTO.Solicitud.TipoIdentificacionSolicitante,
                     NoIdentificacionSolicitante=requestDTO.Solicitud.NoIdentificacionSolicitante,
-                    RazonSocialSolicitante=requestDTO.Solicitud.RazonSocialSolicitante
+                    RazonSocialSolicitante=requestDTO.Solicitud.RazonSocialSolicitante,
+                    ID_Control_Tramite=0
 
-                });
+                });;
 
                 //ubicacion persona
                 // en el front, para los valores nulos se debe enciar el siguiente valor: "00000000-0000-0000-0000-000000000000"
@@ -639,6 +654,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 Console.WriteLine(temporal);
                 var listadoResumen = await _repositoryResumenSolicitud.GetAllAsync();
+                Console.WriteLine("paso1");
                 // Console.WriteLine(listadoResumen);
                 var resultJoin = (from rr in resultRequest
                                   join rd in listadoEstadoSolicitud on rr.EstadoSolicitud equals rd.Id
@@ -655,18 +671,24 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                       NumeroCertificado = rr.NumeroCertificado,
                                       RazonSocialSolicitante = rr.RazonSocialSolicitante,
                                       NoIdentificacionSolicitante = rr.NoIdentificacionSolicitante,
+                                      ID_Control_Tramite = rr.ID_Control_Tramite+"",
                                       NroIdentificacionFallecido=""
                                   }).ToList();
                 Solicitud busqueda = new Solicitud();
                 Persona fallecido = new Persona();
+                Console.Write("paso1");
                 foreach (var final in resultJoin)
                 {
+                    
                     fallecido = temporal.Where(x => x.IdSolicitud.Equals(final.IdSolicitud)).SingleOrDefault();
                     if(fallecido != null)
                     {
+                        Console.WriteLine("paso2");
                         final.NroIdentificacionFallecido = fallecido.NumeroIdentificacion;
+                        Console.WriteLine("paso3");
                     }
                 }
+                Console.WriteLine("paso4");
 
                 return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.ToList(), count: resultJoin.Count());
             }
@@ -764,7 +786,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         TipoPersona=item.TipoPersona,
                         RazonSocialSolicitante=item.RazonSocialSolicitante,
                         NoIdentificacionSolicitante=item.NoIdentificacionSolicitante,
-
+                        ID_Control_Tramite = item.ID_Control_Tramite,
 
                         Persona = new List<Entities.DTOs.PersonaDTO>(),
 
@@ -836,6 +858,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 foreach (var item in resultSolicitud)
                 {
+                    
                     //solicitud validado
                     Entities.DTOs.SolicitudDTO solicitudDTO = new Entities.DTOs.SolicitudDTO
                     {
@@ -851,6 +874,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         IdUsuarioSeguridad = item.IdUsuarioSeguridad,
                         IdTramite = item.IdTramite,
                         IdTipoMuerte = item.IdTipoMuerte,
+                       
 
                         //ubicacion persona validado
                         UbicacionPersona = new Entities.DTOs.UbicacionPersonaDTO

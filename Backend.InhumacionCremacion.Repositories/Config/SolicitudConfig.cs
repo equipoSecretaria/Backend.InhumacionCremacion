@@ -25,11 +25,13 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                 entity.Property(e => e.FechaDefuncion).HasColumnType("date");
 
                 entity.Property(e => e.FechaSolicitud).HasColumnType("datetime");
+                entity.Property(e => e.ID_Control_Tramite).ValueGeneratedNever();
 
                 entity.Property(e => e.Hora)
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+              
                 entity.Property(e => e.NumeroCertificado)
                     .IsRequired()
                     .HasMaxLength(200)
