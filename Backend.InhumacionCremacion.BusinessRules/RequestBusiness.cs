@@ -156,7 +156,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         Path = requestGestionDTO.estado.Path,
                         Observaciones = requestGestionDTO.estado.Observaciones,
                         Estado_Documento = requestGestionDTO.estado.Estado_Documento,   
-                        TipoSeguimiento= requestGestionDTO.estado.TipoSeguimiento,
+                        TipoSeguimiento= requestGestionDTO.estado.TipoSeguimiento
                         
 
                 });;
@@ -165,8 +165,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                    x.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
                 Console.WriteLine( requestGestionDTO.estado.IdSolicitud);
                datos.EstadoSolicitud = requestGestionDTO.estado.TipoSeguimiento;
+               
 
-               await _repositorySolicitud.UpdateAsync(datos);
+             await _repositorySolicitud.UpdateAsync(datos);
   
 
 
