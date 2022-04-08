@@ -52,6 +52,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.GeneratePDFPrev(System.String,System.String)">
+            <summary>
+                Generates the PDF.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.VisualizarPDF(System.String)">
             <summary>
             Visualizar the PDF.
@@ -204,6 +210,13 @@
                 GetSeguimientoBySolicitud
             </summary>
             <param name="idSolicitud"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.SeguimientoController.GetCosntante(System.String)">
+            <summary>
+                GetConstante
+            </summary>
+            <param name="idConstante"></param>
             <returns></returns>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Controllers.SupportDocumentsController">

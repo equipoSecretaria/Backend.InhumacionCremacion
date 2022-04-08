@@ -19,5 +19,12 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// <param name="seguimiento"></param>
         /// <returns></returns>
         Task<ResponseBase<bool>> AddSeguimiento(Models.InhumacionCremacion.Seguimiento seguimiento);
+
+        /// <summary>
+        /// AddSeguimiento
+        /// </summary>
+        /// <param name="idConstante"></param>
+        /// <returns></returns>
+        Task<ResponseBase<Entities.DTOs.ConstanteDTO>> getConstante(string idConstante);
     }
 }

@@ -39,6 +39,18 @@ namespace Backend.InhumacionCremacion.API.Controllers
         }
 
         /// <summary>
+        ///     Generates the PDF.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GeneratePDFPrev/{idSolicitud}/{tramitador}")]
+        public async Task<ActionResult> GeneratePDFPrev(string idSolicitud, string tramitador)
+        {
+            var result = await _generatePDFBusiness.GeneratePDFPrev(idSolicitud, tramitador);
+
+            return new FileStreamResult(result.Data, "application/pdf");
+        }
+
+        /// <summary>
         /// Visualizar the PDF.
         /// </summary>
         /// <returns></returns>

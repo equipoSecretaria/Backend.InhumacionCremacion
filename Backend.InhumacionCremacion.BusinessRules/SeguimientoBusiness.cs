@@ -26,6 +26,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Seguimiento> _repositorySeguimiento;
 
         /// <summary>
+        /// _repositorySeguimiento
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Constante> _repositoryConstante;
+
+        /// <summary>
         /// _repositoryDominio
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> _repositoryDominio;
@@ -43,11 +48,13 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <param name="repositoryDominio"></param>
         public SeguimientoBusiness(ITelemetryException telemetryException,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Seguimiento> repositorySeguimiento,
-                                   Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio)
+                                   Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Constante> repositoryConstante)
         {
             _telemetryException = telemetryException;
             _repositorySeguimiento = repositorySeguimiento;
             _repositoryDominio = repositoryDominio;
+            _repositoryConstante = repositoryConstante;
         }
 
         #endregion
@@ -118,6 +125,39 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
                 _telemetryException.RegisterException(ex);
                 return new ResponseBase<List<Entities.DTOs.SeguimientoDto>>(code: HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
+
+        public async Task<ResponseBase<Entities.DTOs.ConstanteDTO>> getConstante(string idConstante)
+        {
+            try
+            {
+
+                var constante = await _repositoryConstante.GetAsync(predicate: y => y.idConstante.Equals(Guid.Parse(idConstante)));
+
+                if (constante == null)
+                {
+                    return new ResponseBase<Entities.DTOs.ConstanteDTO>(code: System.Net.HttpStatusCode.NotFound, data: null, message: "No se encontró el registro)");
+                }
+                else
+                {
+                    Entities.DTOs.ConstanteDTO constanteObj = new Entities.DTOs.ConstanteDTO()
+                    {
+                        idConstante = constante.idConstante,
+
+                        NombreConstante = constante.NombreConstante,
+
+                        valor = constante.valor,
+                    };
+
+                    return new ResponseBase<Entities.DTOs.ConstanteDTO>(code: System.Net.HttpStatusCode.OK, data: constanteObj, message: "Registro encontrado");
+                }
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<Entities.DTOs.ConstanteDTO>(code: HttpStatusCode.InternalServerError, message: ex.Message);
             }
         }
         #endregion
