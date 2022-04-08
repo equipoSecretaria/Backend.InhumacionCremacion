@@ -25,6 +25,8 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public Guid IdTipoMuerte { get; set; }
         public Guid IdDatosCementerio { get; set; }
 
+        public int ID_Control_Tramite { get; set; }
+
         public string TipoPersona { get; set; }
         public string NoIdentificacionSolicitante { get; set; }
         public string TipoIdentificacionSolicitante { get; set; }

@@ -23,5 +23,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string NroIdentificacionFallecido { get; set; }
 
         public string RazonSocialSolicitante { get; set; }
+
+       
+        public string ID_Control_Tramite { get; set; }
     }
 }
