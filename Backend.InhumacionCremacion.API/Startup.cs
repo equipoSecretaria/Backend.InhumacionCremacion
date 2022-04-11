@@ -45,6 +45,7 @@ namespace Backend.InhumacionCremacion.API
             services.AddUtilities(Configuration.GetValue<string>(KeyVault.InstrumentationKey));
             services.AddBusinessConfig();
             services.AddSwaggerConfig();
+            services.AddCors();
         }
 
         /// <summary>
@@ -58,7 +59,8 @@ namespace Backend.InhumacionCremacion.API
             app.UseInitialConfig();
             app.UseSwaggerConfig();
 
-
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:3000/"));
             //app.UseRouting();
             //app.UseDefaultFiles();
             //app.UseStaticFiles();
