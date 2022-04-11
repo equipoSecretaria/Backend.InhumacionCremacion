@@ -5,6 +5,7 @@ using Backend.InhumacionCremacion.Entities.Interface.Business;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion;
+using Microsoft.AspNetCore.Cors;
 
 namespace Backend.InhumacionCremacion.API.Controllers
 {
@@ -14,6 +15,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
     /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("https://ambitious-sand-025fb710f.azurestaticapps.net")]
     public class RequestController : ControllerBase
     {
         #region Cosnstructor
@@ -199,6 +201,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetResumenSolicitud/{idSolicitud}")]
+       
         public async Task<ActionResult> GetResumenSolicitud(string idSolicitud)
         {
             var result = await RequestBusiness.GetResumenSolicitud(idSolicitud);
@@ -223,7 +226,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
         /// <param name="idSolicitud">The request dto.</param>
         /// <param name="idTipoPersona">The request dto.</param>
         /// <returns></returns>
-        [HttpGet("GetDataFromQuery/{idSolicitud}/{idTipoPersona}")]
+        [HttpPost("GetDataFromQuery/{idSolicitud}/{idTipoPersona}")]
         public async Task<ActionResult> GetDataFromInhumacionQuery(string idSolicitud, string idTipoPersona)
         {
             var result = await RequestBusiness.GetDataFromInhumacionQuery(idSolicitud,idTipoPersona);
