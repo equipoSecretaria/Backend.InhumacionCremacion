@@ -133,7 +133,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
-                    var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
+                    //var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var rutaAprobador = "\\Views\\firmas\\aprobador.png";
                     var rutaValidador = "\\Views\\firmas\\validador.png";
                     var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
@@ -207,7 +207,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = datosMedico.PrimerNombre + " " + datosMedico.SegundoNombre + " " + datosMedico.PrimerApellido + " " + datosMedico.SegundoApellido,
                             Cementerio = cementerio.Data.Cementerio,
                             AutorizadorCremacion = "PENDIENTE POR DEFINIR", // Puede ser quien hace la solicitud de cremación índividual.
-                            Parentesco = parentesco.Data.Descripcion,
+                           // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador
                         };
@@ -240,7 +240,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
-                    var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
+                   // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var rutaAprobador = "\\Views\\firmas\\aprobador.png";
                     var rutaValidador = "\\Views\\firmas\\validador.png";
                     var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
@@ -306,7 +306,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = datosMedico.PrimerNombre + " " + datosMedico.SegundoNombre + " " + datosMedico.PrimerApellido + " " + datosMedico.SegundoApellido,
                             Cementerio = cementerio.Data.Cementerio,
                             AutorizadorCremacion = datosPersonaFallecida.PrimerNombre + " " + datosPersonaFallecida.SegundoNombre + " " + datosPersonaFallecida.PrimerApellido + " " + datosPersonaFallecida.SegundoApellido,
-                            Parentesco = parentesco.Data.Descripcion,
+                           // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador
                         };
@@ -370,7 +370,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
-                    var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
+                   // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var rutaAprobador = "\\Views\\firmas\\aprobador.png";
                     var rutaValidador = "\\Views\\firmas\\validador.png";
                     var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
@@ -443,7 +443,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = datosMedico.PrimerNombre + " " + datosMedico.SegundoNombre + " " + datosMedico.PrimerApellido + " " + datosMedico.SegundoApellido,
                             Cementerio = cementerio.Data.Cementerio,
                             AutorizadorCremacion = "PENDIENTE POR DEFINIR", // Puede ser quien hace la solicitud de cremación índividual.
-                            Parentesco = parentesco.Data.Descripcion,
+                            //Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador
                         };
@@ -473,7 +473,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
-                    var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
+                    //var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var rutaAprobador = "\\Views\\firmas\\aprobador.png";
                     var rutaValidador = "\\Views\\firmas\\validador.png";
                     var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
@@ -539,7 +539,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = datosMedico.PrimerNombre + " " + datosMedico.SegundoNombre + " " + datosMedico.PrimerApellido + " " + datosMedico.SegundoApellido,
                             Cementerio = cementerio.Data.Cementerio,
                             AutorizadorCremacion = datosPersonaFallecida.PrimerNombre + " " + datosPersonaFallecida.SegundoNombre + " " + datosPersonaFallecida.PrimerApellido + " " + datosPersonaFallecida.SegundoApellido,
-                            Parentesco = parentesco.Data.Descripcion,
+                            //Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador
                         };
