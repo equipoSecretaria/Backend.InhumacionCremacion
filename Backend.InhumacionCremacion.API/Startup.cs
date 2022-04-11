@@ -60,7 +60,8 @@ namespace Backend.InhumacionCremacion.API
             app.UseSwaggerConfig();
 
             app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:3000/"));
+                    builder.WithOrigins("http://localhost:3000")
+                           .AllowAnyHeader());
             //app.UseRouting();
             //app.UseDefaultFiles();
             //app.UseStaticFiles();
