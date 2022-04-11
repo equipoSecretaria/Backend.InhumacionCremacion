@@ -300,6 +300,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         case "segundoApellido":
                             personaDB.SegundoApellido = cambio;
                             break;
+                        case "numeroIdentificacion":
+                            personaDB.NumeroIdentificacion = cambio;
+                            break;
                         case null:
                             return new ResponseBase<string>(code: System.Net.HttpStatusCode.NotFound, message: "No se encontró el registro para actualizar, incorrecta llave de actualización");
                             break;
