@@ -1095,7 +1095,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
 
-                Task<string> Update = UpdateRsumenSolicitud(toUpdate);
+                //Task<string> Update = UpdateRsumenSolicitud(toUpdate);
                 Console.WriteLine("Numero Columnas →" + execute);
 
                 if (result == null)
