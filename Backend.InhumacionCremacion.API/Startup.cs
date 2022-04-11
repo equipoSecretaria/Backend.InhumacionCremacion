@@ -60,7 +60,7 @@ namespace Backend.InhumacionCremacion.API
             app.UseSwaggerConfig();
 
             app.UseCors(builder =>
-                    builder.WithOrigins("http://localhost:3000")
+                    builder.WithOrigins("https://ambitious-sand-025fb710f.azurestaticapps.net").AllowAnyMethod()
                            .AllowAnyHeader());
             //app.UseRouting();
             //app.UseDefaultFiles();
