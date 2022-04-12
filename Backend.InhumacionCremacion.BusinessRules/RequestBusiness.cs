@@ -156,7 +156,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         Path = requestGestionDTO.estado.Path,
                         Observaciones = requestGestionDTO.estado.Observaciones,
                         Estado_Documento = requestGestionDTO.estado.Estado_Documento,   
-                        TipoSeguimiento= requestGestionDTO.estado.TipoSeguimiento,
+                        TipoSeguimiento= requestGestionDTO.estado.TipoSeguimiento
                         
 
                 });;
@@ -165,8 +165,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                    x.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
                 Console.WriteLine( requestGestionDTO.estado.IdSolicitud);
                datos.EstadoSolicitud = requestGestionDTO.estado.TipoSeguimiento;
+               
 
-               await _repositorySolicitud.UpdateAsync(datos);
+             await _repositorySolicitud.UpdateAsync(datos);
   
 
 
@@ -633,7 +634,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 {
                     foreach (var per in sol.Persona)
                     {
-                        if(per.IdTipoPersona.Equals(Guid.Parse("D8B0250B-2991-42A0-A672-8E3E45985500")) || per.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")))
+                        if(per.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")) || per.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")))
                         {
                             temporal.Add(per);
                         }

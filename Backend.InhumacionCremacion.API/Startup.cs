@@ -45,6 +45,7 @@ namespace Backend.InhumacionCremacion.API
             services.AddUtilities(Configuration.GetValue<string>(KeyVault.InstrumentationKey));
             services.AddBusinessConfig();
             services.AddSwaggerConfig();
+            services.AddCors();
         }
 
         /// <summary>
@@ -58,7 +59,9 @@ namespace Backend.InhumacionCremacion.API
             app.UseInitialConfig();
             app.UseSwaggerConfig();
 
-
+            app.UseCors(builder =>
+                    builder.WithOrigins("https://ambitious-sand-025fb710f.azurestaticapps.net").AllowAnyMethod()
+                           .AllowAnyHeader());
             //app.UseRouting();
             //app.UseDefaultFiles();
             //app.UseStaticFiles();
