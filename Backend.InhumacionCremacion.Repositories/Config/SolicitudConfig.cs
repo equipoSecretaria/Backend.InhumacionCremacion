@@ -25,7 +25,7 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                 entity.Property(e => e.FechaDefuncion).HasColumnType("date");
 
                 entity.Property(e => e.FechaSolicitud).HasColumnType("datetime");
-                entity.Property(e => e.ID_Control_Tramite).UseSqlServerIdentityColumn();
+                entity.Property(e => e.ID_Control_Tramite).UseSqlServerIdentityColumn().UseIdentityColumn().Metadata.SetAfterSaveBehavior(Microsoft.EntityFrameworkCore.Metadata.PropertySaveBehavior.Ignore);
 
                 entity.Property(e => e.Hora)
                     .HasMaxLength(100)
