@@ -875,6 +875,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         IdUsuarioSeguridad = item.IdUsuarioSeguridad,
                         IdTramite = item.IdTramite,
                         IdTipoMuerte = item.IdTipoMuerte,
+                        RazonSocialSolicitante = item.RazonSocialSolicitante,
                        
 
                         //ubicacion persona validado
