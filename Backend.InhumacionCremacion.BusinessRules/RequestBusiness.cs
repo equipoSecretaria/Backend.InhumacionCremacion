@@ -1196,6 +1196,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 var fallecido1 = await _repositoryPersona.GetAllAsync(predicate: p=> p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
                 Persona fallecido = fallecido1.Where(x => x.IdTipoPersona.Equals(Guid.Parse("01f64f02-373b-49d4-8cb1-cb677f74292c"))).SingleOrDefault();
+                if(fallecido==null)
+                {
+                    fallecido = fallecido1.Where(x => x.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246"))).SingleOrDefault();
+                }
                 if (result == null)
                 {
                     return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "No se encontraron resultados");
