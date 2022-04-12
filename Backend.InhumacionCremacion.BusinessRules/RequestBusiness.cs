@@ -875,6 +875,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         IdUsuarioSeguridad = item.IdUsuarioSeguridad,
                         IdTramite = item.IdTramite,
                         IdTipoMuerte = item.IdTipoMuerte,
+                        RazonSocialSolicitante = item.RazonSocialSolicitante,
                        
 
                         //ubicacion persona validado
@@ -1009,7 +1010,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// Gets Data from InhumacionCremacion.
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseBase<dynamic>> GetDataFromInhumacionQuery(string idSolicitud,string idTipoPersona)
+        public async Task<ResponseBase<dynamic>> GetDataFromInhumacionQuery(string idSolicitud)
         {
             try
             {

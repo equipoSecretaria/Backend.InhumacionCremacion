@@ -45,7 +45,9 @@ namespace Backend.InhumacionCremacion.API
             services.AddUtilities(Configuration.GetValue<string>(KeyVault.InstrumentationKey));
             services.AddBusinessConfig();
             services.AddSwaggerConfig();
-            services.AddCors();
+            services.AddCors(options => {
+                options.AddPolicy(name: "_ToOracle", policy => { policy.WithOrigins("https://ambitious-sand-025fb710f.azurestaticapps.net"); });
+            });
         }
 
         /// <summary>

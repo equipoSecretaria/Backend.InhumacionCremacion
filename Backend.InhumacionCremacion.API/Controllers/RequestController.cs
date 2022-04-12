@@ -226,10 +226,10 @@ namespace Backend.InhumacionCremacion.API.Controllers
         /// <param name="idSolicitud">The request dto.</param>
         /// <param name="idTipoPersona">The request dto.</param>
         /// <returns></returns>
-        [HttpPost("GetDataFromQuery/{idSolicitud}/{idTipoPersona}")]
-        public async Task<ActionResult> GetDataFromInhumacionQuery(string idSolicitud, string idTipoPersona)
+        [HttpOptions("GetDataFromQuery/{idSolicitud}")]
+        public async Task<ActionResult> GetDataFromInhumacionQuery(string idSolicitud)
         {
-            var result = await RequestBusiness.GetDataFromInhumacionQuery(idSolicitud,idTipoPersona);
+            var result = await RequestBusiness.GetDataFromInhumacionQuery(idSolicitud);
             return StatusCode(result.Code, result);
         }
         
