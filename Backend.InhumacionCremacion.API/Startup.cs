@@ -46,7 +46,7 @@ namespace Backend.InhumacionCremacion.API
             services.AddBusinessConfig();
             services.AddSwaggerConfig();
             services.AddCors(options => {
-                options.AddPolicy(name: "_ToOracle", policy => { policy.WithOrigins("https://ambitious-sand-025fb710f.azurestaticapps.net"); });
+                options.AddPolicy(name: "_ToOracle", policy => { policy.WithOrigins("https://ambitious-sand-025fb710f.azurestaticapps.net").AllowAnyHeader().AllowAnyMethod(); });
             });
         }
 
@@ -60,10 +60,7 @@ namespace Backend.InhumacionCremacion.API
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             app.UseInitialConfig();
             app.UseSwaggerConfig();
-
-            app.UseCors(builder =>
-                    builder.WithOrigins("https://ambitious-sand-025fb710f.azurestaticapps.net").AllowAnyMethod()
-                           .AllowAnyHeader());
+            app.UseCors("_ToOracle");
             //app.UseRouting();
             //app.UseDefaultFiles();
             //app.UseStaticFiles();

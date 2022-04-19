@@ -15,7 +15,8 @@ namespace Backend.InhumacionCremacion.API.Controllers
     /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("https://ambitious-sand-025fb710f.azurestaticapps.net")]
+    [EnableCors("_ToOracle")]
+    //[EnableCors(origins: "http://example.com", headers: "*", methods: "*")]
     public class RequestController : ControllerBase
     {
         #region Cosnstructor
