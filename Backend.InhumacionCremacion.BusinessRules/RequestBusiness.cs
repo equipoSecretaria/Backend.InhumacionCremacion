@@ -465,6 +465,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         IdUsuarioSeguridad = item.IdUsuarioSeguridad,
                         IdTramite = item.IdTramite,
                         IdTipoMuerte = item.IdTipoMuerte,
+                        ID_Control_Tramite=item.ID_Control_Tramite,
 
                         //ubicacion persona validado
                         UbicacionPersona = new Entities.DTOs.UbicacionPersonaDTO
