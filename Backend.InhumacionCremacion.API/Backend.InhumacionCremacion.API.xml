@@ -165,7 +165,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetDataFromInhumacionQuery(System.String,System.String)">
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetDataFromInhumacionQuery(System.String)">
             <summary>
             Execute a Query into SQL Database
             </summary>

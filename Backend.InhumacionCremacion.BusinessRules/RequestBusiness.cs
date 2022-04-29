@@ -692,7 +692,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
                 Console.WriteLine("paso4");
 
-                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.ToList(), count: resultJoin.Count());
+                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.OrderBy(x => x.ID_Control_Tramite).ToList(), count: resultJoin.Count());
             }
             catch (Exception ex)
             {
@@ -816,7 +816,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
 
                 return new ResponseBase<List<Entities.DTOs.SolicitudDTO>>(code: System.Net.HttpStatusCode.OK,
-                    message: "Solicitud OK", data: resultSol.ToList());
+                    message: "Solicitud OK", data: resultSol.OrderBy(x => x.ID_Control_Tramite).ToList());
             }
             catch (Exception ex)
             {
