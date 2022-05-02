@@ -369,6 +369,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             SegundoApellido = personas.SegundoApellido,
                             FechaNacimiento = personas.FechaNacimiento,
                             Nacionalidad = personas.Nacionalidad,
+                            SegundaNacionalidad = personas.SegundaNacionalidad,
                             OtroParentesco = personas.OtroParentesco,
                             Estado = true,
                             IdEstadoCivil = personas.IdEstadoCivil,
