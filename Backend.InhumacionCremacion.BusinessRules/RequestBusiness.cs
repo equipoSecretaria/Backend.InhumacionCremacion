@@ -802,7 +802,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     {
                         //datos persona validado
 
-                        if(rsp.IdTipoPersona.Equals(Guid.Parse("D8B0250B-2991-42A0-A672-8E3E45985500")) || rsp.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")))
+                        if(rsp.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")) || rsp.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")))
                         {
                             Entities.DTOs.PersonaDTO personaDTO = new Entities.DTOs.PersonaDTO
                             {
