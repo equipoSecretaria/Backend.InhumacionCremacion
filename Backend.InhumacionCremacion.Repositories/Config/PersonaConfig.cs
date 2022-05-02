@@ -32,6 +32,10 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+                entity.Property(e => e.SegundaNacionalidad)
+                   .IsRequired()
+                   .HasMaxLength(100)
+                   .IsUnicode(false);
 
                 entity.Property(e => e.NumeroIdentificacion)
                     .IsRequired()

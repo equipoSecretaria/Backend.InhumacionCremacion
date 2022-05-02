@@ -14,6 +14,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string SegundoApellido { get; set; }
         public string FechaNacimiento { get; set; }
         public string Nacionalidad { get; set; }
+        public string SegundaNacionalidad { get; set; }
         public string OtroParentesco { get; set; }
 
         public bool? Estado { get; set; }
