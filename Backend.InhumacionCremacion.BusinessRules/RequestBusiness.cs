@@ -801,19 +801,24 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     foreach (var rsp in item.Persona)
                     {
                         //datos persona validado
-                        Entities.DTOs.PersonaDTO personaDTO = new Entities.DTOs.PersonaDTO
+
+                        if(rsp.IdTipoPersona.Equals(Guid.Parse("D8B0250B-2991-42A0-A672-8E3E45985500")) || rsp.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")))
                         {
+                            Entities.DTOs.PersonaDTO personaDTO = new Entities.DTOs.PersonaDTO
+                            {
 
-                            IdPersona = rsp.IdPersona,
-                            NumeroIdentificacion = rsp.NumeroIdentificacion,
-                            PrimerNombre = rsp.PrimerNombre,
-                            SegundoNombre = rsp.SegundoNombre,
-                            PrimerApellido = rsp.PrimerApellido,
-                            SegundoApellido = rsp.SegundoApellido,
-                            Estado = rsp.Estado,
+                                IdPersona = rsp.IdPersona,
+                                NumeroIdentificacion = rsp.NumeroIdentificacion,
+                                PrimerNombre = rsp.PrimerNombre,
+                                SegundoNombre = rsp.SegundoNombre,
+                                PrimerApellido = rsp.PrimerApellido,
+                                SegundoApellido = rsp.SegundoApellido,
+                                Estado = rsp.Estado,
 
-                        };
-                        solicitudDTO.Persona.Add(personaDTO);
+                            };
+                            solicitudDTO.Persona.Add(personaDTO);
+
+                        }                                                
                     }
                 }
 
