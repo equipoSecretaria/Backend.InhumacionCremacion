@@ -139,6 +139,48 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <returns></returns>
         /// 
 
+
+
+
+        public async Task<ResponseBase<string>> ConsultarFallecido(string numero, string persona)
+        {
+
+            try
+            {
+
+                var resultRequest = await _repositoryPersona.GetAllAsync(predicate: p => p.NumeroIdentificacion.Equals(numero));
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Libre");
+                    //return new ResponseBase<int>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+                else
+                {
+                    foreach(var fallecido in resultRequest)
+                    {
+                        if(fallecido.IdTipoPersona.Equals(Guid.Parse(persona)))
+                        {
+                            return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Ocupado", data: fallecido.PrimerNombre);
+                        }
+                    }
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Libre");
+
+
+
+
+                }
+
+               
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
+
+
         public async Task<ResponseBase<string>> AddGestion(Entities.DTOs.RequestGestionDTO requestGestionDTO)
         {
             try
