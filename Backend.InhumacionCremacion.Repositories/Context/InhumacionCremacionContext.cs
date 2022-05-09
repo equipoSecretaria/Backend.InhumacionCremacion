@@ -61,7 +61,9 @@ namespace Backend.InhumacionCremacion.Repositories.Context
             modelBuilder.AddEstadoDocumentosSoporte();
             modelBuilder.AddDatosFuneraria();
             modelBuilder.AddConstante();
-            
+            modelBuilder.AddFirmaUsuarios();
+
+
         }
         #endregion
     }

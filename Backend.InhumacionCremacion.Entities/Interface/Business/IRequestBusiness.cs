@@ -22,6 +22,13 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         Task<ResponseBase<string>> AddRequest(DTOs.RequestDTO requestDTO);
 
         /// <summary>
+        /// Adds the request.
+        /// </summary>
+        /// <param name="requestDTO">The request dto.</param>
+        /// <returns></returns>
+        Task<ResponseBase<string>> AddFirma(Entities.DTOs.FirmaUsuariosDTO firma);
+
+        /// <summary>
         /// GetRequestByIdUser
         /// </summary>
         /// <param name="idUser"></param>

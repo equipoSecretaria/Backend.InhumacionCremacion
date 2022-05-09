@@ -66,6 +66,25 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        /// <summary>
+        ///     GetRequestByIdUser
+        /// </summary>
+        /// <param name="firma"></param>
+        /// <returns></returns>
+
+        [HttpPost("AddFirma")]
+        public async Task<ActionResult> AddFirma([FromBody] FirmaUsuariosDTO firma)
+        {
+            var result = await RequestBusiness.AddFirma(firma);
+            return StatusCode(result.Code, result);
+        }
+
+        /// <summary>
+        ///     GetRequestByIdUser
+        /// </summary>
+        /// <param name="requestDTO"></param>
+        /// <returns></returns>
+
         [HttpPost("AddRquest")]
         public async Task<ActionResult> AddRquest([FromBody] RequestDTO requestDTO)
         {

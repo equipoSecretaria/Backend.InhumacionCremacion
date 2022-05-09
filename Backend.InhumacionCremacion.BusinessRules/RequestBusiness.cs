@@ -55,7 +55,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> _repositorySolicitud;
 
-        
+        /// <summary>
+        /// The repository solicitud
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> _repositoryFirmaUsuarios;
+
+
 
         /// <summary>
         /// _repositoryDominio
@@ -84,7 +89,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// The Oracle Context
         /// </summary>
         private readonly Repositories.Context.OracleContext _oracleContext;
-               
+
 
 
 
@@ -97,6 +102,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <param name="telemetryException"></param>
         /// <param name="repositoryDominio"></param>
         /// <param name="repositorySolicitud"></param>
+        /// <param name="repositoryFirmaUsarios"></param>
         /// <param name="repositoryDatosCementerio"></param>
         /// <param name="repositoryInstitucionCertificaFallecimiento"></param>
         /// <param name="repositoryLugarDefuncion"></param>
@@ -105,6 +111,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         public RequestBusiness(ITelemetryException telemetryException,
                                Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> repositorySolicitud,
+                               Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> repositoryFirmaUsuarios,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> repositoryInstitucionCertificaFallecimiento,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.LugarDefuncion> repositoryLugarDefuncion,
@@ -118,6 +125,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             _telemetryException = telemetryException;
             _repositorySolicitud = repositorySolicitud;
+            _repositoryFirmaUsuarios = repositoryFirmaUsuarios;
             _repositoryDatosCementerio = repositoryDatosCementerio;
             _repositoryInstitucionCertificaFallecimiento = repositoryInstitucionCertificaFallecimiento;
             _repositoryLugarDefuncion = repositoryLugarDefuncion;
@@ -138,6 +146,35 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <param name="requestDTO">The request dto.</param>
         /// <returns></returns>
         /// 
+
+        public async Task<ResponseBase<string>> AddFirma(Entities.DTOs.FirmaUsuariosDTO firma)
+        {
+            try
+            {
+                var stream = System.IO.File.OpenRead(firma.Ruta);
+                using var ms = new System.IO.MemoryStream();
+                await stream.CopyToAsync(ms);
+                byte[] data = ms.ToArray();
+                Console.WriteLine(Convert.ToBase64String(data));
+
+                String imagenBase64 = Convert.ToBase64String(data);
+
+
+                await _repositoryFirmaUsuarios.AddAsync(new Entities.Models.InhumacionCremacion.FirmaUsuarios {
+                    ID_Usuario = firma.ID_Usuario,
+                    Firma = imagenBase64,
+                });
+
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Solicitud OK");
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
 
         public async Task<ResponseBase<string>> AddGestion(Entities.DTOs.RequestGestionDTO requestGestionDTO)
         {

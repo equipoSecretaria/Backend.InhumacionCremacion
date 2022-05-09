@@ -10,6 +10,7 @@ using Wkhtmltopdf.NetCore;
 using System.Collections.Generic;
 using System.Linq;
 using Backend.InhumacionCremacion.Entities.Models.Commons;
+using System.IO;
 
 namespace Backend.InhumacionCremacion.BusinessRules
 {
@@ -60,6 +61,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
         private readonly Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> _repositoryDominio;
 
         /// <summary>
+        /// The repository solicitud
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> _repositoryFirmaUsuarios;
+
+        /// <summary>
         /// The repository datos cementerio
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> _repositoryDatosCementerio;
@@ -72,6 +78,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         public GeneratePDFBusiness(ITelemetryException telemetryException,
                                    IGeneratePdf generatePdf,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> repositorySolicitud,
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> repositoryFirmaUsuarios,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Persona> repositoryPersona,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Formatos> repositoryFormato,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> repositoryResumenSolicitud,
@@ -82,6 +89,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _telemetryException = telemetryException;
             _generatePdf = generatePdf;
             _repositorySolicitud = repositorySolicitud;
+            _repositoryFirmaUsuarios = repositoryFirmaUsuarios;
             _repositoryPersona = repositoryPersona;
             _repositoryFormato = repositoryFormato;
             _repositoryResumenSolicitud = repositoryResumenSolicitud;
@@ -119,6 +127,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Solicitud datoSolitud = null;
 
                 datoSolitud = await _repositorySolicitud.GetAsync(w => w.IdSolicitud.Equals(System.Guid.Parse(idSolicitud)));
+                var firmaAprobadorDB = await _repositoryFirmaUsuarios.GetAsync(x => x.ID_FIrma == Guid.Parse("63407E91-E1B2-4D17-0036-08DA32040224"));
+                var firmaValidadorDB = await _repositoryFirmaUsuarios.GetAsync(x => x.ID_FIrma == Guid.Parse("20B71C38-EF61-4AEC-0037-08DA32040224"));
 
 
                 if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")) || datoSolitud.IdTramite.Equals(Guid.Parse("E69BDA86-2572-45DB-90DC-B40BE14FE020")))
@@ -134,10 +144,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                     //var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
-                    var rutaAprobador = "\\Views\\firmas\\aprobador.png";
-                    var rutaValidador = "\\Views\\firmas\\validador.png";
-                    var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
-                    var firmaValidador = System.IO.Directory.GetCurrentDirectory() + rutaValidador;
+                    var firmaAprobador = "data:image/png;base64," + firmaAprobadorDB.Firma;
+                    var firmaValidador = "data:image/png;base64," + firmaValidadorDB.Firma;
 
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
@@ -240,11 +248,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
-                   // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
-                    var rutaAprobador = "\\Views\\firmas\\aprobador.png";
-                    var rutaValidador = "\\Views\\firmas\\validador.png";
-                    var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
-                    var firmaValidador = System.IO.Directory.GetCurrentDirectory() + rutaValidador;
+                    // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
+                    var firmaAprobador = "data:image/png;base64," + firmaAprobadorDB.Firma;
+                    var firmaValidador = "data:image/png;base64," + firmaValidadorDB.Firma;
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("AD5EA0CB-1FA2-4933-A175-E93F2F8C0060")))
                     {
@@ -357,6 +363,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Solicitud datoSolitud = null;
 
                 datoSolitud = await _repositorySolicitud.GetAsync(w => w.IdSolicitud.Equals(System.Guid.Parse(idSolicitud)));
+                var firmaAprobadorDB = await _repositoryFirmaUsuarios.GetAsync(x => x.ID_FIrma == Guid.Parse("63407E91-E1B2-4D17-0036-08DA32040224"));
+                var firmaValidadorDB = await _repositoryFirmaUsuarios.GetAsync(x => x.ID_FIrma == Guid.Parse("20B71C38-EF61-4AEC-0037-08DA32040224"));
 
 
                 if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")) || datoSolitud.IdTramite.Equals(Guid.Parse("E69BDA86-2572-45DB-90DC-B40BE14FE020")))
@@ -371,10 +379,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                    // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
-                    var rutaAprobador = "\\Views\\firmas\\aprobador.png";
-                    var rutaValidador = "\\Views\\firmas\\validador.png";
-                    var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
-                    var firmaValidador = System.IO.Directory.GetCurrentDirectory() + rutaValidador;
+                    var firmaAprobador = "data:image/png;base64," + firmaAprobadorDB.Firma;
+                    var firmaValidador = "data:image/png;base64," + firmaValidadorDB.Firma;
 
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
@@ -474,10 +480,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                     //var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
-                    var rutaAprobador = "\\Views\\firmas\\aprobador.png";
-                    var rutaValidador = "\\Views\\firmas\\validador.png";
-                    var firmaAprobador = System.IO.Directory.GetCurrentDirectory() + rutaAprobador;
-                    var firmaValidador = System.IO.Directory.GetCurrentDirectory() + rutaValidador;
+                    var firmaAprobador = "data:image/png;base64," + firmaAprobadorDB.Firma;
+                    var firmaValidador = "data:image/png;base64," + firmaValidadorDB.Firma;
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("AD5EA0CB-1FA2-4933-A175-E93F2F8C0060")))
                     {
