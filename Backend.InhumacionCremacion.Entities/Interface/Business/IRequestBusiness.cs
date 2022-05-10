@@ -14,6 +14,7 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// <param name="requestGestionDTO">The request dto.</param>
         /// <returns></returns>
         /// 
+        Task<ResponseBase<string>> ConsultarCertificado(string numero);
         Task<ResponseBase<string>> ConsultarFallecido(string numero,string persona);
         Task<ResponseBase<string>> AddGestion(DTOs.RequestGestionDTO requestGestionDTO);
         /// <summary>

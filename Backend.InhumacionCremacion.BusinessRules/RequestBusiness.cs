@@ -141,7 +141,32 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
 
+        public async Task<ResponseBase<string>> ConsultarCertificado(string numero)
+        {
 
+            try
+            {
+
+                var resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.NumeroCertificado.Equals(numero));
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Libre");
+                    //return new ResponseBase<int>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+                else
+                {
+                   return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Ocupado", data: resultRequest.NumeroCertificado);
+                    
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
         public async Task<ResponseBase<string>> ConsultarFallecido(string numero, string persona)
         {
 

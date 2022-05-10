@@ -87,7 +87,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 {
                     return new ResponseBase<List<DocumentosSoporte>>(code: HttpStatusCode.OK, message: "No se encontraron resultados");
                 }
-                return new ResponseBase<List<DocumentosSoporte>>(code: HttpStatusCode.OK, message: "Solicitud OK", data: result.ToList(), count: result.Count());
+                return new ResponseBase<List<DocumentosSoporte>>(code: HttpStatusCode.OK, message: "Solicitud OK", data: result.OrderBy(x => x.Path).ToList(), count: result.Count());
             }
             catch (Exception ex)
             {

@@ -66,6 +66,13 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        [HttpGet("ConsultarCertificado/{numero}")]
+        public async Task<ActionResult> ConsultarCertificado(string numero)
+        {
+            var result = await RequestBusiness.ConsultarCertificado(numero);
+            return StatusCode(result.Code, result);
+        }
+
         [HttpPost("AddGestion")]
         public async Task<ActionResult> AddGestion([FromBody] RequestGestionDTO requestGestionDTO)
         {
