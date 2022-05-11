@@ -95,6 +95,13 @@
             <returns></returns>
             
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.AddGestion(Backend.InhumacionCremacion.Entities.DTOs.RequestGestionDTO)">
+            <summary>
+                GetRequestByIdUser
+            </summary>
+            <param name="requestDTO"></param>
+            <returns></returns>
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.AddFirma(Backend.InhumacionCremacion.Entities.DTOs.FirmaUsuariosDTO)">
             <summary>
                 GetRequestByIdUser
