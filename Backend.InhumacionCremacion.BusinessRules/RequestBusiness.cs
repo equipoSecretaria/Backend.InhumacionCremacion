@@ -151,6 +151,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
         {
             try
             {
+
+                /*
                 var stream = System.IO.File.OpenRead(firma.Ruta);
                 using var ms = new System.IO.MemoryStream();
                 await stream.CopyToAsync(ms);
@@ -158,13 +160,25 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Console.WriteLine(Convert.ToBase64String(data));
 
                 String imagenBase64 = Convert.ToBase64String(data);
+                */
 
+                var firmaExistente = await _repositoryFirmaUsuarios.GetAsync(x => x.ID_Usuario == firma.ID_Usuario);
 
-                await _repositoryFirmaUsuarios.AddAsync(new Entities.Models.InhumacionCremacion.FirmaUsuarios
+                //firmaExistente
+
+                if (firmaExistente!=null)
                 {
-                    ID_Usuario = firma.ID_Usuario,
-                    Firma = imagenBase64,
-                });
+                    firmaExistente.Firma = firma.firma;
+                    await _repositoryFirmaUsuarios.UpdateAsync(firmaExistente);
+                }
+                else
+                {
+                    await _repositoryFirmaUsuarios.AddAsync(new Entities.Models.InhumacionCremacion.FirmaUsuarios
+                    {
+                        ID_Usuario = firma.ID_Usuario,
+                        Firma = firma.firma
+                    });
+                }
 
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Solicitud OK");
 
