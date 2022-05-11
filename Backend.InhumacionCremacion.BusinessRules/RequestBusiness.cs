@@ -89,7 +89,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// The Oracle Context
         /// </summary>
         private readonly Repositories.Context.OracleContext _oracleContext;
-
+               
 
 
 
@@ -102,7 +102,6 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <param name="telemetryException"></param>
         /// <param name="repositoryDominio"></param>
         /// <param name="repositorySolicitud"></param>
-        /// <param name="repositoryFirmaUsarios"></param>
         /// <param name="repositoryDatosCementerio"></param>
         /// <param name="repositoryInstitucionCertificaFallecimiento"></param>
         /// <param name="repositoryLugarDefuncion"></param>
@@ -147,6 +146,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <returns></returns>
         /// 
 
+
         public async Task<ResponseBase<string>> AddFirma(Entities.DTOs.FirmaUsuariosDTO firma)
         {
             try
@@ -160,7 +160,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 String imagenBase64 = Convert.ToBase64String(data);
 
 
-                await _repositoryFirmaUsuarios.AddAsync(new Entities.Models.InhumacionCremacion.FirmaUsuarios {
+                await _repositoryFirmaUsuarios.AddAsync(new Entities.Models.InhumacionCremacion.FirmaUsuarios
+                {
                     ID_Usuario = firma.ID_Usuario,
                     Firma = imagenBase64,
                 });
@@ -175,6 +176,72 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
             }
         }
+
+
+        public async Task<ResponseBase<string>> ConsultarCertificado(string numero)
+        {
+
+            try
+            {
+
+                var resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.NumeroCertificado.Equals(numero));
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Libre");
+                    //return new ResponseBase<int>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+                else
+                {
+                   return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Ocupado", data: resultRequest.NumeroCertificado);
+                    
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+        public async Task<ResponseBase<string>> ConsultarFallecido(string numero, string persona)
+        {
+
+            try
+            {
+
+                var resultRequest = await _repositoryPersona.GetAllAsync(predicate: p => p.NumeroIdentificacion.Equals(numero));
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Libre");
+                    //return new ResponseBase<int>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+                else
+                {
+                    foreach(var fallecido in resultRequest)
+                    {
+                        if(fallecido.IdTipoPersona.Equals(Guid.Parse(persona)))
+                        {
+                            return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Ocupado", data: fallecido.PrimerNombre);
+                        }
+                    }
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Libre");
+
+
+
+
+                }
+
+               
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
+
 
         public async Task<ResponseBase<string>> AddGestion(Entities.DTOs.RequestGestionDTO requestGestionDTO)
         {
@@ -375,6 +442,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             SegundoApellido = personas.SegundoApellido,
                             FechaNacimiento = personas.FechaNacimiento,
                             Nacionalidad = personas.Nacionalidad,
+                            SegundaNacionalidad= personas.SegundaNacionalidad,
                             OtroParentesco = personas.OtroParentesco,
                             Estado = true,
                             IdEstadoCivil = personas.IdEstadoCivil,
@@ -405,6 +473,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             SegundoApellido = personas.SegundoApellido,
                             FechaNacimiento = personas.FechaNacimiento,
                             Nacionalidad = personas.Nacionalidad,
+                            SegundaNacionalidad = personas.SegundaNacionalidad,
                             OtroParentesco = personas.OtroParentesco,
                             Estado = true,
                             IdEstadoCivil = personas.IdEstadoCivil,
@@ -502,6 +571,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         IdUsuarioSeguridad = item.IdUsuarioSeguridad,
                         IdTramite = item.IdTramite,
                         IdTipoMuerte = item.IdTipoMuerte,
+                        ID_Control_Tramite=item.ID_Control_Tramite,
 
                         //ubicacion persona validado
                         UbicacionPersona = new Entities.DTOs.UbicacionPersonaDTO
@@ -728,7 +798,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
                 Console.WriteLine("paso4");
 
-                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.ToList(), count: resultJoin.Count());
+                return new ResponseBase<List<Entities.DTOs.RequestDetailDTOUser>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud ok", data: resultJoin.OrderByDescending(x => x.ID_Control_Tramite).ToList(), count: resultJoin.Count());
             }
             catch (Exception ex)
             {
@@ -835,24 +905,29 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     foreach (var rsp in item.Persona)
                     {
                         //datos persona validado
-                        Entities.DTOs.PersonaDTO personaDTO = new Entities.DTOs.PersonaDTO
+
+                        if(rsp.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")) || rsp.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")))
                         {
+                            Entities.DTOs.PersonaDTO personaDTO = new Entities.DTOs.PersonaDTO
+                            {
 
-                            IdPersona = rsp.IdPersona,
-                            NumeroIdentificacion = rsp.NumeroIdentificacion,
-                            PrimerNombre = rsp.PrimerNombre,
-                            SegundoNombre = rsp.SegundoNombre,
-                            PrimerApellido = rsp.PrimerApellido,
-                            SegundoApellido = rsp.SegundoApellido,
-                            Estado = rsp.Estado,
+                                IdPersona = rsp.IdPersona,
+                                NumeroIdentificacion = rsp.NumeroIdentificacion,
+                                PrimerNombre = rsp.PrimerNombre,
+                                SegundoNombre = rsp.SegundoNombre,
+                                PrimerApellido = rsp.PrimerApellido,
+                                SegundoApellido = rsp.SegundoApellido,
+                                Estado = rsp.Estado,
 
-                        };
-                        solicitudDTO.Persona.Add(personaDTO);
+                            };
+                            solicitudDTO.Persona.Add(personaDTO);
+
+                        }                                                
                     }
                 }
 
                 return new ResponseBase<List<Entities.DTOs.SolicitudDTO>>(code: System.Net.HttpStatusCode.OK,
-                    message: "Solicitud OK", data: resultSol.ToList());
+                    message: "Solicitud OK", data: resultSol.OrderByDescending(x => x.ID_Control_Tramite).ToList());
             }
             catch (Exception ex)
             {

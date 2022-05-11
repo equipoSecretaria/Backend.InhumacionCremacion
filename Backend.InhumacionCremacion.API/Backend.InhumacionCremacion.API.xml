@@ -87,7 +87,7 @@
                 The update request business
             </summary>
         </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.AddGestion(Backend.InhumacionCremacion.Entities.DTOs.RequestGestionDTO)">
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.ConsultarFallecido(System.String,System.String)">
             <summary>
                 Adds the rquest.
             </summary>
