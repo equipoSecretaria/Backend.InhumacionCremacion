@@ -900,7 +900,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     };
 
-                    resultSol.Add(solicitudDTO);
+                    //resultSol.Add(solicitudDTO);
 
                     foreach (var rsp in item.Persona)
                     {
@@ -918,8 +918,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                 PrimerApellido = rsp.PrimerApellido,
                                 SegundoApellido = rsp.SegundoApellido,
                                 Estado = rsp.Estado,
-
+                                
                             };
+                            solicitudDTO.NoIdentificacionSolicitante=rsp.NumeroIdentificacion;
+                             resultSol.Add(solicitudDTO);
                             solicitudDTO.Persona.Add(personaDTO);
 
                         }                                                
