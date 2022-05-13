@@ -921,6 +921,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                 
                             };
                             solicitudDTO.NoIdentificacionSolicitante=rsp.NumeroIdentificacion;
+                            Console.WriteLine();
                              resultSol.Add(solicitudDTO);
                             solicitudDTO.Persona.Add(personaDTO);
 
