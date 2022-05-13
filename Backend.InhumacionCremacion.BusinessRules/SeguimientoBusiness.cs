@@ -35,6 +35,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> _repositoryDominio;
 
+        /// <summary>
+        /// The repository solicitud
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> _repositoryFirmaUsuarios;
+
         #endregion
 
 
@@ -48,11 +53,13 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// <param name="repositoryDominio"></param>
         public SeguimientoBusiness(ITelemetryException telemetryException,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Seguimiento> repositorySeguimiento,
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> repositoryFirmaUsuarios,
                                    Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Constante> repositoryConstante)
         {
             _telemetryException = telemetryException;
             _repositorySeguimiento = repositorySeguimiento;
+            _repositoryFirmaUsuarios = repositoryFirmaUsuarios;
             _repositoryDominio = repositoryDominio;
             _repositoryConstante = repositoryConstante;
         }
@@ -88,6 +95,36 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 return new ResponseBase<bool>(code: HttpStatusCode.InternalServerError, message: ex.Message, data: false);
             }
         }
+
+        /// <summary>
+        /// GetSeguimientoBySolicitud
+        /// </summary>
+        /// <param name="idSolicitud"></param>
+        /// <returns></returns>
+        
+             public async Task<ResponseBase<bool>> validarFirmaFuncionario(string idUsuario)
+        {
+                try
+                {
+                    var firmaValidadorDB = await _repositoryFirmaUsuarios.GetAsync(x => x.ID_Usuario == Guid.Parse(idUsuario));
+
+                    if(firmaValidadorDB != null)
+                    {
+                        return new ResponseBase<bool>(code: HttpStatusCode.OK, message: "Existe la firma", data: true);
+                    }
+                    else
+                    {
+                        return new ResponseBase<bool>(code: HttpStatusCode.OK, message: "No existe la firma", data: false);
+                    }
+
+                
+                }
+                catch (System.Exception ex)
+                {
+                    _telemetryException.RegisterException(ex);
+                    return new ResponseBase<bool>(code: HttpStatusCode.InternalServerError, message: ex.Message, data: false);
+                }
+            }
 
         /// <summary>
         /// GetSeguimientoBySolicitud

@@ -11,6 +11,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string NumeroLicencia { get; set; }
         public string CertificadoDefuncion { get; set; }
         public string Funeraria { get; set; }
+        public string FullNameSolicitante { get; set; }
         public string FullNameTramitador { get; set; }
         public string FullNameFallecido { get; set; }
         public string NombreMadre { get; set; }

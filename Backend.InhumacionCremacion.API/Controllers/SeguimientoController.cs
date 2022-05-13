@@ -62,6 +62,18 @@ namespace Backend.InhumacionCremacion.API.Controllers
         }
 
         /// <summary>
+        ///     GetSeguimientoBySolicitud
+        /// </summary>
+        /// <param name="idSolicitud"></param>
+        /// <returns></returns>
+        [HttpGet("ValidarFirmaFuncionarioByIdUsuario/{idUsuario}")]
+        public async Task<ActionResult> validarFirmaFuncionario(string idUsuario)
+        {
+            var result = await SeguimientoBusiness.validarFirmaFuncionario(idUsuario);
+            return StatusCode(result.Code, result);
+        }
+
+        /// <summary>
         ///     GetConstante
         /// </summary>
         /// <param name="idConstante"></param>

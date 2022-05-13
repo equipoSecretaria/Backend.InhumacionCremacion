@@ -50,8 +50,7 @@
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO style='font-size:12.0pt'>
-                    LICENCIA INHUMACIÓN INDIVIDUAL N° @Model.NumeroLicencia
-                    CERTIFICADO DE DEFUNCION N° @Model.CertificadoDefuncion
+                    LICENCIA INHUMACIÓN INDIVIDUAL N° @Model.NumeroLicencia &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CERTIFICADO DE DEFUNCION N° @Model.CertificadoDefuncion
                 </span>
             </b>
         </p>
@@ -61,6 +60,8 @@
                 <span lang=ES-CO>Se concede Licencia a</span>
             </b><span lang=ES-CO>: </span><b>
                 <span lang=ES-CO style='font-size:12.0pt'>@Model.Funeraria</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </b><span lang=ES-CO>
                 <b>Fecha</b>: 
                 @Model.FechaActual, @Model.Hora
@@ -70,7 +71,7 @@
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>En calidad de</span>
-            </b><span lang=ES-CO>: @Model.FullNameTramitador</span>
+            </b><span lang=ES-CO>: SOLICITANTE @Model.FullNameSolicitante</span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
@@ -88,7 +89,8 @@
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>Nombres Apellidos</span>
-            </b><span lang=ES-CO>:@Model.FullNameFallecido                                                                                                              <b>Nacionalidad</b>: @Model.Nacionalidad  
+            </b><span lang=ES-CO>:@Model.FullNameFallecido                                                           
+                <b>Nacionalidad</b>: @Model.Nacionalidad  
             </span>
         </p>
 
@@ -105,7 +107,8 @@
             <b>
                 <span lang=ES-CO>Tipo Identificación</span>
             </b><span lang=ES-CO>
-                : @Model.TipoIdentificacion                                                                                                             <b>Número</b>:
+                : @Model.TipoIdentificacion  
+                                                                                                               <b>Número</b>:
                 @Model.NumeroIdentificacion
             </span>
         </p>
@@ -114,8 +117,9 @@
             <b>
                 <span lang=ES-CO>Muerte</span>
             </b><span lang=ES-CO>
-                : @Model.Muerte                                                                                                                                                          
-                <b>Edad</b>:  @Model.Edad AÑOS
+                : @Model.Muerte                                                                      
+                                                                                                   
+                <b>Edad</b>: @Model.Edad AÑOS
             </span>
         </p>
 
@@ -133,7 +137,7 @@
             <b>
                 <span lang=ES-CO>Nombre(s)</span>
             </b>
-                    <span lang=ES-CO>: @Model.FullNameMedico </span>
+            <span lang=ES-CO>: @Model.FullNameMedico </span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
@@ -148,10 +152,10 @@
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
-                <span lang=ES-CO>Se concede permito Cementerio</span>
+                <span lang=ES-CO>Cementerio</span>
             </b><span lang=ES-CO>
                 : 
-                 @Model.Cementerio
+                @Model.Cementerio
             </span>
         </p>
 
@@ -164,23 +168,19 @@
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>
-                    Aprobado por: <img src='@Model.FirmaAprobador'  style='width:90px; height: 70px'/>                                                                                                                      Validador:
-                    <img src='@Model.FirmaValidador' style='width:90px; height: 70px'/>
-                </span>
-            </b>
+            <b><span lang=ES-CO>Aprobado por: <img src='@Model.FirmaAprobador'style='width:90px; height: 70px' /> </span></b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b> <span lang=ES-CO>Validador:<img src='@Model.FirmaValidador' style='width:90px; height: 70px' /></span></b>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>DORA DUARTE PRADA</span>
-            </b><span lang=ES-CO>
-                <b>
-                    Nubia I.
-                    Hernandez S.
-                </b>
-            </span>
+            <b><span lang=ES-CO>DORA DUARTE PRADA</span></b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b><span lang=ES-CO>@Model.FullNameTramitador</span></b>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
