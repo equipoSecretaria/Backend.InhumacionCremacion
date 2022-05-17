@@ -407,7 +407,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Guid EstadoSolicitud = Guid.NewGuid();
                 // HAY QUE PROBAR ESTE PUNTO
                 await _repositoryResumenSolicitud.AddAsync(new Entities.Models.InhumacionCremacion.ResumenSolicitud
-                { 
+                {
                     IdSolicitud = IdSolicitud,
                     NumeroTramite = requestDTO.Solicitud.IdTramite,
                     EstadoSolicitud = requestDTO.Solicitud.EstadoSolicitud,
