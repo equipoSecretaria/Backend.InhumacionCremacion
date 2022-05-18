@@ -178,6 +178,47 @@ namespace Backend.InhumacionCremacion.BusinessRules
         }
 
 
+        public async Task<ResponseBase<string>> ConsultarLicencia(string numero,string tipo)
+        {
+
+            try
+            {
+              
+                var resultRequest= new Entities.Models.InhumacionCremacion.Solicitud();
+
+                if(tipo.Equals("tramite"))
+                {
+          
+                
+                     resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.ID_Control_Tramite.Equals(int.Parse(numero)));
+                }
+                else
+                {
+                   
+                    resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.NumeroCertificado.Equals(numero));
+                    
+                }
+              
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "No existe");
+                    //return new ResponseBase<int>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+                else
+                {                  
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "existe", data: resultRequest.IdSolicitud+"");
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
         public async Task<ResponseBase<string>> ConsultarCertificado(string numero)
         {
 
@@ -550,7 +591,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
 
                 var resultUbicacionPersona = await _repositoryUbicacionPersona.GetAsync(w => w.IdPaisResidencia != Guid.Empty && IdUbicacionPersona.Any(a => a.Equals(w.IdUbicacionPersona)));
-               
+
+                var resulresumen = await _repositoryResumenSolicitud.GetAsync(w => w.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+                var resulfun = await _repositoryDatosFuneraria.GetAsync(x => x.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+
 
                 var resultSol = new List<Entities.DTOs.SolicitudDTO>();
 
@@ -627,8 +673,33 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             IdTipoInstitucion = item.IdInstitucionCertificaFallecimientoNavigation.IdTipoInstitucion
                         },
 
+                        //datos resumen solicitud
+                        ResumenSolicitud= new Entities.DTOs.ResumenSolicitudDTO
+                        {
+                            NombreSolicitante=resulresumen.NombreSolicitante,
+                            ApellidoSolicitante=resulresumen.ApellidoSolicitante,
+                            TipoDocumentoSolicitante=resulresumen.TipoDocumentoSolicitante,
+                            NumeroDocumentoSolicitante=resulresumen.NumeroDocumentoSolicitante,
+                            CorreoCementerio=resulresumen.CorreoCementerio,
+                            CorreoFuneraria=resulresumen.CorreoFuneraria,
+                            CorreoSolicitante=resulresumen.CorreoSolicitante
+                        },
+                        DatosFuneraria = new Entities.DTOs.DatosFunerariaDTO
+                        {
+                            IdDatosFuneraria = resulfun.IdDatosFuneraria,
+                            EnBogota = resulfun.EnBogota,
+                            FueraBogota = resulfun.FueraBogota,
+                            FueraPais = resulfun.FueraPais,
+                            Funeraria = resulfun.Funeraria,
+                            OtroSitio = item.IdDatosCementerioNavigation.OtroSitio,
+                            Ciudad = resulfun.Ciudad,
+                            IdPais = resulfun.IdPais,
+                            IdDepartamento = resulfun.IdDepartamento,
+                            IdMunicipio = resulfun.IdMunicipio
+                        }
 
-                        
+
+
                     };
 
                     resultSol.Add(solicitudDTO);
