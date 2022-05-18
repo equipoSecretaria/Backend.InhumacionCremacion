@@ -25,6 +25,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string ApellidoSolicitante { get; set; }
         public string NumeroDocumentoSolicitante { get; set; }
         public string FechaLicencia { get; set; }
+        public bool CumpleCausa { get; set; }
+        public string ObservacionCausa { get; set; }
         public Guid TipoDocumentoSolicitante { get; set; }
     }
 }

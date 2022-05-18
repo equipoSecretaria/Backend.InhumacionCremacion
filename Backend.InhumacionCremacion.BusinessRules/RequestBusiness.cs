@@ -407,7 +407,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Guid EstadoSolicitud = Guid.NewGuid();
                 // HAY QUE PROBAR ESTE PUNTO
                 await _repositoryResumenSolicitud.AddAsync(new Entities.Models.InhumacionCremacion.ResumenSolicitud
-                { 
+                {
                     IdSolicitud = IdSolicitud,
                     NumeroTramite = requestDTO.Solicitud.IdTramite,
                     EstadoSolicitud = requestDTO.Solicitud.EstadoSolicitud,
@@ -421,6 +421,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     ApellidoSolicitante = requestDTO.Solicitud.ResumenSolicitud.ApellidoSolicitante,
                     NumeroDocumentoSolicitante = requestDTO.Solicitud.ResumenSolicitud.NumeroDocumentoSolicitante,
                     TipoDocumentoSolicitante = requestDTO.Solicitud.ResumenSolicitud.TipoDocumentoSolicitante,
+                    CumpleCausa = requestDTO.Solicitud.ResumenSolicitud.CumpleCausa,
+                    ObservacionCausa = requestDTO.Solicitud.ResumenSolicitud.ObservacionCausa
                 });
 
                 foreach (var personas in requestDTO.Solicitud.Persona)

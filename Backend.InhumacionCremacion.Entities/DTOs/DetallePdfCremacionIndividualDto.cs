@@ -14,6 +14,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string FullNameSolicitante { get; set; }
         public string FullNameTramitador { get; set; }
         public string FullNameFallecido { get; set; }
+        public string ObservacionCausa { get; set; }
+        public string ObservacionCausaLabel { get; set; }
         public string Nacionalidad { get; set; }
         public DateTime FechaFallecido { get; set; }
         public string TipoIdentificacion { get; set; }

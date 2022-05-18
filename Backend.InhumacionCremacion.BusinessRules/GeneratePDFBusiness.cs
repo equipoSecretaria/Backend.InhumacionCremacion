@@ -186,6 +186,14 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
 
+                    String label = " ";
+
+
+                    if (resumen.Data[0].CumpleCausa)
+                    {
+                        label = "Observación:";
+                    }
+
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
                     {
@@ -201,7 +209,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                             FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
-                            NumeroLicencia = " ",
+                            NumeroLicencia = resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
                             Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
@@ -216,7 +224,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            ObservacionCausaLabel = label,
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa
                         };
 
 
@@ -241,7 +251,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                             FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
-                            NumeroLicencia = " ",
+                            NumeroLicencia = resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
                             Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
@@ -258,7 +268,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             AutorizadorCremacion = "PENDIENTE POR DEFINIR", // Puede ser quien hace la solicitud de cremación índividual.
                                                                             // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            ObservacionCausaLabel = label,
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa
+
+
                         };
 
                         
@@ -341,7 +355,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                             FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
-                            NumeroLicencia = " ",
+                            NumeroLicencia = resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
                             Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
@@ -354,7 +368,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
                         };
 
 
@@ -495,7 +509,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     }
 
-
+                    var resumen = await GetResumenSolicitud(idSolicitud);
                     var funeraria = await GetFuneraria(idSolicitud);
                     var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
@@ -504,6 +518,14 @@ namespace Backend.InhumacionCremacion.BusinessRules
                    // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
+
+                    String label = " ";
+
+
+                    if (resumen.Data[0].CumpleCausa)
+                    {
+                        label = "Observación:";
+                    }
 
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
@@ -533,7 +555,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            ObservacionCausaLabel = label,
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa
                         };
 
 
@@ -576,7 +600,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             AutorizadorCremacion = "PENDIENTE POR DEFINIR", // Puede ser quien hace la solicitud de cremación índividual.
                                                                             // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            ObservacionCausaLabel = label,
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa
                         };
 
                        
