@@ -195,6 +195,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         public async Task<ResponseBase<string>> ConsultarLicencia(string numero,string tipo)
         {
 
+
             try
             {
               
