@@ -3,34 +3,6 @@
 <head>
     <meta http-equiv=Content-Type content="text/html; charset=utf-8">
     <meta name=Generator content="Microsoft Word 15 (filtered)">
-    <style>
-@*<!--
- /* Font Definitions */
- @font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
- /* Style Definitions */
- p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:0in;
-	line-height:107%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-.MsoChpDefault
-	{font-family:"Calibri",sans-serif;}
- /* Page Definitions */
- @page WordSection1
-	{size:8.5in 11.0in;
-	margin:56.75pt 52.05pt 28.4pt 49.65pt;}
-div.WordSection1
-	{page:WordSection1;}
--->*@
-    </style>
 
 </head>
 
@@ -76,17 +48,18 @@ div.WordSection1
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO style='font-size:12.0pt'>
-                    LICENCIA CREMACIÓN INDIVIDUAL N° @Model.NumeroLicencia
-                    CERTIFICADO DE DEFUNCION N° @Model.CertificadoDefuncion
+                    LICENCIA CREMACIÓN INDIVIDUAL N° @Model.NumeroLicencia &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CERTIFICADO DE DEFUNCION N° @Model.CertificadoDefuncion
                 </span>
             </b>
         </p>
 
-        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
+       <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>Se concede Licencia a</span>
             </b><span lang=ES-CO>: </span><b>
                 <span lang=ES-CO style='font-size:12.0pt'>@Model.Funeraria</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </b><span lang=ES-CO>
                 <b>Fecha</b>: 
                 @Model.FechaActual, @Model.Hora
@@ -96,7 +69,7 @@ div.WordSection1
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>En calidad de</span>
-            </b><span lang=ES-CO>: @Model.FullNameTramitador</span>
+            </b><span lang=ES-CO>: SOLICITANTE @Model.FullNameSolicitante</span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
@@ -131,7 +104,8 @@ div.WordSection1
             <b>
                 <span lang=ES-CO>Tipo Identificación</span>
             </b><span lang=ES-CO>
-                : @Model.TipoIdentificacion                                                                                                             <b>Número</b>:
+                : @Model.TipoIdentificacion  
+                                                                                                               <b>Número</b>:
                 @Model.NumeroIdentificacion
             </span>
         </p>
@@ -175,19 +149,12 @@ div.WordSection1
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
-                <span lang=ES-CO>Se concede permito Cementerio</span>
+                <span lang=ES-CO>Cementerio</span>
             </b><span lang=ES-CO>
                 : 
                  @Model.Cementerio
             </span>
         </p>
-        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>Autorización de Cremación por</span>
-            </b><span lang=ES-CO>
-                : @Model.AutorizadorCremacion
-            </span>
-        </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <span lang=ES-CO>&nbsp;</span>
@@ -198,23 +165,19 @@ div.WordSection1
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>
-                Aprobado por: <img src='@Model.FirmaAprobador'  style='width:90px; height: 70px'/>                                                                                                                      Validador:
-                    <img src='@Model.FirmaValidador' style='width:90px; height: 70px'/>
-                </span>
-            </b>
+            <b><span lang=ES-CO>Aprobado por: <img src='@Model.FirmaAprobador'style='width:90px; height: 70px' /> </span></b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b> <span lang=ES-CO>Validador:<img src='@Model.FirmaValidador' style='width:90px; height: 70px' /></span></b>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>DORA DUARTE PRADA</span>
-            </b><span lang=ES-CO>
-                <b>
-                    Nubia I.
-                    Hernandez S.
-                </b>
-            </span>
+            <b><span lang=ES-CO>DORA DUARTE PRADA</span></b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b><span lang=ES-CO>@Model.FullNameTramitador</span></b>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>

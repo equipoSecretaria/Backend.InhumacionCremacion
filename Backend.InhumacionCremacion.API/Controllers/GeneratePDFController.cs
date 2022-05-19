@@ -30,10 +30,10 @@ namespace Backend.InhumacionCremacion.API.Controllers
         ///     Generates the PDF.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GeneratePDF/{idSolicitud}/{tramitador}")]
-        public async Task<ActionResult> GeneratePDF(string idSolicitud, string tramitador)
+        [HttpGet("GeneratePDF/{idSolicitud}/{idValidador}/{nombreValidar}")]
+        public async Task<ActionResult> GeneratePDF(string idSolicitud, string idValidador, string nombreValidar)
         {
-            var result = await _generatePDFBusiness.GeneratePDF(idSolicitud, tramitador);
+            var result = await _generatePDFBusiness.GeneratePDF(idSolicitud, idValidador, nombreValidar);
 
             return new FileStreamResult(result.Data, "application/pdf");
         }
@@ -42,10 +42,10 @@ namespace Backend.InhumacionCremacion.API.Controllers
         ///     Generates the PDF.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GeneratePDFPrev/{idSolicitud}/{tramitador}")]
-        public async Task<ActionResult> GeneratePDFPrev(string idSolicitud, string tramitador)
+        [HttpGet("GeneratePDFPrev/{idSolicitud}/{idValidador}/{nombreValidar}")]
+        public async Task<ActionResult> GeneratePDFPrev(string idSolicitud, string idValidador, string nombreValidar)
         {
-            var result = await _generatePDFBusiness.GeneratePDFPrev(idSolicitud, tramitador);
+            var result = await _generatePDFBusiness.GeneratePDFPrev(idSolicitud, idValidador, nombreValidar);
 
             return new FileStreamResult(result.Data, "application/pdf");
         }

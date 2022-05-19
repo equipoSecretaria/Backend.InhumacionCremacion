@@ -26,5 +26,12 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// <param name="idConstante"></param>
         /// <returns></returns>
         Task<ResponseBase<Entities.DTOs.ConstanteDTO>> getConstante(string idConstante);
+
+        /// <summary>
+        /// AddSeguimiento
+        /// </summary>
+        /// <param name="idConstante"></param>
+        /// <returns></returns>
+        Task<ResponseBase<bool>> validarFirmaFuncionario(string idUsuario);
     }
 }

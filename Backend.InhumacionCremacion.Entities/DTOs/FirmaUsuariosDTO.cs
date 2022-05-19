@@ -7,6 +7,6 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
     public class FirmaUsuariosDTO
     {
         public Guid ID_Usuario { get; set; }
-        public string Ruta { get; set; }
+        public string firma { get; set; }
     }
 }
