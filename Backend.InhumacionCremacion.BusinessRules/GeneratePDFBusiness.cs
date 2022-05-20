@@ -555,6 +555,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         };
 
 
+
                         var pdf = await _generatePdf.GetByteArray("Views/InhumacionIndividual.cshtml", dataInhumacionIndividual);
 
                         var pdfStream = new System.IO.MemoryStream();
