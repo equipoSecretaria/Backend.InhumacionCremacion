@@ -191,7 +191,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     if (resumen.Data[0].CumpleCausa)
                     {
-                        label = "Observación:";
+                        label = "Observación: ";
                     }
 
 
@@ -519,13 +519,17 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
 
+                    // String bandera = resumen.Data[0].CumpleCausa.ToString();
                     String label = " ";
 
 
                     if (resumen.Data[0].CumpleCausa)
                     {
-                        label = "Observación:";
+                        label = "Observación: ";
                     }
+
+
+                    Console.WriteLine(resumen.Data[0].CumpleCausa);
 
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
