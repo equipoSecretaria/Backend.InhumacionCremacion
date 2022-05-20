@@ -87,7 +87,8 @@
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>Nombres Apellidos</span>
-            </b><span lang=ES-CO>:@Model.FullNameFallecido                                                          <b>Nacionalidad</b>: @Model.Nacionalidad  
+            </b><span lang=ES-CO>:@Model.FullNameFallecido                                                           
+                <b>Nacionalidad</b>: @Model.Nacionalidad  
             </span>
         </p>
 
@@ -96,7 +97,10 @@
                 <span lang=ES-CO>Fecha de Fallecido</span>
             </b><span lang=ES-CO>
                 @Model.FechaFallecido
-                Hora</b>: @Model.Hora               
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>Hora:</b> @Model.Hora &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <b>Género:</b> @Model.Genero             
             </span>
         </p>
 
@@ -105,8 +109,10 @@
                 <span lang=ES-CO>Tipo Identificación</span>
             </b><span lang=ES-CO>
                 : @Model.TipoIdentificacion  
-                                                                                                               <b>Número</b>:
-                @Model.NumeroIdentificacion
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;
+                <b>Número</b>: @Model.NumeroIdentificacion
             </span>
         </p>
 
@@ -114,8 +120,12 @@
             <b>
                 <span lang=ES-CO>Muerte</span>
             </b><span lang=ES-CO>
-                : @Model.Muerte                                                                                                                                                          
-                <b>Edad</b>:  @Model.Edad AÑOS
+                : @Model.Muerte  
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>Edad</b>: @Model.Edad AÑOS
             </span>
         </p>
 
