@@ -200,8 +200,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
               
                 var resultRequest= new Entities.Models.InhumacionCremacion.Solicitud();
+                Console.Write(resultRequest);
 
-                if(tipo.Equals("tramite"))
+                if (tipo.Equals("tramite"))
                 {
           
                 
@@ -209,11 +210,46 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
                 else
                 {
+
+                    if (tipo.Equals("certificado"))
+                    {
+
+
+                        resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.NumeroCertificado.Equals(numero));
+                    }
+                    else
+                    {
+                        var resultid = await _repositoryPersona.GetAllAsync(predicate: p => p.NumeroIdentificacion.Equals(numero));
+
+                        Console.Write(resultid.FirstOrDefault());
+                        if (resultid.FirstOrDefault()==null)
+                        {
+                            Console.Write("entro");
+
+                            resultRequest = null;
+                        }
+                       
+                        foreach (var personas in resultid)
+                        {
+                           
+                            if (personas.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")) || 
+                                personas.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")))
+                            {
+                               
+                                resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.IdSolicitud.Equals(personas.IdSolicitud));
+                                break;
+                            }
+                            
+                        }
+
+                           
+                    }
+
                    
-                    resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.NumeroCertificado.Equals(numero));
                     
                 }
-              
+                Console.Write(resultRequest);
+
                 if (resultRequest == null)
                 {
                     return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "No existe");
@@ -260,6 +296,38 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
             }
         }
+
+
+        public async Task<ResponseBase<string>> ModificarCementerio(string numero, string tipo,string nombre)
+        {
+            try
+            {
+                if(tipo== "cementerio")
+                {
+                    var resultRequest = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(numero));
+
+                    resultRequest.Cementerio = nombre;
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "ok");
+
+                }
+                else
+                {
+                    var resultRequest = await _repositoryDatosFuneraria.GetAsync(predicate: p => p.IdDatosFuneraria.Equals(numero));
+                    resultRequest.Funeraria = nombre;
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "ok");
+                }              
+               
+               
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
         public async Task<ResponseBase<string>> ConsultarFallecido(string numero, string persona)
         {
 

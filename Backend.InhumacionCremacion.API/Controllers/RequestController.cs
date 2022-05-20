@@ -66,6 +66,12 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        [HttpPost("ModificarCementerio/{numero}/{persona}/{nombre}")]
+        public async Task<ActionResult> ModificarCementerio(string numero, string persona,string nombre)
+        {
+            var result = await RequestBusiness.ModificarCementerio(numero, persona,nombre);
+            return StatusCode(result.Code, result);
+        }
 
         [HttpGet("ConsultarFallecido/{numero}/{persona}")]
         public async Task<ActionResult> ConsultarFallecido(string numero,string persona)
