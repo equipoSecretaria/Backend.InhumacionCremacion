@@ -176,12 +176,15 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     }
 
-                    var resumen = await GetResumenSolicitud(idSolicitud);
-                    var funeraria = await GetFuneraria(idSolicitud);
-                    var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
-                    var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
-                    var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
-                    var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
+                    //var resumen = await GetResumenSolicitud(idSolicitud);
+                    var resumen = await _repositoryResumenSolicitud.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+                    //var funeraria = await GetFuneraria(idSolicitud);
+                    var funeraria = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+                    var nacionalidad = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(Guid.Parse(datosPersonaFallecida.Nacionalidad))); //GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
+
+                    var tipoIdentificacion = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datosPersonaFallecida.TipoIdentificacion));// GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datoSolitud.IdTipoMuerte)); //GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
+                    var cementerio = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(datoSolitud.IdDatosCementerio));//GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                     //var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
@@ -201,20 +204,20 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                             FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
-                            NumeroLicencia = resumen.Data[0].NumeroLicencia,
+                            NumeroLicencia = resumen[0].NumeroLicencia,//resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
+                            TipoIdentificacion = tipoIdentificacion.Descripcion.ToUpper(),//tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                         };
@@ -241,20 +244,20 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                             FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
-                            NumeroLicencia = resumen.Data[0].NumeroLicencia,
+                            NumeroLicencia = resumen[0].NumeroLicencia,//resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
+                            TipoIdentificacion = tipoIdentificacion.Descripcion.ToUpper(),//tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             AutorizadorCremacion = "PENDIENTE POR DEFINIR", // Puede ser quien hace la solicitud de cremación índividual.
                                                                             // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -323,12 +326,19 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     }
 
-                    var resumen = await GetResumenSolicitud(idSolicitud);
-                    var funeraria = await GetFuneraria(idSolicitud);
-                    var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
-                    var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
-                    var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
-                    var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
+                    //var resumen = await GetResumenSolicitud(idSolicitud);
+                    var resumen = await _repositoryResumenSolicitud.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+                    //var funeraria = await GetFuneraria(idSolicitud);
+                    var funeraria = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+                    var nacionalidad = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(Guid.Parse(datosPersonaFallecida.Nacionalidad))); //GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
+
+                    var tipoIdentificacion = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datosPersonaFallecida.TipoIdentificacion));// GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datoSolitud.IdTipoMuerte)); //GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
+                    //var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
+                    //var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    //var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
+                    var cementerio = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(datoSolitud.IdDatosCementerio));//GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                     // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
@@ -343,18 +353,18 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                             FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
-                            NumeroLicencia = resumen.Data[0].NumeroLicencia,
+                            NumeroLicencia = resumen[0].NumeroLicencia,//resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             NombreMadre = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                         };
@@ -382,18 +392,18 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                             FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
-                            NumeroLicencia = resumen.Data[0].NumeroLicencia,
+                            NumeroLicencia = resumen[0].NumeroLicencia,//resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             NombreMadre = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             AutorizadorCremacion = nombreFallecido.ToUpper(),
                             // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -497,12 +507,19 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     }
 
-                    var funeraria = await GetFuneraria(idSolicitud);
-                    var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
-                    var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
-                    var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
-                    var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
-                   // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
+                    //var funeraria = await GetFuneraria(idSolicitud);
+                    var funeraria = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+                    var nacionalidad = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(Guid.Parse(datosPersonaFallecida.Nacionalidad))); //GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
+
+                    var tipoIdentificacion = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datosPersonaFallecida.TipoIdentificacion));// GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datoSolitud.IdTipoMuerte)); //GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
+
+                    // var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
+                    // var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    // var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
+                    var cementerio = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(datoSolitud.IdDatosCementerio));//GetCementerio((datoSolitud.IdDatosCementerio).ToString());
+                                                                                                                                                          // var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;  
 
@@ -521,21 +538,22 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
                             NumeroLicencia = " ",
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
+                            TipoIdentificacion = tipoIdentificacion.Descripcion.ToUpper(),//tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                         };
+
 
 
                         var pdf = await _generatePdf.GetByteArray("Views/InhumacionIndividual.cshtml", dataInhumacionIndividual);
@@ -562,18 +580,18 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
                             NumeroLicencia = " ",
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
+                            TipoIdentificacion = tipoIdentificacion.Descripcion.ToUpper(),//tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             AutorizadorCremacion = "PENDIENTE POR DEFINIR", // Puede ser quien hace la solicitud de cremación índividual.
                                                                             // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -640,11 +658,18 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     }
 
 
-                    var funeraria = await GetFuneraria(idSolicitud);
-                    var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
-                    var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
-                    var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
-                    var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
+                    //var funeraria = await GetFuneraria(idSolicitud);
+                    var funeraria = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+                    var nacionalidad = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(Guid.Parse(datosPersonaFallecida.Nacionalidad))); //GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
+
+                    var tipoIdentificacion = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datosPersonaFallecida.TipoIdentificacion));// GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    var tipoMuerte = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(datoSolitud.IdTipoMuerte)); //GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
+
+                    // var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
+                    // var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    // var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
+                    var cementerio = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(datoSolitud.IdDatosCementerio));//GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                     //var parentesco = await GetDescripcionDominio((datosPersonaFallecida.IdParentesco).ToString());
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
@@ -661,16 +686,16 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
                             NumeroLicencia = " ",
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             NombreMadre = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador
                         };
@@ -700,16 +725,16 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Hora = DateTime.Now.ToString("hh:mm:ss"),
                             NumeroLicencia = " ",
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
-                            Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
+                            Funeraria = funeraria[0].Funeraria.ToUpper(),//funeraria.Data[0].Funeraria.ToUpper(),
                             FullNameSolicitante = datoSolitud.RazonSocialSolicitante.ToUpper(),
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             NombreMadre = nombreFallecido.ToUpper(),
-                            Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
+                            Nacionalidad = nacionalidad.Descripcion.ToUpper(), //nacionalidad.Data.Descripcion.ToUpper(),
                             FechaFallecido = datoSolitud.FechaDefuncion,
-                            Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
+                            Muerte = tipoMuerte.Descripcion.ToUpper(),//tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = cementerio.Cementerio.ToUpper(), //cementerio.Data.Cementerio.ToUpper(),
                             AutorizadorCremacion = nombreFallecido.ToUpper(),
                             // Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -778,6 +803,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             return nuevoHTML;
         }
 
+        /*
         public async Task<ResponseBase<List<ResumenSolicitud>>> GetResumenSolicitud(string idSolicitud)
         {
             try
@@ -801,7 +827,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
 
         }
-
+        */
+        /*
         public async Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud)
         {
             try
@@ -825,7 +852,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
 
         }
+        */
 
+        /*
         public async Task<ResponseBase<Dominio>> GetDescripcionDominio(string idDominio)
         {
             try
@@ -850,7 +879,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
 
         }
+        */
 
+        /*
         public async Task<ResponseBase<DatosCementerio>> GetCementerio(string idCementerio)
         {
             try
@@ -873,6 +904,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
 
         }
+        */
 
     }
 }
