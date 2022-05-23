@@ -192,6 +192,84 @@ namespace Backend.InhumacionCremacion.BusinessRules
         }
 
 
+        public async Task<ResponseBase<string>> ConsultarLicencia(string numero,string tipo)
+        {
+
+
+            try
+            {
+              
+                var resultRequest= new Entities.Models.InhumacionCremacion.Solicitud();
+                Console.Write(resultRequest);
+
+                if (tipo.Equals("tramite"))
+                {
+          
+                
+                     resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.ID_Control_Tramite.Equals(int.Parse(numero)));
+                }
+                else
+                {
+
+                    if (tipo.Equals("certificado"))
+                    {
+
+
+                        resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.NumeroCertificado.Equals(numero));
+                    }
+                    else
+                    {
+                        var resultid = await _repositoryPersona.GetAllAsync(predicate: p => p.NumeroIdentificacion.Equals(numero));
+
+                        Console.Write(resultid.FirstOrDefault());
+                        if (resultid.FirstOrDefault()==null)
+                        {
+                            Console.Write("entro");
+
+                            resultRequest = null;
+                        }
+                       
+                        foreach (var personas in resultid)
+                        {
+                           
+                            if (personas.IdTipoPersona.Equals(Guid.Parse("342D934B-C316-46CB-A4F3-3AAC5845D246")) || 
+                                personas.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")))
+                            {
+                               
+                                resultRequest = await _repositorySolicitud.GetAsync(predicate: p => p.IdSolicitud.Equals(personas.IdSolicitud));
+                                break;
+                            }
+                            
+                        }
+
+                           
+                    }
+
+                   
+                    
+                }
+                Console.Write(resultRequest);
+
+                if (resultRequest == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "No existe");
+                    //return new ResponseBase<int>(code: System.Net.HttpStatusCode.OK, message: "No se encontraron resultados");
+                }
+                else
+                {                  
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "existe", data: resultRequest.IdSolicitud+"");
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
         public async Task<ResponseBase<string>> ConsultarCertificado(string numero)
         {
 
@@ -218,6 +296,41 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
             }
         }
+
+
+        public async Task<ResponseBase<string>> ModificarCementerio(string numero, string tipo,string nombre)
+        {
+            try
+            {
+                if(tipo== "cementerio")
+                {
+                    var resultRequest = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(Guid.Parse(numero)));
+
+                    resultRequest.Cementerio = nombre;
+                    await _repositoryDatosCementerio.UpdateAsync(resultRequest);
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "ok");
+
+                }
+                else
+                {
+                    Console.Write(numero);
+                    var resultRequest = await _repositoryDatosFuneraria.GetAsync(predicate: p => p.IdDatosFuneraria.Equals(Guid.Parse(numero)));
+                    resultRequest.Funeraria = nombre;
+                    await _repositoryDatosFuneraria.UpdateAsync(resultRequest);
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "ok");
+                }              
+               
+               
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
         public async Task<ResponseBase<string>> ConsultarFallecido(string numero, string persona)
         {
 
@@ -566,7 +679,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 }
 
                 var resultUbicacionPersona = await _repositoryUbicacionPersona.GetAsync(w => w.IdPaisResidencia != Guid.Empty && IdUbicacionPersona.Any(a => a.Equals(w.IdUbicacionPersona)));
-               
+
+                var resulresumen = await _repositoryResumenSolicitud.GetAsync(w => w.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+                var resulfun = await _repositoryDatosFuneraria.GetAsync(x => x.IdSolicitud.Equals(Guid.Parse(idSolicitud)));
+
+
 
                 var resultSol = new List<Entities.DTOs.SolicitudDTO>();
 
@@ -643,8 +761,35 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             IdTipoInstitucion = item.IdInstitucionCertificaFallecimientoNavigation.IdTipoInstitucion
                         },
 
+                        //datos resumen solicitud
+                        ResumenSolicitud= new Entities.DTOs.ResumenSolicitudDTO
+                        {
+                            NombreSolicitante=resulresumen.NombreSolicitante,
+                            ApellidoSolicitante=resulresumen.ApellidoSolicitante,
+                            TipoDocumentoSolicitante=resulresumen.TipoDocumentoSolicitante,
+                            NumeroDocumentoSolicitante=resulresumen.NumeroDocumentoSolicitante,
+                            CorreoCementerio=resulresumen.CorreoCementerio,
+                            CorreoFuneraria=resulresumen.CorreoFuneraria,
+                            CorreoSolicitante=resulresumen.CorreoSolicitante,
+                            NumeroLicencia=resulresumen.NumeroLicencia,
+                            FechaLicencia=resulresumen.FechaLicencia
+                        },
+                        DatosFuneraria = new Entities.DTOs.DatosFunerariaDTO
+                        {
+                            IdDatosFuneraria = resulfun.IdDatosFuneraria,
+                            EnBogota = resulfun.EnBogota,
+                            FueraBogota = resulfun.FueraBogota,
+                            FueraPais = resulfun.FueraPais,
+                            Funeraria = resulfun.Funeraria,
+                            OtroSitio = item.IdDatosCementerioNavigation.OtroSitio,
+                            Ciudad = resulfun.Ciudad,
+                            IdPais = resulfun.IdPais,
+                            IdDepartamento = resulfun.IdDepartamento,
+                            IdMunicipio = resulfun.IdMunicipio
+                        }
 
-                        
+
+
                     };
 
                     resultSol.Add(solicitudDTO);
@@ -916,7 +1061,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     };
 
-                    resultSol.Add(solicitudDTO);
+                    //resultSol.Add(solicitudDTO);
 
                     foreach (var rsp in item.Persona)
                     {
@@ -934,8 +1079,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                 PrimerApellido = rsp.PrimerApellido,
                                 SegundoApellido = rsp.SegundoApellido,
                                 Estado = rsp.Estado,
-
+                                
                             };
+                            solicitudDTO.NoIdentificacionSolicitante=rsp.NumeroIdentificacion;
+                            Console.WriteLine();
+                             resultSol.Add(solicitudDTO);
                             solicitudDTO.Persona.Add(personaDTO);
 
                         }                                                

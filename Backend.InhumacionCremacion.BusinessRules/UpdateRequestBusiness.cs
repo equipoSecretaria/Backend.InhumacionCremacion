@@ -35,9 +35,19 @@ namespace Backend.InhumacionCremacion.BusinessRules
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> _repositoryDatosCementerio;
 
         /// <summary>
+        /// The repository datos funeraria
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> _repositoryDatosFuneraria;
+
+        /// <summary>
         /// The repository institucion certifica fallecimiento
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> _repositoryInstitucionCertificaFallecimiento;
+
+        /// <summary>
+        /// The repository Resumen Solicitud
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> _repositoryResumenSolicitud;
 
         /// <summary>
         /// The repository solicitud
@@ -62,6 +72,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                 Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> repositorySolicitud,
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio,
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> repositoryDatosFuneraria,
+                                      Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> repositoryResumenSolicitud,
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> repositoryInstitucionCertificaFallecimiento,
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.LugarDefuncion> repositoryLugarDefuncion,
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Persona> repositoryPersona,
@@ -70,6 +82,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _telemetryException = telemetryException;
             _repositorySolicitud = repositorySolicitud;
             _repositoryDatosCementerio = repositoryDatosCementerio;
+            _repositoryDatosFuneraria = repositoryDatosFuneraria;
+            _repositoryResumenSolicitud = repositoryResumenSolicitud;
             _repositoryInstitucionCertificaFallecimiento = repositoryInstitucionCertificaFallecimiento;
             _repositoryLugarDefuncion = repositoryLugarDefuncion;
             _repositoryPersona = repositoryPersona;
@@ -83,10 +97,15 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         /// <param name="requestDTO"></param>
         /// <returns></returns>
+        /// 
+
+  
+
+
         public async Task<ResponseBase<string>> UpdateRequest(SolicitudDTO requestDTO)
         {
             try
-            {
+            {   ///cementerio
                 var datosCementerioDB = await _repositoryDatosCementerio.GetAsync(x => x.IdDatosCementerio == requestDTO.DatosCementerio.IdDatosCementerio);
 
                 if (datosCementerioDB == null)
@@ -106,6 +125,29 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 await _repositoryDatosCementerio.UpdateAsync(datosCementerioDB);
 
+
+                ///funeraria
+                 var datosFunerariaDB = await _repositoryDatosFuneraria.GetAsync(x => x.IdSolicitud.Equals(requestDTO.IdSolicitud));
+
+                if (datosFunerariaDB == null)
+                {
+                    return new ResponseBase<string>(System.Net.HttpStatusCode.BadRequest, "No se encontró el codigo para actualizar");
+                }
+
+                datosFunerariaDB.EnBogota = requestDTO.DatosFuneraria.EnBogota;
+                datosFunerariaDB.FueraBogota = requestDTO.DatosFuneraria.FueraBogota;
+                datosFunerariaDB.FueraPais = requestDTO.DatosFuneraria.FueraPais;
+                datosFunerariaDB.Funeraria = requestDTO.DatosFuneraria.Funeraria;
+                datosFunerariaDB.OtroSitio = requestDTO.DatosFuneraria.OtroSitio;
+                datosFunerariaDB.Ciudad = requestDTO.DatosFuneraria.Ciudad;
+                datosFunerariaDB.IdPais = requestDTO.DatosFuneraria.IdPais;
+                datosFunerariaDB.IdDepartamento = requestDTO.DatosFuneraria.IdDepartamento;
+                datosFunerariaDB. IdMunicipio = requestDTO.DatosFuneraria.IdMunicipio;
+                datosFunerariaDB.IdSolicitud = requestDTO.IdSolicitud;
+
+                await _repositoryDatosFuneraria.UpdateAsync(datosFunerariaDB);
+
+                //institucion que certifica el fallecemiento 
                 var datosInstitucionCertificaFallecimiento = await _repositoryInstitucionCertificaFallecimiento.GetAsync(x => x.IdInstitucionCertificaFallecimiento == requestDTO.InstitucionCertificaFallecimiento.IdInstitucionCertificaFallecimiento);
 
                 if (datosInstitucionCertificaFallecimiento == null)
@@ -122,9 +164,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 datosInstitucionCertificaFallecimiento.SeccionalFiscalia = requestDTO.InstitucionCertificaFallecimiento.SeccionalFiscalia;
                 datosInstitucionCertificaFallecimiento.NoFiscal = requestDTO.InstitucionCertificaFallecimiento.NoFiscal;
                 datosInstitucionCertificaFallecimiento.IdTipoInstitucion = requestDTO.InstitucionCertificaFallecimiento.IdTipoInstitucion;
-
-                //institucion que certifica el fallecemiento ok
                 await _repositoryInstitucionCertificaFallecimiento.UpdateAsync(datosInstitucionCertificaFallecimiento);
+
+                //lugar de defuncion 
 
                 var datosLugarDefuncionDB = await _repositoryLugarDefuncion.GetAsync(x => x.IdLugarDefuncion == requestDTO.LugarDefuncion.IdLugarDefuncion);
 
@@ -139,8 +181,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 datosLugarDefuncionDB.IdAreaDefuncion = requestDTO.LugarDefuncion.IdAreaDefuncion;
                 datosLugarDefuncionDB.IdSitioDefuncion = requestDTO.LugarDefuncion.IdSitioDefuncion;
 
-                //lugar de defuncion ok
+                
                 await _repositoryLugarDefuncion.UpdateAsync(datosLugarDefuncionDB);
+
+                //Solicitud
 
                 var solicitudDB = await _repositorySolicitud.GetAsync(x => x.IdSolicitud == requestDTO.IdSolicitud);
 
@@ -164,10 +208,33 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 solicitudDB.IdDatosCementerio = requestDTO.DatosCementerio.IdDatosCementerio;
                 solicitudDB.IdInstitucionCertificaFallecimiento = requestDTO.InstitucionCertificaFallecimiento.IdInstitucionCertificaFallecimiento;
 
-                //pendiente validacion de campos obligatorios ok
+
                 await _repositorySolicitud.UpdateAsync(solicitudDB);
+                //pendiente validacion de campos obligatorios ok
 
 
+                //Resumen Solicitud
+
+                var ResumenDB= await _repositoryResumenSolicitud.GetAsync(p => p.IdSolicitud.Equals(requestDTO.IdSolicitud));
+
+                if(ResumenDB==null)
+                {
+                    return new ResponseBase<string>(System.Net.HttpStatusCode.BadRequest, "No se encontró el codigo para actualizar");
+                }
+                ResumenDB.CorreoCementerio = requestDTO.ResumenSolicitud.CorreoCementerio;
+                ResumenDB.CorreoFuneraria = requestDTO.ResumenSolicitud.CorreoFuneraria;
+                ResumenDB.CorreoSolicitante = requestDTO.ResumenSolicitud.CorreoSolicitante;
+                ResumenDB.TipoDocumentoSolicitante=requestDTO.ResumenSolicitud.TipoDocumentoSolicitante;
+                ResumenDB.NumeroLicencia=requestDTO.ResumenSolicitud.NumeroLicencia;
+                ResumenDB.NombreSolicitante = requestDTO.ResumenSolicitud.NombreSolicitante;
+                ResumenDB.ApellidoSolicitante = requestDTO.ResumenSolicitud.ApellidoSolicitante;
+
+                await _repositoryResumenSolicitud.UpdateAsync(ResumenDB);
+
+
+
+
+                //ubicacion persona
                 var resultUbicacionPersona = new Entities.Models.InhumacionCremacion.UbicacionPersona();
 
                 if (requestDTO.UbicacionPersona != null)
@@ -175,7 +242,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     resultUbicacionPersona = await _repositoryUbicacionPersona.GetAsync(p => p.IdUbicacionPersona.Equals(requestDTO.UbicacionPersona.IdUbicacionPersona));
                 }
 
-                //ubicacion persona
+               
                 foreach (var persona in requestDTO.Persona)
                 {
                     if (persona.IdTipoPersona == Guid.Parse("342d934b-c316-46cb-a4f3-3aac5845d246") &&
@@ -186,6 +253,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         requestDTO.UbicacionPersona.IdAreaResidencia != Guid.Empty &&
                         requestDTO.UbicacionPersona.IdBarrioResidencia != Guid.Empty)
                     {
+                        Console.Write("entro madre");
                         // si el tipo de persona es madre y los valores son diferentes de: "00000000-0000-0000-0000-000000000000" se inserta la ubicacion
 
 
@@ -236,6 +304,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     }
                     else // si el tipo de persona es diferente de la madre no tiene ubicacion
                     {
+                        Console.Write("entro fallecido");
                         var personaDB = await _repositoryPersona.GetAsync(x => x.IdPersona == persona.IdPersona);
                         if (personaDB == null)
                         {
@@ -243,6 +312,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         }
                         personaDB.TipoIdentificacion = persona.TipoIdentificacion;
                         personaDB.NumeroIdentificacion = persona.NumeroIdentificacion;
+                        Console.Write(persona.PrimerNombre);
                         personaDB.PrimerNombre = persona.PrimerNombre;
                         personaDB.SegundoNombre = persona.SegundoNombre;
                         personaDB.PrimerApellido = persona.PrimerApellido;
@@ -261,7 +331,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         personaDB.IdLugarExpedicion = persona.IdLugarExpedicion;
                         personaDB.IdTipoProfesional = persona.IdTipoProfesional;
                         personaDB.IdUbicacionPersona = persona.IdUbicacionPersona;
+
+                        await _repositoryPersona.UpdateAsync(personaDB);
                     }
+
                 }
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, data: requestDTO.IdSolicitud.ToString(), message: "Solicitud");
             }
