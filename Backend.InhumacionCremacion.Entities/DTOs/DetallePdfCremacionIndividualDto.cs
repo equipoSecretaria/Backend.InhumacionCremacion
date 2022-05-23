@@ -26,7 +26,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string FullNameMedico { get; set; }
         public string Cementerio { get; set; }
         public string AutorizadorCremacion { get; set; }
-        //public string Parentesco { get; set; }
+        public string Parentesco { get; set; }
         public string FirmaAprobador { get; set; }
         public string FirmaValidador { get; set; }
         //public string Name { get; set; }
