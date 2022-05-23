@@ -304,16 +304,19 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
                 if(tipo== "cementerio")
                 {
-                    var resultRequest = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(numero));
+                    var resultRequest = await _repositoryDatosCementerio.GetAsync(predicate: p => p.IdDatosCementerio.Equals(Guid.Parse(numero)));
 
                     resultRequest.Cementerio = nombre;
+                    await _repositoryDatosCementerio.UpdateAsync(resultRequest);
                     return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "ok");
 
                 }
                 else
                 {
-                    var resultRequest = await _repositoryDatosFuneraria.GetAsync(predicate: p => p.IdDatosFuneraria.Equals(numero));
+                    Console.Write(numero);
+                    var resultRequest = await _repositoryDatosFuneraria.GetAsync(predicate: p => p.IdDatosFuneraria.Equals(Guid.Parse(numero)));
                     resultRequest.Funeraria = nombre;
+                    await _repositoryDatosFuneraria.UpdateAsync(resultRequest);
                     return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "ok");
                 }              
                
@@ -765,7 +768,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             NumeroDocumentoSolicitante=resulresumen.NumeroDocumentoSolicitante,
                             CorreoCementerio=resulresumen.CorreoCementerio,
                             CorreoFuneraria=resulresumen.CorreoFuneraria,
-                            CorreoSolicitante=resulresumen.CorreoSolicitante
+                            CorreoSolicitante=resulresumen.CorreoSolicitante,
+                            NumeroLicencia=resulresumen.NumeroLicencia,
+                            FechaLicencia=resulresumen.FechaLicencia
                         },
                         DatosFuneraria = new Entities.DTOs.DatosFunerariaDTO
                         {
