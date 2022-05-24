@@ -828,6 +828,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
         }
 
+
         public async Task<string> GetFormatoByTipoPlantilla(string IdPlantilla)
         {
             try

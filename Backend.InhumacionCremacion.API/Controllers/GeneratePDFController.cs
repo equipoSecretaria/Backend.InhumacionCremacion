@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Backend.InhumacionCremacion.Entities.Interface.Business;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Backend.InhumacionCremacion.API.Controllers
 {
@@ -47,7 +48,14 @@ namespace Backend.InhumacionCremacion.API.Controllers
         {
             var result = await _generatePDFBusiness.GeneratePDFPrev(idSolicitud, idValidador, nombreValidar);
 
-            return new FileStreamResult(result.Data, "application/pdf");
+            if(result.Code.Equals(HttpStatusCode.InternalServerError))
+            {
+                return StatusCode(result.Code, result.Message);
+            }
+            else
+            {
+                return new FileStreamResult(result.Data, "application/pdf");
+            }
         }
 
         /// <summary>
