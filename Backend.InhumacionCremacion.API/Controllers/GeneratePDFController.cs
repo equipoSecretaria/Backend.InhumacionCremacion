@@ -48,7 +48,7 @@ namespace Backend.InhumacionCremacion.API.Controllers
         {
             var result = await _generatePDFBusiness.GeneratePDFPrev(idSolicitud, idValidador, nombreValidar);
 
-            if(result.Code.Equals(HttpStatusCode.InternalServerError))
+            if(result.Code == 500)
             {
                 return StatusCode(result.Code, result.Message);
             }
