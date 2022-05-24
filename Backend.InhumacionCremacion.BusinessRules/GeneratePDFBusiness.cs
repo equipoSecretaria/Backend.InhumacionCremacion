@@ -103,7 +103,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         /// <param name="idSolicitud"></param>
         /// <returns></returns>
-        public async Task<ResponseBase<dynamic>> GeneratePDF(string idSolicitud, string idValidador, string nombreValidador)
+        public async Task<ResponseBase<dynamic>> GeneratePDF(string idSolicitud, string idValidador, string nombreValidador, string codigo)
         {
 
 
@@ -224,7 +224,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             ObservacionCausaLabel = label,
-                            ObservacionCausa = resumen.Data[0].ObservacionCausa
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa,
+                            CodigoVerificacion = codigo
                         };
 
 
@@ -294,7 +295,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             ObservacionCausaLabel = label,
-                            ObservacionCausa = resumen.Data[0].ObservacionCausa
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa,
+                            CodigoVerificacion = codigo
                         };
 
 
@@ -371,7 +373,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            CodigoVerificacion = codigo
                         };
 
 
@@ -437,7 +440,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
                             Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            CodigoVerificacion = codigo
                         };
 
                         var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", dataCremacionFetal);
@@ -582,7 +586,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             ObservacionCausaLabel = label,
-                            ObservacionCausa = resumen.Data[0].ObservacionCausa
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa,
+                            CodigoVerificacion = " "
                         };
 
 
@@ -652,7 +657,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             ObservacionCausaLabel = label,
-                            ObservacionCausa = resumen.Data[0].ObservacionCausa
+                            ObservacionCausa = resumen.Data[0].ObservacionCausa,
+                            CodigoVerificacion = " "
                         };
 
                        
@@ -729,7 +735,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = cementerio.Data.Cementerio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            CodigoVerificacion = " "
                         };
 
 
@@ -795,7 +802,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
                             Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
-                            FirmaValidador = firmaValidador
+                            FirmaValidador = firmaValidador,
+                            CodigoVerificacion = " "
                         };
 
                         var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", dataCremacionFetal);                       

@@ -30,10 +30,10 @@ namespace Backend.InhumacionCremacion.API.Controllers
         ///     Generates the PDF.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GeneratePDF/{idSolicitud}/{idValidador}/{nombreValidar}")]
-        public async Task<ActionResult> GeneratePDF(string idSolicitud, string idValidador, string nombreValidar)
+        [HttpGet("GeneratePDF/{idSolicitud}/{idValidador}/{nombreValidar}/{codigo}")]
+        public async Task<ActionResult> GeneratePDF(string idSolicitud, string idValidador, string nombreValidar, string codigo)
         {
-            var result = await _generatePDFBusiness.GeneratePDF(idSolicitud, idValidador, nombreValidar);
+            var result = await _generatePDFBusiness.GeneratePDF(idSolicitud, idValidador, nombreValidar, codigo);
 
             return new FileStreamResult(result.Data, "application/pdf");
         }

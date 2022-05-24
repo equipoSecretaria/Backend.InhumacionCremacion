@@ -46,7 +46,7 @@
             </summary>
             <param name="generatePDFBusiness">The generate PDF business.</param>
         </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.GeneratePDF(System.String,System.String,System.String)">
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.GeneratePDFController.GeneratePDF(System.String,System.String,System.String,System.String)">
             <summary>
                 Generates the PDF.
             </summary>
@@ -161,7 +161,7 @@
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.UpdateConstante(System.String,System.String)">
             <summary>
-                GetConstante
+                UpdateConstante
             </summary>
             <param name="idConstante"></param>
             /// <param name="value"></param>
