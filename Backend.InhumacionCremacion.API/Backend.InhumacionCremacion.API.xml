@@ -159,6 +159,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.UpdateConstante(System.String,System.String)">
+            <summary>
+                GetConstante
+            </summary>
+            <param name="idConstante"></param>
+            /// <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.UpdateRequest(Backend.InhumacionCremacion.Entities.DTOs.SolicitudDTO)">
             <summary>
                 Updates the request.

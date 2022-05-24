@@ -210,6 +210,19 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        /// <summary>
+        ///     UpdateConstante
+        /// </summary>
+        /// <param name="idConstante"></param>
+        /// /// <param name="value"></param>
+        /// <returns></returns>
+        [HttpPut("UpdateConstante/{idConstante}/{value}")]
+        public async Task<ActionResult> UpdateConstante(string idConstante, string value)
+        {
+            var result = await UpdateRequestBusiness.UpdateConstante(idConstante, value);
+            return StatusCode(result.Code, result);
+        }
+
 
         /// <summary>
         ///     Updates the request.

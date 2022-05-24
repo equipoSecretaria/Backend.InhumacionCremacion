@@ -73,6 +73,8 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+
+
         /// <summary>
         ///     GetConstante
         /// </summary>

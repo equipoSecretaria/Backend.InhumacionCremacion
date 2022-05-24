@@ -12,6 +12,9 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// <returns></returns>
         Task<ResponseBase<string>> UpdateRequest(DTOs.SolicitudDTO requestDTO);
         Task<ResponseBase<string>> UpdateMedico(string idMedico, string campo, string cambio);
-        
+
+        Task<ResponseBase<string>> UpdateConstante(string idConstante, string value);
+
+
     }
 }

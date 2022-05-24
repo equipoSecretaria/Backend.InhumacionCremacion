@@ -54,6 +54,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> _repositorySolicitud;
 
+        /// <summary>
+        /// _repositorySeguimiento
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Constante> _repositoryConstante;
+
         #endregion
 
         #region Constructor
@@ -77,7 +82,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> repositoryInstitucionCertificaFallecimiento,
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.LugarDefuncion> repositoryLugarDefuncion,
                                 Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Persona> repositoryPersona,
-                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.UbicacionPersona> repositoryUbicacionPersona)
+                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.UbicacionPersona> repositoryUbicacionPersona,
+                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Constante> repositoryConstante)
         {
             _telemetryException = telemetryException;
             _repositorySolicitud = repositorySolicitud;
@@ -88,6 +94,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _repositoryLugarDefuncion = repositoryLugarDefuncion;
             _repositoryPersona = repositoryPersona;
             _repositoryUbicacionPersona = repositoryUbicacionPersona;
+            _repositoryConstante = repositoryConstante;
         }
         #endregion
 
@@ -389,6 +396,32 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
                 _telemetryException.RegisterException(ex);
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: "registro no modificado");
+            }
+        }
+
+        public async Task<ResponseBase<string>> UpdateConstante(string idConstante, string value)
+        {
+            try
+            {
+
+                var constante = await _repositoryConstante.GetAsync(x => x.idConstante == Guid.Parse(idConstante));
+
+                if (constante == null)
+                {
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.NotFound, message: "No se encontró la constante para realizar la actualización");
+                }
+                else
+                {                   
+                    constante.valor = value;
+                    await _repositoryConstante.UpdateAsync(constante);
+                    return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Constante modificada");
+                }
+
+            }
+            catch (System.Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: "Constante no modificada, ocurrio el error: "+ex);
             }
         }
         //*/
