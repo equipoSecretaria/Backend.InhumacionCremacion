@@ -15,8 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Views\CremacionFetal.cshtml" />
-      <Content Remove="Views\InhumacionFetal.cshtml" />
+      <Content Remove="Views\CF.cshtml" />
+      <Content Remove="Views\IF.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -418,8 +418,8 @@
         <None Include="bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.resources.dll" />
         <None Include="bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll" />
         <None Include="bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.resources.dll" />
-        <None Include="Views\InhumacionFetal.cshtml" />
-        <None Include="Views\CremacionFetal.cshtml" />
+        <None Include="Views\IF.cshtml" />
+        <None Include="Views\CF.cshtml" />
         <None Include="Views\Test.cshtml" />
         <None Include="Views\TestBootstrapSSL.cshtml" />
         <None Include="Views\InhumacionIndividual.cshtml" />
