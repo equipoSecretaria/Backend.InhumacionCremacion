@@ -740,7 +740,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         };
 
 
-                        var pdf = await _generatePdf.GetByteArray("Views/IF.cshtml", dataInhumacionFetal);
+                        var pdf = await _generatePdf.GetByteArray("Views/InhumacionFetal.cshtml", dataInhumacionFetal);
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -806,7 +806,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             CodigoVerificacion = " "
                         };
 
-                        var pdf = await _generatePdf.GetByteArray("Views/CF.cshtml", dataCremacionFetal);                       
+                        var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", dataCremacionFetal);                       
 
                         var pdfStream = new System.IO.MemoryStream();
 
