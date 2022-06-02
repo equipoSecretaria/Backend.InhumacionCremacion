@@ -61,6 +61,16 @@ namespace Backend.InhumacionCremacion.BusinessRules
         private readonly Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> _repositoryDominio;
 
         /// <summary>
+        /// _repositoryDominio
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Departamento> _repositoryDepartamento;
+
+        /// <summary>
+        /// _repositoryDominio
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Municipio> _repositoryMunicipio;
+
+        /// <summary>
         /// The repository solicitud
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> _repositoryFirmaUsuarios;
@@ -84,6 +94,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.ResumenSolicitud> repositoryResumenSolicitud,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> repositoryDatosFuneraria,
                                    Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
+                                   Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Municipio> repositoryMunicipio,
+                                   Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Departamento> repositoryDepartamento,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio)
         {
             _telemetryException = telemetryException;
@@ -95,6 +107,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _repositoryResumenSolicitud = repositoryResumenSolicitud;
             _repositoryDatosFuneraria = repositoryDatosFuneraria;
             _repositoryDominio = repositoryDominio;
+            _repositoryMunicipio = repositoryMunicipio;
+            _repositoryDepartamento = repositoryDepartamento;
             _repositoryDatosCementerio = repositoryDatosCementerio;
         }
 
@@ -184,6 +198,24 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
 
+                    String nombreCementeio = "";
+
+                    if (cementerio.Data.EnBogota == true)
+                    {
+                        nombreCementeio = cementerio.Data.Cementerio.ToUpper();
+                    }
+                    else if (cementerio.Data.FueraBogota == true)
+                    {
+                        var departamento = await GetDescripcionDepartamento(cementerio.Data.IdDepartamento.ToString());
+                        var municipio = await GetDescripcionMunicipio(cementerio.Data.IdMunicipio.ToString());
+                        nombreCementeio = nombreCementeio = "FUERA DE BOGOTá, "+ departamento.Data.Descripcion.ToUpper() +" "+ municipio.Data.Descripcion.ToUpper();
+                    }
+                    else
+                    {
+                        var pais = await GetDescripcionDominio(cementerio.Data.IdPais.ToString());
+                        nombreCementeio = "FUERA DEL PAÍS, "+ pais.Data.Descripcion.ToUpper() +" "+ cementerio.Data.Ciudad.ToUpper();
+                    }
+
                     String label = " ";
 
 
@@ -220,7 +252,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             ObservacionCausaLabel = label,
@@ -289,7 +321,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
                             Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -349,6 +381,24 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
 
+                    String nombreCementeio = "";
+
+                    if (cementerio.Data.EnBogota == true)
+                    {
+                        nombreCementeio = cementerio.Data.Cementerio.ToUpper();
+                    }
+                    else if (cementerio.Data.FueraBogota == true)
+                    {
+                        var departamento = await GetDescripcionDepartamento(cementerio.Data.IdDepartamento.ToString());
+                        var municipio = await GetDescripcionMunicipio(cementerio.Data.IdMunicipio.ToString());
+                        nombreCementeio = nombreCementeio = nombreCementeio = "FUERA DE BOGOTá, "+ departamento.Data.Descripcion.ToUpper() +" "+ municipio.Data.Descripcion.ToUpper();
+                    }
+                    else
+                    {
+                        var pais = await GetDescripcionDominio(cementerio.Data.IdPais.ToString());
+                        nombreCementeio = "FUERA DEL PAÍS, "+ pais.Data.Descripcion.ToUpper() +" "+ cementerio.Data.Ciudad.ToUpper();
+                    }
+
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("AD5EA0CB-1FA2-4933-A175-E93F2F8C0060")))
                     {
                         //IHUMACION FETAL
@@ -371,7 +421,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Genero = genero.Data.Descripcion.ToUpper(),
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             CodigoVerificacion = codigo
@@ -436,7 +486,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Genero = genero.Data.Descripcion.ToUpper(),
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
                             Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -546,6 +596,24 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
 
+                    String nombreCementeio = "";
+
+                    if (cementerio.Data.EnBogota==true)
+                    {
+                        nombreCementeio = cementerio.Data.Cementerio.ToUpper();
+                    }
+                    else if (cementerio.Data.FueraBogota==true)
+                    {
+                        var departamento = await GetDescripcionDepartamento(cementerio.Data.IdDepartamento.ToString());
+                        var municipio = await GetDescripcionMunicipio(cementerio.Data.IdMunicipio.ToString());
+                        nombreCementeio = nombreCementeio = "FUERA DE BOGOTá, "+ departamento.Data.Descripcion.ToUpper() +" "+ municipio.Data.Descripcion.ToUpper();
+                    }
+                    else
+                    {
+                        var pais = await GetDescripcionDominio(cementerio.Data.IdPais.ToString());
+                        nombreCementeio = "FUERA DEL PAÍS, "+ pais.Data.Descripcion.ToUpper() +" "+ cementerio.Data.Ciudad.ToUpper();
+                    }
+
                     
                     String label = " ";
 
@@ -582,7 +650,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             ObservacionCausaLabel = label,
@@ -651,7 +719,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento)),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
                             Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -711,6 +779,24 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var firmaAprobador = firmaAprobadorDB.Firma;
                     var firmaValidador = firmaValidadorDB.Firma;
 
+                    String nombreCementeio = "";
+
+                    if (cementerio.Data.EnBogota == true)
+                    {
+                        nombreCementeio = cementerio.Data.Cementerio.ToUpper();
+                    }
+                    else if (cementerio.Data.FueraBogota == true)
+                    {
+                        var departamento = await GetDescripcionDepartamento(cementerio.Data.IdDepartamento.ToString());
+                        var municipio = await GetDescripcionMunicipio(cementerio.Data.IdMunicipio.ToString());
+                        nombreCementeio = nombreCementeio = nombreCementeio = "FUERA DE BOGOTá, "+ departamento.Data.Descripcion.ToUpper() +" "+ municipio.Data.Descripcion.ToUpper();
+                    }
+                    else
+                    {
+                        var pais = await GetDescripcionDominio(cementerio.Data.IdPais.ToString());
+                        nombreCementeio = "FUERA DEL PAÍS, "+ pais.Data.Descripcion.ToUpper() +" "+ cementerio.Data.Ciudad.ToUpper();
+                    }
+
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("AD5EA0CB-1FA2-4933-A175-E93F2F8C0060")))
                     {
                         //IHUMACION FETAL
@@ -733,7 +819,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Genero = genero.Data.Descripcion.ToUpper(),
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
                             FirmaValidador = firmaValidador,
                             CodigoVerificacion = " "
@@ -798,7 +884,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Genero = genero.Data.Descripcion.ToUpper(),
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
                             FullNameMedico = nombreMedico.ToUpper(),
-                            Cementerio = cementerio.Data.Cementerio.ToUpper(),
+                            Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
                             Parentesco = parentesco.Data.Descripcion,
                             FirmaAprobador = firmaAprobador,
@@ -938,6 +1024,56 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
                 _telemetryException.RegisterException(ex);
                 return new Entities.Responses.ResponseBase<Dominio>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
+            }
+
+        }
+
+        public async Task<ResponseBase<Departamento>> GetDescripcionDepartamento(string idDepartamento)
+        {
+            try
+            {
+                var result = await _repositoryDepartamento.GetAsync(predicate: p => p.IdDepartamento.Equals(Guid.Parse(idDepartamento))); //.GetAllAsync(predicate: p => p.Id.Equals(Guid.Parse(idPais)));
+                //var result = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idPais)));
+
+                if (result == null)
+                {
+                    return new Entities.Responses.ResponseBase<Departamento>(code: HttpStatusCode.OK, message: "No se encontraron registros");
+                }
+                else
+                {
+                    return new Entities.Responses.ResponseBase<Departamento>(code: HttpStatusCode.OK, message: Middle.Messages.GetOk, data: result, count: 1);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new Entities.Responses.ResponseBase<Departamento>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
+            }
+
+        }
+
+        public async Task<ResponseBase<Municipio>> GetDescripcionMunicipio(string idMunicipio)
+        {
+            try
+            {
+                var result = await _repositoryMunicipio.GetAsync(predicate: p => p.IdMunicipio.Equals(Guid.Parse(idMunicipio))); //.GetAllAsync(predicate: p => p.Id.Equals(Guid.Parse(idPais)));
+                //var result = await _repositoryDatosFuneraria.GetAllAsync(predicate: p => p.IdSolicitud.Equals(Guid.Parse(idPais)));
+
+                if (result == null)
+                {
+                    return new Entities.Responses.ResponseBase<Municipio>(code: HttpStatusCode.OK, message: "No se encontraron registros");
+                }
+                else
+                {
+                    return new Entities.Responses.ResponseBase<Municipio>(code: HttpStatusCode.OK, message: Middle.Messages.GetOk, data: result, count: 1);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new Entities.Responses.ResponseBase<Municipio>(code: HttpStatusCode.InternalServerError, message: Middle.Messages.ServerError);
             }
 
         }

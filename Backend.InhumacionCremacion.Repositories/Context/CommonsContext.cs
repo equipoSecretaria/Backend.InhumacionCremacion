@@ -36,6 +36,8 @@ namespace Backend.InhumacionCremacion.Repositories.Context
             base.OnModelCreating(modelBuilder);
             modelBuilder.AddDominio();
             modelBuilder.AddTipoDominio();
+            modelBuilder.AddDepartamento();
+            modelBuilder.AddMunicipio();
         }
         #endregion
     }
