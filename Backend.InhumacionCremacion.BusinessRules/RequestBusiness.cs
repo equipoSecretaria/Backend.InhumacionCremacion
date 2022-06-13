@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion;
 using Newtonsoft.Json.Linq;
 using Backend.InhumacionCremacion.Repositories.Context;
+using Backend.InhumacionCremacion.Entities.DTOs;
 
 namespace Backend.InhumacionCremacion.BusinessRules
 {
@@ -83,8 +84,14 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// The repository Datos Funeraria
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosFuneraria> _repositoryDatosFuneraria;
-               
-                
+
+
+        /// <summary>
+        /// The repository Documentos Soportes
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DocumentosSoporte> _repositoryDocumentosSoportes;
+
+
         /// <summary>
         /// The Oracle Context
         /// </summary>
@@ -110,6 +117,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         public RequestBusiness(ITelemetryException telemetryException,
                                Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Solicitud> repositorySolicitud,
+                               Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DocumentosSoporte> repositoryDocumentosSoportes,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> repositoryFirmaUsuarios,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio,
                                Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.InstitucionCertificaFallecimiento> repositoryInstitucionCertificaFallecimiento,
@@ -134,6 +142,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _repositoryResumenSolicitud = repositoryResumenSolicitud;         
             _repositoryDatosFuneraria = repositoryDatosFuneraria;
             _repositoryEstadoDocumentosSoporte = repositoryEstadoDocumentosSoporte;
+            _repositoryDocumentosSoportes = repositoryDocumentosSoportes;
             _oracleContext = oracleContext;
         }
         #endregion
@@ -1502,6 +1511,48 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 _telemetryException.RegisterException(ex);
                 return new ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: ex.Message);
             }
+        }
+
+
+        public async Task<ResponseBase<List<Entities.DTOs.EstadoDocumentosSoporteDTO>>> GetDocumentosRechazados(Guid idSolicitud)
+        {
+            try {
+                var resultado = await _repositoryEstadoDocumentosSoporte.GetAllAsync(predicate: p => p.IdSolicitud.Equals(idSolicitud));
+                List<Entities.DTOs.EstadoDocumentosSoporteDTO> respuesta = new List<Entities.DTOs.EstadoDocumentosSoporteDTO>();
+                resultado = resultado.Where(x=>x.Estado_Documento.Equals("No Cumple")).ToList();
+                if (resultado != null)
+                {
+                    
+                    foreach (var item in resultado)
+                    {
+                        var documentoSop = await _repositoryDocumentosSoportes.GetAsync(predicate: p=> p.IdDocumentoSoporte.Equals(item.IdDocumentoSoporte));
+                        var tipo = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(documentoSop.IdTipoDocumentoSoporte));
+                        var tipoSegDesc = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(item.TipoSeguimiento));
+                        EstadoDocumentosSoporteDTO agregar = new EstadoDocumentosSoporteDTO {
+                            IdEstadoDocumento = item.IdEstadoDocumento,
+                            IdSolicitud = item.IdSolicitud,
+                            IdDocumentoSoporte =item.IdDocumentoSoporte,
+                            Observaciones = item.Observaciones,
+                            Estado_Documento = item.Estado_Documento,
+                            tipo_documento = tipo.Descripcion,
+                            fecha_registro = documentoSop.FechaRegistro.ToString(),
+                            fecha_ultima_modificacion = documentoSop.FechaModificacion.ToString(),
+                            Path = documentoSop.Path,
+                            TipoSeguimiento = item.TipoSeguimiento,
+                            tipoSeguimientoDescripcion = tipoSegDesc.Descripcion
+                        };
+                        respuesta.Add(agregar);
+                    }
+                    return new ResponseBase<List<Entities.DTOs.EstadoDocumentosSoporteDTO>>(code: System.Net.HttpStatusCode.OK, message: "Solicitud OK", data: respuesta.ToList());
+                }
+                return new ResponseBase<List<Entities.DTOs.EstadoDocumentosSoporteDTO>>(code: System.Net.HttpStatusCode.NotFound, message: "Solicitud OK, pero no se encontraron resultados");
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                throw new Exception(ex.Message);
+            }
+
         }
         #endregion
 

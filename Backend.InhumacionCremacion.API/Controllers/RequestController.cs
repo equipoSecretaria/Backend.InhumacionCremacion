@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion;
 using Microsoft.AspNetCore.Cors;
+using System;
 
 namespace Backend.InhumacionCremacion.API.Controllers
 {
@@ -171,6 +172,17 @@ namespace Backend.InhumacionCremacion.API.Controllers
         public async Task<ActionResult> GetRequestById(string idSolicitud)
         {
             var result = await RequestBusiness.GetRequestById(idSolicitud);
+            return StatusCode(result.Code, result);
+        }
+        /// <summary>
+        /// GetRequestById
+        /// </summary>
+        /// <param name="idSolicitud"></param>
+        /// <returns></returns>
+        [HttpGet("GetDocumentosRechazados/{idSolicitud}")]
+        public async Task<ActionResult> GetDocumentosRechazados(Guid idSolicitud)
+        {
+            var result = await RequestBusiness.GetDocumentosRechazados(idSolicitud);
             return StatusCode(result.Code, result);
         }
 

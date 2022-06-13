@@ -103,7 +103,7 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
 
         Task<ResponseBase<List<DatosFuneraria>>> GetFuneraria(string idSolicitud);
 
-
+        Task<ResponseBase<List<DTOs.EstadoDocumentosSoporteDTO>>> GetDocumentosRechazados(Guid idSolicitud);
 
 
 
