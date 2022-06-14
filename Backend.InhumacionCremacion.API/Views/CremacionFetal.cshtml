@@ -63,10 +63,14 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <b>Género:</b> @Model.Genero</span> </p>
+                    <b>Sexo:</b> @Model.Genero</span> </p>
         <p class=MsoNormal style="margin-bottom:0in;line-height:normal"><b><span lang=ES-CO>Fecha de
                     Fallecido:</span></b><span lang=ES-CO> :
-                @Model.FechaFallecido</span></p>
+                 @Model.FechaFallecido
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>Hora:</b> @Model.HoraFallecido</span></p>
         <p class=MsoNormal style="margin-bottom:0in;line-height:normal"><b><span lang=ES-CO>Muerte</span></b><span
                 lang=ES-CO> :  @Model.Muerte <p class=MsoNormal style="margin-bottom:0in;line-height:normal"><span
                         lang=ES-CO>&nbsp;</span></p>
@@ -127,8 +131,9 @@
                         deberá conservarse cuidadosamente en el archivo de la administración del cementerio, Ley 66 de
                         1916. </span></p>
                 <p class=MsoNormal style="margin-bottom:0in;text-align:justify;line-height:normal"><span lang=ES-CO
-                        style="font-size:8.0pt"> La cremación únicamente debe realizarse después de 24 horas de ocurrido
-                        el fallecimiento 14:25 del día 11/05/2021. </span></p>
+                        style="font-size:8.0pt"> La cremación únicamente debe
+                realizarse después de 24 horas de ocurrido el fallecimiento: @Model.HoraFallecido del día
+                @Model.FechaCremacion.</span></p>
                 <p class=MsoNormal style="margin-bottom:0in;text-align:justify;line-height:normal"><span lang=ES-CO
                         style="font-size:8.0pt">&nbsp;</span></p>
                 <p class=MsoNormal align=center style="margin-bottom:0in;text-align:center;line-height:normal"><span

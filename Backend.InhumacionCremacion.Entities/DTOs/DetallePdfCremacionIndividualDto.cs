@@ -17,7 +17,9 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string ObservacionCausa { get; set; }
         public string ObservacionCausaLabel { get; set; }
         public string Nacionalidad { get; set; }
-        public DateTime FechaFallecido { get; set; }
+        public string FechaFallecido { get; set; }
+        public string FechaCremacion { get; set; }
+        public string HoraFallecido { get; set; }
         public string Genero { get; set; }
         public string TipoIdentificacion { get; set; }
         public string NumeroIdentificacion { get; set; }
