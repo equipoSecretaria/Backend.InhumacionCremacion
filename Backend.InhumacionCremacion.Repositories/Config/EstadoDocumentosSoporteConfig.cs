@@ -21,7 +21,7 @@ namespace Backend.InhumacionCremacion.Repositories.Config
 
                 entity.Property(e => e.IdDocumentoSoporte).ValueGeneratedNever();
 
-                entity.Property(e => e.TipoSeguimiento).ValueGeneratedNever();
+                entity.Property(e => e.TipoSeguimiento);
 
                 entity.Property(e => e.Path)
                     .HasMaxLength(100)

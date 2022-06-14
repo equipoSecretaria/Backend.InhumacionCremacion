@@ -144,6 +144,13 @@
             <param name="idSolicitud"></param>
             <returns></returns>
         </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetDocumentosRechazados(System.Guid)">
+            <summary>
+            GetRequestById
+            </summary>
+            <param name="idSolicitud"></param>
+            <returns></returns>
+        </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetCodeVentanillaByIdUser(System.String)">
             <summary>
                 Gets the code ventanilla by identifier user.
