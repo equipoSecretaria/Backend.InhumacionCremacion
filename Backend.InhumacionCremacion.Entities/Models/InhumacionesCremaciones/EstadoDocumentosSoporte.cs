@@ -14,6 +14,6 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public string Observaciones { get; set; }
         public string Estado_Documento { get; set; }
      
-        public Guid TipoSeguimiento { get; set; }
+        public Guid? TipoSeguimiento { get; set; }
     }
 }

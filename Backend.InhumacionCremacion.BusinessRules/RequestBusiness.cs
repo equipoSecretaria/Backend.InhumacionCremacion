@@ -404,7 +404,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                var datos = await _repositorySolicitud.GetAsync(x =>
                    x.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
                 Console.WriteLine( requestGestionDTO.estado.IdSolicitud);
-               datos.EstadoSolicitud = requestGestionDTO.estado.TipoSeguimiento;
+               datos.EstadoSolicitud = (Guid)requestGestionDTO.estado.TipoSeguimiento;
                
 
              await _repositorySolicitud.UpdateAsync(datos);
@@ -1517,9 +1517,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
         public async Task<ResponseBase<List<Entities.DTOs.EstadoDocumentosSoporteDTO>>> GetDocumentosRechazados(Guid idSolicitud)
         {
             try {
-                var resultado = await _repositoryEstadoDocumentosSoporte.GetAllAsync(predicate: p => p.IdSolicitud.Equals(idSolicitud));
+                var resultado = await _repositoryEstadoDocumentosSoporte.GetAllAsync(predicate: p=> p.IdSolicitud.Equals(idSolicitud)); //(predicate: p => p.IdSolicitud == idSolicitud);
                 List<Entities.DTOs.EstadoDocumentosSoporteDTO> respuesta = new List<Entities.DTOs.EstadoDocumentosSoporteDTO>();
-                resultado = resultado.Where(x=>x.Estado_Documento.Equals("No Cumple")).ToList();
+                resultado = resultado.Where(x=>x.Estado_Documento.Trim().Equals("No Cumple")).ToList();
                 if (resultado != null)
                 {
                     
@@ -1527,7 +1527,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     {
                         var documentoSop = await _repositoryDocumentosSoportes.GetAsync(predicate: p=> p.IdDocumentoSoporte.Equals(item.IdDocumentoSoporte));
                         var tipo = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(documentoSop.IdTipoDocumentoSoporte));
-                        var tipoSegDesc = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(item.TipoSeguimiento));
+                        var tipoSegDesc = new Entities.Models.Commons.Dominio();
+                        if (item.TipoSeguimiento != null) {
+                            tipoSegDesc = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(item.TipoSeguimiento));
+                        }
                         EstadoDocumentosSoporteDTO agregar = new EstadoDocumentosSoporteDTO {
                             IdEstadoDocumento = item.IdEstadoDocumento,
                             IdSolicitud = item.IdSolicitud,
@@ -1539,7 +1542,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             fecha_ultima_modificacion = documentoSop.FechaModificacion.ToString(),
                             Path = documentoSop.Path,
                             TipoSeguimiento = item.TipoSeguimiento,
-                            tipoSeguimientoDescripcion = tipoSegDesc.Descripcion
+                            tipoSeguimientoDescripcion = (tipoSegDesc == null ? "":tipoSegDesc.Descripcion)
                         };
                         respuesta.Add(agregar);
                     }

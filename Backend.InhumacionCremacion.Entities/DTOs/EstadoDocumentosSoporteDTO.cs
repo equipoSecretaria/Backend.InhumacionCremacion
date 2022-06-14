@@ -17,7 +17,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string tipo_documento { get; set; }
         public string fecha_registro { get; set; }
         public string fecha_ultima_modificacion { get; set; }
-        public Guid TipoSeguimiento { get; set; }
+        public Guid? TipoSeguimiento { get; set; }
 
         public string tipoSeguimientoDescripcion { get; set; }
     }
