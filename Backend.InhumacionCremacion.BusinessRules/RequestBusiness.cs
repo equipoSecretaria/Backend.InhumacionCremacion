@@ -384,7 +384,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             try
             {
                 
-                    Guid IdEstadoDocumento = Guid.NewGuid();
+                Guid IdEstadoDocumento = Guid.NewGuid();
                 Guid seguimiento = Guid.NewGuid();
                 Console.WriteLine("Tipo seguimiento");
                 Console.WriteLine(requestGestionDTO.estado.TipoSeguimiento);
