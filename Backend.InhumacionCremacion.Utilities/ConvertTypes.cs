@@ -160,10 +160,10 @@ namespace Backend.InhumacionCremacion.Utilities
         /// </summary>
         /// <param name="fechaNacimiento"></param>
         /// <returns></returns>
-        public static int GetEdad(this DateTime fechaNacimiento)
+        public static int GetEdad(this DateTime fechaNacimiento, DateTime fechaDefuncion)
         {
-            DateTime fechaActual = DateTime.Today;
-            int edad = fechaActual.Year - fechaNacimiento.Year;
+            //DateTime fechaActual = DateTime.Today;
+            int edad = fechaDefuncion.Year - fechaNacimiento.Year;
             return edad;
         }
 

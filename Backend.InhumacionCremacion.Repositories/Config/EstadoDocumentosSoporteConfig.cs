@@ -28,7 +28,7 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                     .IsUnicode(false);
                          
                 entity.Property(e => e.Observaciones)
-                    .HasMaxLength(100)
+                    .HasMaxLength(300)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Estado_Documento)
