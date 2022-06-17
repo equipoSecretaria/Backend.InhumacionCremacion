@@ -6,6 +6,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
 {
     public class EstadoDocumentosSoporteDTO
     {
+        public Guid idTipoDocumento;
+
         public Guid IdEstadoDocumento { get; set; }
         public Guid IdSolicitud { get; set; }
 
