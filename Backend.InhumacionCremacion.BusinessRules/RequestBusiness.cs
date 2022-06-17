@@ -1538,6 +1538,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             Observaciones = item.Observaciones,
                             Estado_Documento = item.Estado_Documento,
                             tipo_documento = tipo.Descripcion,
+                            idTipoDocumento = tipo.Id,
                             fecha_registro = documentoSop.FechaRegistro.ToString(),
                             fecha_ultima_modificacion = documentoSop.FechaModificacion.ToString(),
                             Path = documentoSop.Path,
