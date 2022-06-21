@@ -162,9 +162,23 @@ namespace Backend.InhumacionCremacion.Utilities
         /// <returns></returns>
         public static int GetEdad(this DateTime fechaNacimiento, DateTime fechaDefuncion)
         {
-            //DateTime fechaActual = DateTime.Today;
-            int edad = fechaDefuncion.Year - fechaNacimiento.Year;
+
+            int edad = (fechaDefuncion.Year - fechaNacimiento.Year);
+
+            if (fechaDefuncion.Month < fechaNacimiento.Month) {
+                return edad - 1;
+
+            }
+
+            if (fechaDefuncion.Month == fechaNacimiento.Month && fechaDefuncion.DayOfYear < fechaNacimiento.DayOfYear)
+            {
+                return edad - 1;
+
+            }
+
             return edad;
+
+
         }
 
         /// <summary>
