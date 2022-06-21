@@ -87,6 +87,23 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        /// <summary>
+        ///     GetConstante
+        /// </summary>
+        /// <param name="idTabla"></param>
+        /// <returns></returns>
+
+
+        [HttpGet("GetLicencia/{idTabla}")]
+        public async Task<ActionResult> GetLicencia(string idTabla)
+        {
+            var result = await SeguimientoBusiness.getLicencia(idTabla);
+            return StatusCode(result.Code, result);
+        }
+
+
+
+        
         #endregion
     }
 }
