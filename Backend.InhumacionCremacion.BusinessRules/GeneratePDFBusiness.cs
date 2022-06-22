@@ -81,6 +81,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> _repositoryDatosCementerio;
 
         /// <summary>
+        /// The repository datos cementerio
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Licencia> _repositoryLicencia;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GeneratePDFBusiness"/> class.
         /// </summary>
         /// <param name="telemetryException">The telemetry exception.</param>
@@ -96,7 +101,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                    Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
                                    Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Municipio> repositoryMunicipio,
                                    Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Departamento> repositoryDepartamento,
-                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio)
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.DatosCementerio> repositoryDatosCementerio,
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Licencia> repositoryLicencia)
         {
             _telemetryException = telemetryException;
             _generatePdf = generatePdf;
@@ -110,6 +116,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             _repositoryMunicipio = repositoryMunicipio;
             _repositoryDepartamento = repositoryDepartamento;
             _repositoryDatosCementerio = repositoryDatosCementerio;
+            _repositoryLicencia = repositoryLicencia;
         }
 
         /// <summary>
@@ -192,6 +199,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var funeraria = await GetFuneraria(idSolicitud);
                     var nacionalidad = await GetDescripcionDominio(datosPersonaFallecida.Nacionalidad);
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaFallecida.TipoIdentificacion).ToString());
+                    var tipoTramite = await GetDescripcionDominio((datoSolitud.IdTramite).ToString());
+                    int numeroTramite = datoSolitud.ID_Control_Tramite.Value;
+                    DateTime fechaActual = DateTime.Now;
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                     var genero = await GetDescripcionDominio(datoSolitud.IdSexo.ToString());
@@ -235,8 +245,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         {
 
 
-                            FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
-                            Hora = DateTime.Now.ToString("hh:mm:ss"),
+                            FechaActual = fechaActual.ToString("dd/MM/yyyy"),
+                            Hora = fechaActual.ToString("hh:mm:ss"),
                             NumeroLicencia = resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
                             Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
@@ -250,7 +260,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.AddDays(1).ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
@@ -262,6 +272,22 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
                         var pdf = await _generatePdf.GetByteArray("Views/InhumacionIndividual.cshtml", dataInhumacionIndividual);
+
+                        Licencia licencia = await _repositoryLicencia.GetAsync(e => e.NumeroLicencia == int.Parse(resumen.Data[0].NumeroLicencia));
+
+                        if (licencia == null)
+                        {
+                            await _repositoryLicencia.AddAsync(new Licencia
+                            {
+                                ID_Tabla = Guid.NewGuid(),
+                                ID_Documento = Guid.NewGuid(),
+                                NombreDocumento = "Licencia_" + tipoTramite.Data.Descripcion.Replace(" ", String.Empty) + "_" + resumen.Data[0].NumeroLicencia,
+                                NumeroTramite = numeroTramite,
+                                NumeroLicencia = int.Parse(resumen.Data[0].NumeroLicencia),
+                                FechaGeneracion = fechaActual,
+                                DocumentoBase64 = Convert.ToBase64String(pdf)
+                            });
+                        }
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -305,8 +331,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         {
 
 
-                            FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
-                            Hora = DateTime.Now.ToString("hh:mm:ss"),
+                            FechaActual = fechaActual.ToString("dd/MM/yyyy"),
+                            Hora = fechaActual.ToString("hh:mm:ss"),
                             NumeroLicencia = resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
                             Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
@@ -321,7 +347,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.AddDays(1).ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
@@ -335,6 +361,23 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
                         var pdf = await _generatePdf.GetByteArray("Views/CremacionIndividual.cshtml", dataCremacionIndividual);
+
+                        Licencia licencia = await _repositoryLicencia.GetAsync(e => e.NumeroLicencia == int.Parse(resumen.Data[0].NumeroLicencia));
+
+                        if (licencia == null)
+                        {
+                            await _repositoryLicencia.AddAsync(new Licencia
+                            {
+                                ID_Tabla = Guid.NewGuid(),
+                                ID_Documento = Guid.NewGuid(),
+                                NombreDocumento = "Licencia_" + tipoTramite.Data.Descripcion.Replace(" ", String.Empty) + "_" + resumen.Data[0].NumeroLicencia,
+                                NumeroTramite = numeroTramite,
+                                NumeroLicencia = int.Parse(resumen.Data[0].NumeroLicencia),
+                                FechaGeneracion = fechaActual,
+                                DocumentoBase64 = Convert.ToBase64String(pdf)
+                            });
+                        }
+
                         var pdfStream = new System.IO.MemoryStream();
 
                         pdfStream.Write(pdf, 0, pdf.Length);
@@ -380,6 +423,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     var resumen = await GetResumenSolicitud(idSolicitud);
                     var nacionalidad = await GetDescripcionDominio(datosPersonaMadre.Nacionalidad);
                     var tipoIdentificacion = await GetDescripcionDominio((datosPersonaMadre.TipoIdentificacion).ToString());
+                    var tipoTramite = await GetDescripcionDominio((datoSolitud.IdTramite).ToString());
+                    int numeroTramite = datoSolitud.ID_Control_Tramite.Value;
+                    DateTime fechaActual = DateTime.Now;
                     var tipoMuerte = await GetDescripcionDominio((datoSolitud.IdTipoMuerte).ToString());
                     var cementerio = await GetCementerio((datoSolitud.IdDatosCementerio).ToString());
                     var genero = await GetDescripcionDominio(datoSolitud.IdSexo.ToString());
@@ -430,8 +476,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         {
 
 
-                            FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
-                            Hora = DateTime.Now.ToString("hh:mm:ss"),
+                            FechaActual = fechaActual.ToString("dd/MM/yyyy"),
+                            Hora = fechaActual.ToString("hh:mm:ss"),
                             NumeroLicencia = resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
                             Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
@@ -453,6 +499,22 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
                         var pdf = await _generatePdf.GetByteArray("Views/InhumacionFetal.cshtml", dataInhumacionFetal);
+
+                        Licencia licencia = await _repositoryLicencia.GetAsync(e => e.NumeroLicencia == int.Parse(resumen.Data[0].NumeroLicencia));
+
+                        if (licencia == null)
+                        {
+                            await _repositoryLicencia.AddAsync(new Licencia
+                            {
+                                ID_Tabla = Guid.NewGuid(),
+                                ID_Documento = Guid.NewGuid(),
+                                NombreDocumento = "Licencia_" + tipoTramite.Data.Descripcion.Replace(" ", String.Empty) + "_" + resumen.Data[0].NumeroLicencia,
+                                NumeroTramite = numeroTramite,
+                                NumeroLicencia = int.Parse(resumen.Data[0].NumeroLicencia),
+                                FechaGeneracion = fechaActual,
+                                DocumentoBase64 = Convert.ToBase64String(pdf)
+                            });
+                        }
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -496,8 +558,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         {
 
 
-                            FechaActual = DateTime.Now.ToString("dd/MM/yyyy"),
-                            Hora = DateTime.Now.ToString("hh:mm:ss"),
+                            FechaActual = fechaActual.ToString("dd/MM/yyyy"),
+                            Hora = fechaActual.ToString("hh:mm:ss"),
                             NumeroLicencia = resumen.Data[0].NumeroLicencia,
                             CertificadoDefuncion = datoSolitud.NumeroCertificado,
                             Funeraria = funeraria.Data[0].Funeraria.ToUpper(),
@@ -521,6 +583,22 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         };
 
                         var pdf = await _generatePdf.GetByteArray("Views/CremacionFetal.cshtml", dataCremacionFetal);
+
+                        Licencia licencia = await _repositoryLicencia.GetAsync(e => e.NumeroLicencia == int.Parse(resumen.Data[0].NumeroLicencia));
+
+                        if (licencia == null)
+                        {
+                            await _repositoryLicencia.AddAsync(new Licencia
+                            {
+                                ID_Tabla = Guid.NewGuid(),
+                                ID_Documento = Guid.NewGuid(),
+                                NombreDocumento = "Licencia_" + tipoTramite.Data.Descripcion.Replace(" ", String.Empty) + "_" + resumen.Data[0].NumeroLicencia,
+                                NumeroTramite = numeroTramite,
+                                NumeroLicencia = int.Parse(resumen.Data[0].NumeroLicencia),
+                                FechaGeneracion = fechaActual,
+                                DocumentoBase64 = Convert.ToBase64String(pdf)
+                            });
+                        }
 
                         var pdfStream = new System.IO.MemoryStream();
 
@@ -675,7 +753,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.AddDays(1).ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
@@ -746,7 +824,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.AddDays(1).ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
