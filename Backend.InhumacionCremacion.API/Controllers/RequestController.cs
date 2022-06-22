@@ -235,6 +235,19 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        /// <summary>
+        ///     UpdateStateRequest
+        /// </summary>
+        /// <param name="idSolicitud"></param>
+        /// /// <param name="idEstado"></param>
+        /// <returns></returns>
+        [HttpPut("UpdateStateRequest/{idSolicitud}/{idEstado}")]
+        public async Task<ActionResult> UpdateStateRequest(string idSolicitud, string idEstado)
+        {
+            var result = await UpdateRequestBusiness.UpdateStateRequest(idSolicitud, idEstado);
+            return StatusCode(result.Code, result);
+        }
+
 
         /// <summary>
         ///     Updates the request.

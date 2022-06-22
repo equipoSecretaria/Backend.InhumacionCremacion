@@ -424,6 +424,44 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: "Constante no modificada, ocurrio el error: "+ex);
             }
         }
+
+        public async Task<ResponseBase<string>> UpdateStateRequest(string idSolicitud, string idEstado)
+        {
+            try
+            {
+
+                var solicitud = await _repositorySolicitud.GetAsync(x => x.IdSolicitud ==  Guid.Parse(idSolicitud));
+
+                if (solicitud == null)
+                {
+                    return new ResponseBase<string>(System.Net.HttpStatusCode.BadRequest, "No se encontró ninguna solicitud con ese ID");
+                }
+                else
+                {
+                    solicitud.EstadoSolicitud = Guid.Parse(idEstado);
+
+                    try
+                    {
+                        await _repositorySolicitud.UpdateAsync(solicitud);
+                        return new ResponseBase<string>(System.Net.HttpStatusCode.OK, "Estado modificado exitosamente");
+                    }
+                    catch(System.Exception ex)
+                    {
+                        _telemetryException.RegisterException(ex);
+                        return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: "El estado de la solicitud no pudo ser modificado");
+                    }
+                    
+                }
+
+                
+            }
+            catch (System.Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.InternalServerError, message: "Ocurio un error al buscar la solicitud: " + ex);
+            }
+        }
+
         //*/
         #endregion
     }

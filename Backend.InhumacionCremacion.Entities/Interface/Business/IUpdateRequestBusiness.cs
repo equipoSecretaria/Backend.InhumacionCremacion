@@ -15,6 +15,8 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
 
         Task<ResponseBase<string>> UpdateConstante(string idConstante, string value);
 
+        Task<ResponseBase<string>> UpdateStateRequest(string idSolicitud, string idEstado);
+
 
     }
 }
