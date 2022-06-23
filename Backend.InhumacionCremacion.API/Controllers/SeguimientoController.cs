@@ -90,14 +90,14 @@ namespace Backend.InhumacionCremacion.API.Controllers
         /// <summary>
         ///     GetConstante
         /// </summary>
-        /// <param name="idTabla"></param>
+        /// <param name="numeroTramite"></param>
         /// <returns></returns>
 
 
-        [HttpGet("GetLicencia/{idTabla}")]
-        public async Task<ActionResult> GetLicencia(string idTabla)
+        [HttpGet("GetLicencia/{numeroTramite}")]
+        public async Task<ActionResult> GetLicencia(int numeroTramite)
         {
-            var result = await SeguimientoBusiness.getLicencia(idTabla);
+            var result = await SeguimientoBusiness.getLicencia(numeroTramite);
             return StatusCode(result.Code, result);
         }
 

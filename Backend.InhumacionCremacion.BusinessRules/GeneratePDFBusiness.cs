@@ -124,7 +124,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         /// <param name="idSolicitud"></param>
         /// <returns></returns>
-        public async Task<ResponseBase<dynamic>> GeneratePDF(string idSolicitud, string idValidador, string nombreValidador, string codigo)
+        public async Task<ResponseBase<string>> GeneratePDF(string idSolicitud, string idValidador, string nombreValidador, string codigo)
         {
 
 
@@ -289,13 +289,13 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             });
                         }
 
-                        var pdfStream = new System.IO.MemoryStream();
+                       // var pdfStream = new System.IO.MemoryStream();
 
-                        pdfStream.Write(pdf, 0, pdf.Length);
+                        //pdfStream.Write(pdf, 0, pdf.Length);
 
-                        pdfStream.Position = 0;
+                      //  pdfStream.Position = 0;
 
-                        return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Solicitud OK", data: pdfStream);
+                        return new ResponseBase<string>(code: HttpStatusCode.OK, message: "Solicitud OK", data: Convert.ToBase64String(pdf));
 
                     }
                     else
@@ -378,13 +378,13 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             });
                         }
 
-                        var pdfStream = new System.IO.MemoryStream();
+                        //var pdfStream = new System.IO.MemoryStream();
 
-                        pdfStream.Write(pdf, 0, pdf.Length);
+                        //pdfStream.Write(pdf, 0, pdf.Length);
 
-                        pdfStream.Position = 0;
+                        //pdfStream.Position = 0;
 
-                        return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Solicitud OK", data: pdfStream);
+                        return new ResponseBase<string>(code: HttpStatusCode.OK, message: "Solicitud OK", data: Convert.ToBase64String(pdf));
                     }
 
                 }
@@ -516,13 +516,13 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             });
                         }
 
-                        var pdfStream = new System.IO.MemoryStream();
+                        //var pdfStream = new System.IO.MemoryStream();
 
-                        pdfStream.Write(pdf, 0, pdf.Length);
+                        //pdfStream.Write(pdf, 0, pdf.Length);
 
-                        pdfStream.Position = 0;
+                        //pdfStream.Position = 0;
 
-                        return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Solicitud OK", data: pdfStream);
+                        return new ResponseBase<string>(code: HttpStatusCode.OK, message: "Solicitud OK", data: Convert.ToBase64String(pdf));
 
                     }
                     else
@@ -600,13 +600,13 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             });
                         }
 
-                        var pdfStream = new System.IO.MemoryStream();
+                       // var pdfStream = new System.IO.MemoryStream();
 
-                        pdfStream.Write(pdf, 0, pdf.Length);
+                        //pdfStream.Write(pdf, 0, pdf.Length);
 
-                        pdfStream.Position = 0;
+                        //pdfStream.Position = 0;
 
-                        return new ResponseBase<dynamic>(code: HttpStatusCode.OK, message: "Solicitud OK", data: pdfStream);
+                        return new ResponseBase<string>(code: HttpStatusCode.OK, message: "Solicitud OK", data: Convert.ToBase64String(pdf));
                     }
 
 
@@ -616,7 +616,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             catch (System.Exception ex)
             {
                 _telemetryException.RegisterException(ex);
-                return new Entities.Responses.ResponseBase<dynamic>(code: HttpStatusCode.InternalServerError, message: ex.Message);
+                return new Entities.Responses.ResponseBase<string>(code: HttpStatusCode.InternalServerError, message: ex.Message);
             }
 
         }

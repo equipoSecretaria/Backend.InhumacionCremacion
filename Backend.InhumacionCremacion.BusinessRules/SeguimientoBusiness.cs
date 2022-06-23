@@ -206,12 +206,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
         }
 
-        public async Task<ResponseBase<Licencia>> getLicencia(string idTabla)
+        public async Task<ResponseBase<Licencia>> getLicencia(int numeroTramite)
         {
             try
             {
 
-                var licencia = await _repositoryLicencia.GetAsync(predicate: y => y.ID_Tabla.Equals(Guid.Parse(idTabla)));
+                var licencia = await _repositoryLicencia.GetAsync(predicate: y => y.NumeroTramite== numeroTramite);
 
                 if (licencia == null)
                 {

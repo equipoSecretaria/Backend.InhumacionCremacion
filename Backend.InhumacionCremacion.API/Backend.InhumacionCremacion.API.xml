@@ -262,11 +262,11 @@
             <param name="idConstante"></param>
             <returns></returns>
         </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.SeguimientoController.GetLicencia(System.String)">
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.SeguimientoController.GetLicencia(System.Int32)">
             <summary>
                 GetConstante
             </summary>
-            <param name="idTabla"></param>
+            <param name="numeroTramite"></param>
             <returns></returns>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Controllers.SupportDocumentsController">

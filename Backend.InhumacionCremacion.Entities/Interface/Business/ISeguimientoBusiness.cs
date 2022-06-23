@@ -40,7 +40,7 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// </summary>
         /// <param name="idTabla"></param>
         /// <returns></returns>
-        Task<ResponseBase<Licencia>> getLicencia(string idTabla);
+        Task<ResponseBase<Licencia>> getLicencia(int numeroTramite);
 
         
     }

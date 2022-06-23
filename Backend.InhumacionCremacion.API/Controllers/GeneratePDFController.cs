@@ -36,7 +36,8 @@ namespace Backend.InhumacionCremacion.API.Controllers
         {
             var result = await _generatePDFBusiness.GeneratePDF(idSolicitud, idValidador, nombreValidar, codigo);
 
-            return new FileStreamResult(result.Data, "application/pdf");
+            //return new FileStreamResult(result.Data, "application/pdf");
+            return StatusCode(result.Code, result);
         }
 
         /// <summary>
