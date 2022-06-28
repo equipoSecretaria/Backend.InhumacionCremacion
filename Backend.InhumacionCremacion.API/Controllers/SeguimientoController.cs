@@ -87,6 +87,23 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        /// <summary>
+        ///     GetConstante
+        /// </summary>
+        /// <param name="numeroTramite"></param>
+        /// <returns></returns>
+
+
+        [HttpGet("GetLicencia/{numeroTramite}")]
+        public async Task<ActionResult> GetLicencia(int numeroTramite)
+        {
+            var result = await SeguimientoBusiness.getLicencia(numeroTramite);
+            return StatusCode(result.Code, result);
+        }
+
+
+
+        
         #endregion
     }
 }

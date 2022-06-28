@@ -40,6 +40,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> _repositoryFirmaUsuarios;
 
+        /// <summary>
+        /// The repository datos cementerio
+        /// </summary>
+        private readonly Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Licencia> _repositoryLicencia;
+
         #endregion
 
 
@@ -55,13 +60,15 @@ namespace Backend.InhumacionCremacion.BusinessRules
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Seguimiento> repositorySeguimiento,
                                    Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.FirmaUsuarios> repositoryFirmaUsuarios,
                                    Entities.Interface.Repository.IBaseRepositoryCommons<Entities.Models.Commons.Dominio> repositoryDominio,
-                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Constante> repositoryConstante)
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Constante> repositoryConstante,
+                                   Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<Entities.Models.InhumacionCremacion.Licencia> repositoryLicencia)
         {
             _telemetryException = telemetryException;
             _repositorySeguimiento = repositorySeguimiento;
             _repositoryFirmaUsuarios = repositoryFirmaUsuarios;
             _repositoryDominio = repositoryDominio;
             _repositoryConstante = repositoryConstante;
+            _repositoryLicencia = repositoryLicencia;
         }
 
         #endregion
@@ -72,6 +79,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
         /// </summary>
         /// <param name="seguimiento"></param>
         /// <returns></returns>
+        /// 
         public async Task<ResponseBase<bool>> AddSeguimiento(Seguimiento seguimiento)
         {
             try
@@ -195,6 +203,30 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
                 _telemetryException.RegisterException(ex);
                 return new ResponseBase<Entities.DTOs.ConstanteDTO>(code: HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
+        public async Task<ResponseBase<Licencia>> getLicencia(int numeroTramite)
+        {
+            try
+            {
+
+                var licencia = await _repositoryLicencia.GetAsync(predicate: y => y.NumeroTramite== numeroTramite);
+
+                if (licencia == null)
+                {
+                    return new ResponseBase<Licencia>(code: System.Net.HttpStatusCode.NotFound, data: null, message: "No se encontró la licencia");
+                }
+                else
+                {
+
+                    return new ResponseBase<Licencia>(code: System.Net.HttpStatusCode.OK, data: licencia, message: "Licencia encontrada");
+                }
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<Licencia>(code: HttpStatusCode.InternalServerError, message: ex.Message);
             }
         }
         #endregion
