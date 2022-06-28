@@ -389,19 +389,41 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Console.WriteLine("Tipo seguimiento");
                 Console.WriteLine(requestGestionDTO.estado.TipoSeguimiento);
 
-
-                await _repositoryEstadoDocumentosSoporte.UpdateAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
+                var result = _repositoryEstadoDocumentosSoporte.GetAsync(predicate: p => p.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
+                if(result==null)
+                {
+                    await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
                         IdEstadoDocumento = IdEstadoDocumento,
                         IdSolicitud = requestGestionDTO.estado.IdSolicitud,
                         IdDocumentoSoporte = requestGestionDTO.estado.IdDocumentoSoporte,
                         Path = requestGestionDTO.estado.Path,
                         Observaciones = requestGestionDTO.estado.Observaciones,
-                        Estado_Documento = requestGestionDTO.estado.Estado_Documento,   
-                        TipoSeguimiento= requestGestionDTO.estado.TipoSeguimiento
-                        
+                        Estado_Documento = requestGestionDTO.estado.Estado_Documento,
+                        TipoSeguimiento = requestGestionDTO.estado.TipoSeguimiento
 
-                });;
+
+                    });
+
+                }
+                else
+                {
+
+                    await _repositoryEstadoDocumentosSoporte.UpdateAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
+                    {
+                        IdEstadoDocumento = IdEstadoDocumento,
+                        IdSolicitud = requestGestionDTO.estado.IdSolicitud,
+                        IdDocumentoSoporte = requestGestionDTO.estado.IdDocumentoSoporte,
+                        Path = requestGestionDTO.estado.Path,
+                        Observaciones = requestGestionDTO.estado.Observaciones,
+                        Estado_Documento = requestGestionDTO.estado.Estado_Documento,
+                        TipoSeguimiento = requestGestionDTO.estado.TipoSeguimiento
+
+
+                    });
+                }
+
+
                
                var datos = await _repositorySolicitud.GetAsync(x =>
                    x.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
