@@ -423,19 +423,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     }
                 else
                 {
+                    resultdoc.Observaciones = requestGestionDTO.estado.Observaciones;
+                    resultdoc.Estado_Documento = requestGestionDTO.estado.Estado_Documento;
+                    resultdoc.TipoSeguimiento = requestGestionDTO.estado.TipoSeguimiento;
 
-                    await _repositoryEstadoDocumentosSoporte.UpdateAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
-                    {
-                        IdEstadoDocumento = resultdoc.IdDocumentoSoporte,
-                        IdSolicitud = requestGestionDTO.estado.IdSolicitud,
-                        IdDocumentoSoporte = requestGestionDTO.estado.IdDocumentoSoporte,
-                        Path = requestGestionDTO.estado.Path,
-                        Observaciones = requestGestionDTO.estado.Observaciones,
-                        Estado_Documento = requestGestionDTO.estado.Estado_Documento,
-                        TipoSeguimiento = requestGestionDTO.estado.TipoSeguimiento
-
-
-                    });
+                    await _repositoryEstadoDocumentosSoporte.UpdateAsync(resultdoc);
                 }
 
 
