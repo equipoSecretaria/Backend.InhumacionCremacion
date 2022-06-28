@@ -405,7 +405,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
 
-                if (resultdoc.IdEstadoDocumento == null)
+                if (resultdoc.Path == null)
                     {
                     await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
