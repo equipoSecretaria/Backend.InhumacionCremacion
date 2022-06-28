@@ -388,7 +388,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Guid seguimiento = Guid.NewGuid();
                 Console.WriteLine("Tipo seguimiento");
                 Console.WriteLine(requestGestionDTO.estado.TipoSeguimiento);
-                await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
+
+
+                await _repositoryEstadoDocumentosSoporte.UpdateAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
                         IdEstadoDocumento = IdEstadoDocumento,
                         IdSolicitud = requestGestionDTO.estado.IdSolicitud,
