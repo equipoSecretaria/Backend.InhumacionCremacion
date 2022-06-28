@@ -394,6 +394,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                 var resultdoc = new  Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte();
 
+
                 foreach (var doc in result)
                 {
                     if(doc.IdDocumentoSoporte.Equals(requestGestionDTO.estado.IdDocumentoSoporte))
@@ -404,7 +405,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
 
-                if (resultdoc == null)
+                if (resultdoc.IdEstadoDocumento == null)
                     {
                     await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
