@@ -347,6 +347,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             {
 
                 var resultRequest = await _repositoryPersona.GetAllAsync(predicate: p => p.NumeroIdentificacion.Equals(numero));
+
                 if (resultRequest == null)
                 {
                     return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Esta Libre");
@@ -389,9 +390,22 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Console.WriteLine("Tipo seguimiento");
                 Console.WriteLine(requestGestionDTO.estado.TipoSeguimiento);
 
-                var result = _repositoryEstadoDocumentosSoporte.GetAsync(predicate: p => p.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
-                if(result==null)
+                var result = await _repositoryEstadoDocumentosSoporte.GetAllAsync(predicate: p => p.IdSolicitud.Equals(requestGestionDTO.estado.IdSolicitud));
+
+                var resultdoc = new  Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte();
+
+                foreach (var doc in result)
                 {
+                    if(doc.IdDocumentoSoporte.Equals(requestGestionDTO.estado.IdDocumentoSoporte))
+                    {
+                        resultdoc = doc;
+                    }
+                }
+
+
+
+                if (resultdoc == null)
+                    {
                     await _repositoryEstadoDocumentosSoporte.AddAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
                         IdEstadoDocumento = IdEstadoDocumento,
@@ -405,13 +419,13 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     });
 
-                }
+                    }
                 else
                 {
 
                     await _repositoryEstadoDocumentosSoporte.UpdateAsync(new Entities.Models.InhumacionCremacion.EstadoDocumentosSoporte
                     {
-                        IdEstadoDocumento = IdEstadoDocumento,
+                        IdEstadoDocumento = resultdoc.IdDocumentoSoporte,
                         IdSolicitud = requestGestionDTO.estado.IdSolicitud,
                         IdDocumentoSoporte = requestGestionDTO.estado.IdDocumentoSoporte,
                         Path = requestGestionDTO.estado.Path,

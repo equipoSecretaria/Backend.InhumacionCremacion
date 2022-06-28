@@ -6,6 +6,7 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
 {
     public partial class EstadoDocumentosSoporte
     {
+
         public Guid IdEstadoDocumento { get; set; }
         public Guid IdSolicitud { get; set; }
 
