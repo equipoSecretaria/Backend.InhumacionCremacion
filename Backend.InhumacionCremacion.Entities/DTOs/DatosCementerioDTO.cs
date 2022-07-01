@@ -4,6 +4,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
 {
     public class DatosCementerioDTO
     {
+        //campo adicional update
+        public Guid IdDatosCementerio { get; set; }
         public bool? EnBogota { get; set; }
         public bool? FueraBogota { get; set; }
         public bool? FueraPais { get; set; }

@@ -13,6 +13,7 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public string SegundoApellido { get; set; }
         public string FechaNacimiento { get; set; }
         public string Nacionalidad { get; set; }
+        public string SegundaNacionalidad { get; set; }
         public string OtroParentesco { get; set; }
         public bool? Estado { get; set; }
         public Guid? IdEstadoCivil { get; set; }
@@ -26,6 +27,9 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public Guid? IdTipoProfesional { get; set; }
         public Guid? IdUbicacionPersona { get; set; }
         public virtual Solicitud IdSolicitudNavigation { get; set; }
+
+        //public string TipoMuerte { get; set; }
+       // public string TipoMuerte { get; set; }
         //public virtual UbicacionPersona IdUbicacionPersonaNavigation { get; set; }
     }
 }

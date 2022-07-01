@@ -4,6 +4,8 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
 {
     public class InstitucionCertificaFallecimientoDTO
     {
+        //nuevo validar
+        public Guid IdInstitucionCertificaFallecimiento { get; set; }
         public Guid? TipoIdentificacion { get; set; }
         public string NumeroIdentificacion { get; set; }
         public string RazonSocial { get; set; }

@@ -4,32 +4,6 @@
     <meta http-equiv=Content-Type content="text/html; charset=utf-8">
     <meta name=Generator content="Microsoft Word 15 (filtered)">
     <style>
-@*<!--
- /* Font Definitions */
- @font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
- /* Style Definitions */
- p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:0in;
-	line-height:107%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-.MsoChpDefault
-	{font-family:"Calibri",sans-serif;}
- /* Page Definitions */
- @page WordSection1
-	{size:8.5in 11.0in;
-	margin:56.75pt 52.05pt 28.4pt 49.65pt;}
-div.WordSection1
-	{page:WordSection1;}
--->*@
     </style>
 
 </head>
@@ -38,11 +12,9 @@ div.WordSection1
 
     <div class=WordSection1>
 
-        <p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
-line-height:normal'>
+        <p class=MsoNormal align=center style='margin-bottom:0in;text-align:center; line-height:normal'>
             <span lang=ES-CO style='font-size:20.0pt'>
-                LICENCIAS
-                INHUMACION / CREMACION INDIVIDUAL
+                LICENCIA INHUMACIÓN INDIVIDUAL
             </span>
         </p>
 
@@ -60,12 +32,11 @@ line-height:normal'>
 
         <div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 5.0pt 4.0pt'>
 
-            <p class=MsoNormal style='margin-bottom:0in;line-height:normal;border:none;
-padding:0in'>
+            <p class=MsoNormal style='margin-bottom:0in;line-height:normal;border:none; padding:0in'>
                 <b>
                     <span lang=ES-CO style='font-size:12.0pt'>
                         SECRETARIA DISTRITAL
-                        DE SALUD DE BOGOTA D C COLOMBIA                   10/05/2021    16:20:15
+                        DE SALUD DE BOGOTA D C COLOMBIA                  @Model.FechaActual, @Model.Hora
                     </span>
                 </b>
             </p>
@@ -79,8 +50,7 @@ padding:0in'>
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO style='font-size:12.0pt'>
-                    LICENCIA DE CREMACION INDIVIDUAL N° 2315                   
-                    CERTIFICADO DE DEFUNCION N° 7256645898
+                    LICENCIA INHUMACIÓN INDIVIDUAL N° @Model.NumeroLicencia &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CERTIFICADO DE DEFUNCION N° @Model.CertificadoDefuncion
                 </span>
             </b>
         </p>
@@ -89,17 +59,19 @@ padding:0in'>
             <b>
                 <span lang=ES-CO>Se concede Licencia a</span>
             </b><span lang=ES-CO>: </span><b>
-                <span lang=ES-CO style='font-size:12.0pt'>FUNERARIA GAVIRIA</span>
+                <span lang=ES-CO style='font-size:12.0pt'>@Model.Funeraria</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </b><span lang=ES-CO>
                 <b>Fecha</b>: 
-                10/05/2021    16:20:15
+                @Model.FechaActual, @Model.Hora
             </span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>En calidad de</span>
-            </b><span lang=ES-CO>: TRAMITADOR DAMARIS OCHICA</span>
+            </b><span lang=ES-CO>: SOLICITANTE @Model.FullNameSolicitante</span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
@@ -117,10 +89,8 @@ padding:0in'>
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>Nombres Apellidos</span>
-            </b><span lang=ES-CO>
-                : PEÑA HOYOS DIEGO
-                FERNANDO                                                                 <b>Nacionalidad</b>:
-                COLOMBIA
+            </b><span lang=ES-CO>:@Model.FullNameFallecido                                                           
+                <b>Nacionalidad</b>: @Model.Nacionalidad  
             </span>
         </p>
 
@@ -128,8 +98,11 @@ padding:0in'>
             <b>
                 <span lang=ES-CO>Fecha de Fallecido</span>
             </b><span lang=ES-CO>
-                : 08/05/2021                                                               
-                <b>Hora</b>: 14:25                            <b>Género</b>: MASCULINO
+                @Model.FechaFallecido
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>Hora:</b> @Model.HoraFallecido &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <b>Sexo:</b> @Model.Genero             
             </span>
         </p>
 
@@ -137,8 +110,11 @@ padding:0in'>
             <b>
                 <span lang=ES-CO>Tipo Identificación</span>
             </b><span lang=ES-CO>
-                : CEDULA                                                                                                                             <b>Número</b>:
-                7503649784
+                : @Model.TipoIdentificacion  
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;
+                <b>Número</b>: @Model.NumeroIdentificacion
             </span>
         </p>
 
@@ -146,8 +122,12 @@ padding:0in'>
             <b>
                 <span lang=ES-CO>Muerte</span>
             </b><span lang=ES-CO>
-                : NATURAL                                                                                                                                                            
-                <b>Edad</b>: 73 AÑOS
+                : @Model.Muerte  
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>Edad</b>: @Model.Edad AÑOS
             </span>
         </p>
 
@@ -164,10 +144,8 @@ padding:0in'>
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>Nombre(s)</span>
-            </b><span lang=ES-CO>
-                : KATERINE ANDREA MOLANO
-                CASTILLO
-            </span>
+            </b>
+            <span lang=ES-CO>: @Model.FullNameMedico </span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
@@ -182,62 +160,56 @@ padding:0in'>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
-                <span lang=ES-CO>Se concede permito Cementerio</span>
+                <span lang=ES-CO>Cementerio</span>
             </b><span lang=ES-CO>
                 : 
-                NORTE-CHAPINERO
-            </span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>Autorización de Cremación por</span>
-            </b><span lang=ES-CO>
-                : PEÑA
-                CAÑAS JAVIER EDUARDO     <b>Parentesco</b>: HIJO
+                @Model.Cementerio
             </span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <span lang=ES-CO>&nbsp;</span>
         </p>
+        
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
-                <span lang=ES-CO>NOTA</span>
+                <span lang=ES-CO>@Model.ObservacionCausaLabel</span>
             </b><span lang=ES-CO>
-                : (COVID-19 SEGÚN CADA CASO SE CITAN
-                TRES DECRETOS DISTINTOS O LOS TRES O DOS O UNO)
+                 
+                @Model.ObservacionCausa
             </span>
         </p>
+        
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <span lang=ES-CO>&nbsp;</span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>
-                    Aprobado por:  FIRMA                                                                                                                                                Validador:
-                    FIRMA
-                </span>
-            </b>
+            <b><span lang=ES-CO>Aprobado por: <img src='@Model.FirmaAprobador'style='width:90px; height: 70px' /> </span></b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b> <span lang=ES-CO>Validador:<img src='@Model.FirmaValidador' style='width:90px; height: 70px' /></span></b>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
-            <b>
-                <span lang=ES-CO>DORA DUARTE PRADA</span>
-            </b><span lang=ES-CO>
-                <b>
-                    Nubia I.
-                    Hernandez S.
-                </b>
-            </span>
+            <b><span lang=ES-CO>DORA DUARTE PRADA</span></b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b><span lang=ES-CO>@Model.FullNameTramitador</span></b>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
             <b>
                 <span lang=ES-CO>Subdirectora Inspección Vigilancia y Control de Servicios de S</span>
+            </b>
+        </p>
+        <p class=MsoNormal style='margin-bottom:0in;line-height:normal'>
+            <b>
+                <span lang=ES-CO>Código de verificación: @Model.CodigoVerificacion</span>
             </b>
         </p>
 
@@ -258,15 +230,6 @@ normal'>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
-normal'>
-            <span lang=ES-CO style='font-size:8.0pt'>
-                La cremación únicamente debe
-                realizarse después de 24 horas de ocurrido el fallecimiento 14:25 del día
-                11/05/2021.
-            </span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
 normal'><span lang=ES-CO style='font-size:8.0pt'>&nbsp;</span></p>
 
         <p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
@@ -280,24 +243,6 @@ line-height:normal'>
         <div style='border:none;border-bottom:solid windowtext 1.0pt;padding:0in 0in 1.0pt 0in'>
 
             <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            @*<p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>
-
-            <p class=MsoNormal style='border:none;padding:0in'><span lang=ES-CO>&nbsp;</span></p>*@
 
         </div>
 

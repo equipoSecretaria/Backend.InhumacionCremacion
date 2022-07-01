@@ -6,125 +6,129 @@
     <members>
         <member name="T:Backend.InhumacionCremacion.API.Controllers.AdministracionController">
             <summary>
-            AdministracionController
+                AdministracionController
             </summary>
-            <seealso cref="T:Microsoft.AspNetCore.Mvc.ControllerBase" />
+            <seealso cref="T:Microsoft.AspNetCore.Mvc.ControllerBase"/>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.AdministracionController.ModuloBusiness">
             <summary>
-            The modulo business
+                The modulo business
             </summary>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.AdministracionController.MenuBusiness">
             <summary>
-            The menu business
+                The menu business
             </summary>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.#ctor(Backend.InhumacionCremacion.Entities.Interface.Business.IModuloBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.IMenuBusiness)">
             <summary>
-            Initializes a new instance of the <see cref="T:Backend.InhumacionCremacion.API.Controllers.AdministracionController"/> class.
+                Initializes a new instance of the
+                <see cref="T:Backend.InhumacionCremacion.API.Controllers.AdministracionController"/>
+                class.
             </summary>
             <param name="moduloBusiness">The modulo business.</param>
             <param name="menuBusiness">The modulo business.</param>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.AddModulo(Backend.InhumacionCremacion.Entities.Models.Administracion.Modulo)">
             <summary>
-            Adds the modulo.
+                Adds the modulo.
             </summary>
             <param name="modulo">The modulo.</param>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.GetModulo">
             <summary>
-            Gets the modulo.
+                Gets the modulo.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.UpdateModulo(Backend.InhumacionCremacion.Entities.Models.Administracion.Modulo)">
             <summary>
-            Updates the modulo.
+                Updates the modulo.
             </summary>
             <param name="modulo">The modulo.</param>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.DeleteModulo(System.String)">
             <summary>
-            Deletes the modulo.
+                Deletes the modulo.
             </summary>
             <param name="idmodulo">The idmodulo.</param>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.AddMenu(Backend.InhumacionCremacion.Entities.Models.Administracion.Menu)">
             <summary>
-            Adds the menu.
+                Adds the menu.
             </summary>
             <param name="menu">The menu.</param>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.GetMenu">
             <summary>
-            Gets the menu.
+                Gets the menu.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.UpdateMenu(Backend.InhumacionCremacion.Entities.Models.Administracion.Menu)">
             <summary>
-            Updates the menu.
+                Updates the menu.
             </summary>
             <param name="menu">The menu.</param>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.AdministracionController.DeleteMenu(System.String)">
             <summary>
-            Deletes the menu.
+                Deletes the menu.
             </summary>
             <param name="idmenu">The idmenu.</param>
             <returns></returns>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Controllers.CommonsController">
             <summary>
-            CommonsController
+                CommonsController
             </summary>
-            <seealso cref="T:Microsoft.AspNetCore.Mvc.ControllerBase" />
+            <seealso cref="T:Microsoft.AspNetCore.Mvc.ControllerBase"/>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.CommonsController.TipoIdentificacionBusiness">
             <summary>
-            The tipo identificacion business
+                The tipo identificacion business
             </summary>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.CommonsController.PaisBusiness">
             <summary>
-            The pais business
+                The pais business
             </summary>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.CommonsController.DepartamentoBusiness">
             <summary>
-            The departamento business
+                The departamento business
             </summary>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.CommonsController.EtniaBusiness">
             <summary>
-            The etnia business
+                The etnia business
             </summary>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.CommonsController.EstadoCivilBusiness">
             <summary>
-            The estado civil business
+                The estado civil business
             </summary>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.CommonsController.NivelEducativoBusiness">
             <summary>
-            The nivel educativo business
+                The nivel educativo business
             </summary>
         </member>
         <member name="F:Backend.InhumacionCremacion.API.Controllers.CommonsController.SexoBusiness">
             <summary>
-            The sexo business
+                The sexo business
             </summary>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.#ctor(Backend.InhumacionCremacion.Entities.Interface.Business.ITipoIdentificacionBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.IPaisBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.IDepartamentoBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.IEtniaBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.IEstadoCivilBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.INivelEducativoBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.ISexoBusiness,Backend.InhumacionCremacion.Entities.Interface.Business.IPersonaBusiness)">
             <summary>
-            Initializes a new instance of the <see cref="T:Backend.InhumacionCremacion.API.Controllers.CommonsController"/> class.
+                Initializes a new instance of the
+                <see cref="T:Backend.InhumacionCremacion.API.Controllers.CommonsController"/>
+                class.
             </summary>
             <param name="tipoIdentificacionBusiness">The tipo identificacion business.</param>
             <param name="paisBusiness">The pais business.</param>
@@ -136,144 +140,146 @@
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.GetTipoIdentificacion">
             <summary>
-            Gets the tipo identificacion.
+                Gets the tipo identificacion.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.GetPais">
             <summary>
-            Gets the pais.
+                Gets the pais.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.GetDepartamento">
             <summary>
-            Gets the departamento.
+                Gets the departamento.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.GetEtnia">
             <summary>
-            Gets the etnia.
+                Gets the etnia.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.GetEstadoCivil">
             <summary>
-            Gets the estado civil.
+                Gets the estado civil.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.GetNivelEducativo">
             <summary>
-            Gets the nivel educativo.
+                Gets the nivel educativo.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.GetSexo">
             <summary>
-            Gets the sexo.
+                Gets the sexo.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.CommonsController.AddPersona(Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion.Persona)">
             <summary>
-            Adds the persona.
+                Adds the persona.
             </summary>
             <param name="persona">The persona.</param>
             <returns></returns>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Injections.BusinessInjection">
             <summary>
-            Business Injection
+                Business Injection
             </summary>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Injections.BusinessInjection.AddBusinessConfig(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Adds the business configuration.
+                Adds the business configuration.
             </summary>
             <param name="services">The services.</param>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Injections.InitialInjection">
             <summary>
-            
+
             </summary>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Injections.InitialInjection.AddInitialConfig(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Adds the initial configuration.
+                Adds the initial configuration.
             </summary>
             <param name="services">The services.</param>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Injections.InitialInjection.UseInitialConfig(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
-            Uses the initial configuration.
+                Uses the initial configuration.
             </summary>
             <param name="app">The application.</param>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Injections.SwaggerInjection">
             <summary>
-            Swagger Injection
+                Swagger Injection
             </summary>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Injections.SwaggerInjection.AddSwaggerConfig(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Adds the swagger configuration.
+                Adds the swagger configuration.
             </summary>
             <param name="services">The services.</param>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Injections.SwaggerInjection.UseSwaggerConfig(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
-            Uses the swagger configuration.
+                Uses the swagger configuration.
             </summary>
             <param name="app">The application.</param>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Program">
             <summary>
-            Program
+                Program
             </summary>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Program.Main(System.String[])">
             <summary>
-            Defines the entry point of the application.
+                Defines the entry point of the application.
             </summary>
             <param name="args">The arguments.</param>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Program.CreateHostBuilder(System.String[])">
             <summary>
-            Creates the host builder.
+                Creates the host builder.
             </summary>
             <param name="args">The arguments.</param>
             <returns></returns>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Startup">
             <summary>
-            Startup
+                Startup
             </summary>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Initializes a new instance of the <see cref="T:Backend.InhumacionCremacion.API.Startup"/> class.
+                Initializes a new instance of the
+                <see cref="T:Backend.InhumacionCremacion.API.Startup"/>
+                class.
             </summary>
             <param name="configuration">The configuration.</param>
         </member>
         <member name="P:Backend.InhumacionCremacion.API.Startup.Configuration">
             <summary>
-            Gets the configuration.
+                Gets the configuration.
             </summary>
             <value>
-            The configuration.
+                The configuration.
             </value>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Configures the services.
+                Configures the services.
             </summary>
             <param name="services">The services.</param>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
-            Configures the specified application.
+                Configures the specified application.
             </summary>
             <param name="app">The application.</param>
             <param name="env">The env.</param>

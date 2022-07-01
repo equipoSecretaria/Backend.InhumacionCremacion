@@ -26,6 +26,11 @@
         public const string SQLDBInhumacionCremacion = "SQLDBInhumacionCremacion";
 
         /// <summary>
+        /// SQLDBCommons
+        /// </summary>
+        public const string SQLDBCommons = "SQLDBCommons";
+
+        /// <summary>
         /// The application InhumacionCremacion
         /// </summary>
         public const string AppInhumacionCremacion = "AppInhumacionCremacion";
@@ -44,5 +49,10 @@
         /// The authority
         /// </summary>
         public const string Authority = "Authority";
+
+        /// <summary>
+        /// The oracle connection
+        /// </summary>
+        public const string ORACLEConnection = "ORACLEConnection";
     }
 }

@@ -156,6 +156,32 @@ namespace Backend.InhumacionCremacion.Utilities
         }
 
         /// <summary>
+        /// GetEdad
+        /// </summary>
+        /// <param name="fechaNacimiento"></param>
+        /// <returns></returns>
+        public static int GetEdad(this DateTime fechaNacimiento, DateTime fechaDefuncion)
+        {
+
+            int edad = (fechaDefuncion.Year - fechaNacimiento.Year);
+
+            if (fechaDefuncion.Month < fechaNacimiento.Month) {
+                return edad - 1;
+
+            }
+
+            if (fechaDefuncion.Month == fechaNacimiento.Month && fechaDefuncion.DayOfYear < fechaNacimiento.DayOfYear)
+            {
+                return edad - 1;
+
+            }
+
+            return edad;
+
+
+        }
+
+        /// <summary>
         /// Determines whether this instance is base64.
         /// </summary>
         /// <param name="base64String">The base64 string.</param>

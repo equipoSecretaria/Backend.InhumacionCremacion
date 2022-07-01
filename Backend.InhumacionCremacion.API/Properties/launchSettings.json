@@ -11,7 +11,6 @@
   "profiles": {
     "IIS Express": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ClientSecret": "vUrL7jO92kio3_-_ZE-Q4aEn4r_He0s5ij",

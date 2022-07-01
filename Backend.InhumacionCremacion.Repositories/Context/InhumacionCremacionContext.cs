@@ -18,6 +18,17 @@ namespace Backend.InhumacionCremacion.Repositories.Context
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<UbicacionPersona> UbicacionPersona { get; set; }
+        public virtual DbSet<Seguimiento> Seguimiento { get; set; }
+		public virtual DbSet<Formatos> Formatos { get; set; }
+		public virtual DbSet<ResumenSolicitud> ResumenSolicitud { get; set; }
+
+        public virtual DbSet<DatosFuneraria> DatosFuneraria { get; set; }
+
+        public virtual DbSet<EstadoDocumentosSoporte> EstadoDocumentosSoporte { get; set; }
+
+        public virtual DbSet<Constante> Constante { get; set; }
+
+        public virtual DbSet<Licencia> Licencia { get; set; }
         #endregion
 
         #region Constructor                        
@@ -46,6 +57,14 @@ namespace Backend.InhumacionCremacion.Repositories.Context
             modelBuilder.AddPersona();
             modelBuilder.AddSolicitud();
             modelBuilder.AddUbicacionPersona();
+            modelBuilder.AddSeguimiento();
+            modelBuilder.AddFormatos();
+			modelBuilder.AddResumenSolicitud();
+            modelBuilder.AddEstadoDocumentosSoporte();
+            modelBuilder.AddDatosFuneraria();
+            modelBuilder.AddConstante();
+            modelBuilder.AddFirmaUsuarios();
+            modelBuilder.AddLicencia();
 
 
         }

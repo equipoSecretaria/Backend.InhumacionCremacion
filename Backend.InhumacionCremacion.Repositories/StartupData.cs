@@ -28,11 +28,23 @@ namespace Backend.InhumacionCremacion
                     sqlOptions =>
                     {
                         sqlOptions.CommandTimeout(TIMEOUT_SECONDS);
+                        
 
                     });
             });
 
+            services.AddDbContext<Repositories.Context.CommonsContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetValue<string>(Utilities.Constants.KeyVault.SQLDBCommons),
+                    sqlOptions =>
+                    {
+                        sqlOptions.CommandTimeout(TIMEOUT_SECONDS);
+
+                    });
+            });
             services.AddScoped(typeof(Entities.Interface.Repository.IBaseRepositoryInhumacionCremacion<>), typeof(Repositories.Base.BaseRepositoryInhumacionCremacion<>));
+            services.AddScoped(typeof(Entities.Interface.Repository.IBaseRepositoryCommons<>), typeof(Repositories.Base.BaseRepositoryCommons<>));
+            services.AddSingleton<Repositories.Context.OracleContext>();
         }
     }
 }
