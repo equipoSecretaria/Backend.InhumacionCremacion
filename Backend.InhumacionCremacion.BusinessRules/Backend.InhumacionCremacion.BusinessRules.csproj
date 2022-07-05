@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="Rotativa\**" />
+        <EmbeddedResource Remove="Rotativa\**" />
+        <None Remove="Rotativa\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+
+
+
+      <Compile Include="..\Backend.InhumacionCremacion.Repositories\Config\DatosFunerariaConfig.cs" Link="DatosFunerariaConfig.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.1" />
+        <PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Backend.InhumacionCremacion.Entities\Backend.InhumacionCremacion.Entities.csproj" />
+        <ProjectReference Include="..\Backend.InhumacionCremacion.Repositories\Backend.InhumacionCremacion.Repositories.csproj" />
+        <ProjectReference Include="..\Backend.InhumacionCremacion.Utilities\Backend.InhumacionCremacion.Utilities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Middle\Messages.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Messages.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Middle\Messages.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+</Project>
