@@ -1,0 +1,44 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": false,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:57594",
+      "sslPort": 0
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "IIS Express": {
+      "commandName": "Project",
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ClientSecret": "vUrL7jO92kio3_-_ZE-Q4aEn4r_He0s5ij",
+        "ClientId": "f5e4e5ec-408a-4a78-83d3-af1e3634ec84",
+        "KeyVaultUrl": "KV-AEU-SDS-DEV-Tramites",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Backend.InhumacionCremacion.API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ClientSecret": "vUrL7jO92kio3_-_ZE-Q4aEn4r_He0s5ij",
+        "ClientId": "f5e4e5ec-408a-4a78-83d3-af1e3634ec84",
+        "KeyVaultUrl": "KV-AEU-SDS-DEV-Tramites",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sqlDebugging": false,
+      "nativeDebugging": false,
+      "applicationUrl": "https://localhost:5001"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  }
+}
