@@ -507,6 +507,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     SeccionalFiscalia = requestDTO.Solicitud.InstitucionCertificaFallecimiento.SeccionalFiscalia,
                     NoFiscal = requestDTO.Solicitud.InstitucionCertificaFallecimiento.NoFiscal,
                     IdTipoInstitucion = requestDTO.Solicitud.InstitucionCertificaFallecimiento.IdTipoInstitucion,
+                    NombreFiscal=requestDTO.Solicitud.InstitucionCertificaFallecimiento.NombreFiscal,
+                    ApellidoFiscal= requestDTO.Solicitud.InstitucionCertificaFallecimiento.ApellidoFiscal,
+                    FechaOficio= requestDTO.Solicitud.InstitucionCertificaFallecimiento.FechaOficio,
+                    NoFiscalMedicinaLegal= requestDTO.Solicitud.InstitucionCertificaFallecimiento.NoFiscalMedicinaLegal,
+                    NumeroOficio= requestDTO.Solicitud.InstitucionCertificaFallecimiento.NumeroOficio
+
                 });
 
                 //lugar de defuncion
@@ -961,9 +967,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
 
-                Console.WriteLine(temporal);
+                
                 var listadoResumen = await _repositoryResumenSolicitud.GetAllAsync();
-                Console.WriteLine("paso1");
+          
                 // Console.WriteLine(listadoResumen);
                 var resultJoin = (from rr in resultRequest
                                   join rd in listadoEstadoSolicitud on rr.EstadoSolicitud equals rd.Id
