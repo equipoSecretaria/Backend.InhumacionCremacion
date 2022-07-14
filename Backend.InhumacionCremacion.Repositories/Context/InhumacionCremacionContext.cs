@@ -29,6 +29,8 @@ namespace Backend.InhumacionCremacion.Repositories.Context
         public virtual DbSet<Constante> Constante { get; set; }
 
         public virtual DbSet<Licencia> Licencia { get; set; }
+
+        
         #endregion
 
         #region Constructor                        
@@ -65,6 +67,7 @@ namespace Backend.InhumacionCremacion.Repositories.Context
             modelBuilder.AddConstante();
             modelBuilder.AddFirmaUsuarios();
             modelBuilder.AddLicencia();
+            
 
 
         }
