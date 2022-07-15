@@ -507,6 +507,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     SeccionalFiscalia = requestDTO.Solicitud.InstitucionCertificaFallecimiento.SeccionalFiscalia,
                     NoFiscal = requestDTO.Solicitud.InstitucionCertificaFallecimiento.NoFiscal,
                     IdTipoInstitucion = requestDTO.Solicitud.InstitucionCertificaFallecimiento.IdTipoInstitucion,
+                    NombreFiscal=requestDTO.Solicitud.InstitucionCertificaFallecimiento.NombreFiscal,
+                    ApellidoFiscal= requestDTO.Solicitud.InstitucionCertificaFallecimiento.ApellidoFiscal,
+                    FechaOficio= requestDTO.Solicitud.InstitucionCertificaFallecimiento.FechaOficio,
+                    NoFiscalMedicinaLegal= requestDTO.Solicitud.InstitucionCertificaFallecimiento.NoFiscalMedicinaLegal,
+                    NumeroOficio= requestDTO.Solicitud.InstitucionCertificaFallecimiento.NumeroOficio
+
                 });
 
                 //lugar de defuncion
@@ -523,8 +529,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 });
 
                 //almacenamiento datos de la solicitud
-               
-                await _repositorySolicitud.AddAsync(new Entities.Models.InhumacionCremacion.Solicitud
+
+                var solicitud = new Entities.Models.InhumacionCremacion.Solicitud();
+
+                solicitud=new Entities.Models.InhumacionCremacion.Solicitud
                 {
                     IdSolicitud = IdSolicitud,
                     NumeroCertificado = requestDTO.Solicitud.NumeroCertificado,
@@ -547,7 +555,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
                     RazonSocialSolicitante=requestDTO.Solicitud.RazonSocialSolicitante
                     
 
-                });;
+                };
+                Console.Write(solicitud.ID_Control_Tramite);
+                await _repositorySolicitud.AddAsync(solicitud);
 
                 //ubicacion persona
                 // en el front, para los valores nulos se debe enciar el siguiente valor: "00000000-0000-0000-0000-000000000000"
@@ -559,6 +569,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 Guid NumeroTramite = Guid.NewGuid();
                 Guid EstadoSolicitud = Guid.NewGuid();
                 // HAY QUE PROBAR ESTE PUNTO
+
+
                 await _repositoryResumenSolicitud.AddAsync(new Entities.Models.InhumacionCremacion.ResumenSolicitud
                 {
                     IdSolicitud = IdSolicitud,
@@ -656,9 +668,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             IdTipoProfesional = personas.IdTipoProfesional,
                             IdUbicacionPersona = IdUbicacionPersona
                         });
+                       
                     }
                 }
-                return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Solicitud OK", data: IdSolicitud.ToString());
+                return new ResponseBase<string>(code: System.Net.HttpStatusCode.OK, message: "Solicitud OK", data: new { idsolicitud=solicitud.IdSolicitud,idtramite=solicitud.ID_Control_Tramite } +"");
             }
             catch (Exception ex)
             {
@@ -961,9 +974,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
 
 
-                Console.WriteLine(temporal);
+                
                 var listadoResumen = await _repositoryResumenSolicitud.GetAllAsync();
-                Console.WriteLine("paso1");
+          
                 // Console.WriteLine(listadoResumen);
                 var resultJoin = (from rr in resultRequest
                                   join rd in listadoEstadoSolicitud on rr.EstadoSolicitud equals rd.Id
@@ -1523,7 +1536,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 var sexo = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSexo));
                
                 var tipoID= await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(fallecido.TipoIdentificacion));
-                string years = (result.FechaDefuncion.Year - DateTime.Parse(fallecido.FechaNacimiento).Year).ToString();
+                string years = Utilities.ConvertTypes.GetEdad(DateTime.Parse(fallecido.FechaNacimiento),result.FechaDefuncion).ToString();
                 var fallecidoDTO = new Entities.DTOs.FallecidoDTO
                 {
                     IdSolicitud = Guid.Parse(idSolicitud),

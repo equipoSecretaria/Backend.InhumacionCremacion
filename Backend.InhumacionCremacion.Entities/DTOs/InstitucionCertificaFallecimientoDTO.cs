@@ -15,5 +15,14 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string SeccionalFiscalia { get; set; }
         public string NoFiscal { get; set; }
         public Guid IdTipoInstitucion { get; set; }
+        public string NombreFiscal { get; set; }
+         public string ApellidoFiscal { get; set; }
+         public string NumeroOficio { get; set; }
+         public DateTime? FechaOficio { get; set; }
+        public string NoFiscalMedicinaLegal { get; set; }
+
+
+
+
     }
 }

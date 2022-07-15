@@ -48,6 +48,21 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                 entity.Property(e => e.SeccionalFiscalia)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+
+                entity.Property(e => e.NombreFiscal)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApellidoFiscal)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+                entity.Property(e => e.NumeroOficio)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                 entity.Property(e => e.NoFiscalMedicinaLegal)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
         }
     }
