@@ -1536,7 +1536,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                 var sexo = await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(result.IdSexo));
                
                 var tipoID= await _repositoryDominio.GetAsync(predicate: p => p.Id.Equals(fallecido.TipoIdentificacion));
-                string years = (result.FechaDefuncion.Year - DateTime.Parse(fallecido.FechaNacimiento).Year).ToString();
+                string years = Utilities.ConvertTypes.GetEdad(DateTime.Parse(fallecido.FechaNacimiento),result.FechaDefuncion).ToString();
                 var fallecidoDTO = new Entities.DTOs.FallecidoDTO
                 {
                     IdSolicitud = Guid.Parse(idSolicitud),
