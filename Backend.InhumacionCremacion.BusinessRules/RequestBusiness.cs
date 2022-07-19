@@ -862,6 +862,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             SegundoApellido = rsp.SegundoApellido,
                             FechaNacimiento = rsp.FechaNacimiento,
                             Nacionalidad = rsp.Nacionalidad,
+                            SegundaNacionalidad=rsp.SegundaNacionalidad,
                             OtroParentesco = rsp.OtroParentesco,
                             Estado = rsp.Estado,
                             IdEstadoCivil = rsp.IdEstadoCivil,
