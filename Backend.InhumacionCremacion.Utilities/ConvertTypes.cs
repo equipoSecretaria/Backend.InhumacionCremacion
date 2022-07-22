@@ -182,6 +182,48 @@ namespace Backend.InhumacionCremacion.Utilities
         }
 
         /// <summary>
+        /// GetEdad
+        /// </summary>
+        /// <param name="fechaNacimiento"></param>
+        /// <returns></returns>
+        public static string GetdifFechas(DateTime fechaNacimiento, DateTime fechaDefuncion)
+        {
+
+            string fecha="";
+            var timespam = fechaDefuncion - fechaNacimiento;
+            var separado = timespam.ToString(@"dd\:hh\:mm\ ").Split(":");
+
+            // fecha += (Math.Abs(fechaDefuncion.Month - fechaNacimiento.Month) + 12 * (fechaDefuncion.Year - fechaNacimiento.Year))/12;
+            // fecha += ;
+            int años = (int)(Int32.Parse(separado[0]) / 365.25);
+            int dias = (int)(Int32.Parse(separado[0]) % 365.25);
+            if(años > 0)
+            {
+                fecha += (int)(Int32.Parse(separado[0]) / 365.25) + " Años ";
+            }
+            else
+            {
+                fecha += "0 Años ";
+            }
+           
+                if(dias > 30)
+                {
+                    fecha += (int)(dias/30) + " meses ";
+                }
+                else
+                {
+                    fecha += " 0 meses ";
+                }
+                
+            fecha += (int)(dias%30)+ " días "+(int)(Int32.Parse(separado[1])) + " Horas";
+
+           // fecha += (int)(Int32.Parse(separado[0])/365.25)+" Años "+ (int)(Int32.Parse(separado[0])%365.25)+" dias ";  
+            return fecha;
+
+
+        }
+
+        /// <summary>
         /// Determines whether this instance is base64.
         /// </summary>
         /// <param name="base64String">The base64 string.</param>
