@@ -252,7 +252,13 @@
             Execute a Query into SQL Database
             </summary>
             <param name="idSolicitud">The request dto.</param>
-            <param name="idTipoPersona">The request dto.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.getDiferencias">
+            <summary>
+            Execute a Query into SQL Database
+            </summary>
+            <param name="idSolicitud">The request dto.</param>
             <returns></returns>
         </member>
         <member name="T:Backend.InhumacionCremacion.API.Controllers.SeguimientoController">
