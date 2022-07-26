@@ -22,7 +22,7 @@ namespace Backend.InhumacionCremacion.Repositories.Config
 
                 entity.Property(e => e.IdSolicitud).ValueGeneratedNever();
 
-                entity.Property(e => e.FechaDefuncion).HasColumnType("date");
+                entity.Property(e => e.FechaDefuncion).HasColumnType("datetime");
 
                 entity.Property(e => e.FechaSolicitud).HasColumnType("datetime");
                 entity.Property(e => e.ID_Control_Tramite).UseSqlServerIdentityColumn().UseIdentityColumn().Metadata.SetAfterSaveBehavior(Microsoft.EntityFrameworkCore.Metadata.PropertySaveBehavior.Ignore);
