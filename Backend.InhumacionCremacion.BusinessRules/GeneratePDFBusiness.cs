@@ -262,7 +262,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetdifFechas(DateTime.Parse(datosPersonaFallecida.FechaNacimiento), datoSolitud.FechaDefuncion),
+                            //Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
@@ -349,7 +350,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetdifFechas(DateTime.Parse(datosPersonaFallecida.FechaNacimiento), datoSolitud.FechaDefuncion),
+                            //Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),
@@ -735,10 +737,11 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         //DateTime x = DateTime.ParseExact(datoSolitud.FechaDefuncion.ToString(), "dd/MM/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
                         //DateTime x = 
                         //INHUMACION INDIVIDUAL
-                        Console.WriteLine(datoSolitud.FechaDefuncion.ToString());
+                        
+                        //Console.WriteLine(datoSolitud.FechaDefuncion.ToString());
                         string fechaPrueba = datoSolitud.FechaDefuncion.ToString().Substring(0, 10);
-                        Console.WriteLine(fechaPrueba);
-                        Console.WriteLine(DateTime.Parse(fechaPrueba));
+                        //Console.WriteLine(fechaPrueba);
+                        //Console.WriteLine(DateTime.Parse(fechaPrueba));
 
                         var dataInhumacionIndividual = new Entities.DTOs.DetallePdfInhumacionIndividualDto
                         {
@@ -759,7 +762,8 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetdifFechas(DateTime.Parse(datosPersonaFallecida.FechaNacimiento), datoSolitud.FechaDefuncion),
+                            //Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             FirmaAprobador = firmaAprobador,
@@ -830,7 +834,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
                             NumeroIdentificacion = datosPersonaFallecida.NumeroIdentificacion,
                             Muerte = tipoMuerte.Data.Descripcion.ToUpper(),
-                            Edad = Utilities.ConvertTypes.GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
+                            Edad = Utilities.ConvertTypes.GetdifFechas(DateTime.Parse(datosPersonaFallecida.FechaNacimiento), datoSolitud.FechaDefuncion), // GetEdad(Convert.ToDateTime(datosPersonaFallecida.FechaNacimiento), Convert.ToDateTime(datoSolitud.FechaDefuncion.ToString("dd/MM/yyyy"))),
                             FullNameMedico = nombreMedico.ToUpper(),
                             Cementerio = nombreCementeio.ToUpper(),
                             AutorizadorCremacion = nombreAutorizadorCremacion.ToUpper(),

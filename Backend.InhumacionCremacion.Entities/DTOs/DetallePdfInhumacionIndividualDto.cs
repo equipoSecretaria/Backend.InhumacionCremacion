@@ -24,7 +24,7 @@ namespace Backend.InhumacionCremacion.Entities.DTOs
         public string TipoIdentificacion { get; set; }
         public string NumeroIdentificacion { get; set; }
         public string Muerte { get; set; }
-        public int Edad { get; set; }
+        public string Edad { get; set; }
         public string FullNameMedico { get; set; }
         public string Cementerio { get; set; }
         public string FirmaAprobador { get; set; }
