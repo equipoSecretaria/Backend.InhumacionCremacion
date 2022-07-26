@@ -734,14 +734,9 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
                     {
-                        //DateTime x = DateTime.ParseExact(datoSolitud.FechaDefuncion.ToString(), "dd/MM/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
-                        //DateTime x = 
+
                         //INHUMACION INDIVIDUAL
-                        
-                        //Console.WriteLine(datoSolitud.FechaDefuncion.ToString());
-                        string fechaPrueba = datoSolitud.FechaDefuncion.ToString().Substring(0, 10);
-                        //Console.WriteLine(fechaPrueba);
-                        //Console.WriteLine(DateTime.Parse(fechaPrueba));
+
 
                         var dataInhumacionIndividual = new Entities.DTOs.DetallePdfInhumacionIndividualDto
                         {
@@ -756,7 +751,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
-                            FechaFallecido = DateTime.Parse(fechaPrueba),
+                            FechaFallecido = datoSolitud.FechaDefuncion,
                             HoraFallecido = datoSolitud.Hora,
                             Genero = genero.Data.Descripcion.ToUpper(),
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
