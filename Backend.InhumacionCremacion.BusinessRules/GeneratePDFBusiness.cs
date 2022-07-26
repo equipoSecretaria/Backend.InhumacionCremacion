@@ -735,9 +735,10 @@ namespace Backend.InhumacionCremacion.BusinessRules
                         //DateTime x = DateTime.ParseExact(datoSolitud.FechaDefuncion.ToString(), "dd/MM/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
                         //DateTime x = 
                         //INHUMACION INDIVIDUAL
-                        //Console.WriteLine(datoSolitud.FechaDefuncion);
-                        //Console.WriteLine(DateTime.Now);
-                        //Console.WriteLine(x);
+                        Console.WriteLine(datoSolitud.FechaDefuncion.ToString());
+                        string fechaPrueba = datoSolitud.FechaDefuncion.ToString().Substring(0, 10);
+                        Console.WriteLine(fechaPrueba);
+                        Console.WriteLine(DateTime.Parse(fechaPrueba));
 
                         var dataInhumacionIndividual = new Entities.DTOs.DetallePdfInhumacionIndividualDto
                         {
@@ -752,7 +753,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
-                            FechaFallecido = DateTime.Parse(datoSolitud.FechaDefuncion.ToString()),
+                            FechaFallecido = DateTime.Parse(fechaPrueba),
                             HoraFallecido = datoSolitud.Hora,
                             Genero = genero.Data.Descripcion.ToUpper(),
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
