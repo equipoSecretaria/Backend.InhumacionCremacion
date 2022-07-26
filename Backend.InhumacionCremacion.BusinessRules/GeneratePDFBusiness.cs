@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Backend.InhumacionCremacion.Entities.Models.Commons;
 using System.IO;
+using System.Globalization;
 
 namespace Backend.InhumacionCremacion.BusinessRules
 {
@@ -131,7 +132,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
             try
             {
 
-
+                
                 Persona datosPersonaFallecida;
                 Persona datosPersonaMadre;
                 Persona datosMedico;
@@ -240,6 +241,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                         //INHUMACION INDIVIDUAL
 
+                        
 
                         var dataInhumacionIndividual = new Entities.DTOs.DetallePdfInhumacionIndividualDto
                         {
@@ -254,7 +256,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
-                            FechaFallecido = datoSolitud.FechaDefuncion,
+                            FechaFallecido =   datoSolitud.FechaDefuncion,
                             HoraFallecido = datoSolitud.Hora,
                             Genero = genero.Data.Descripcion.ToUpper(),
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
@@ -730,9 +732,12 @@ namespace Backend.InhumacionCremacion.BusinessRules
 
                     if (datoSolitud.IdTramite.Equals(Guid.Parse("A289C362-E576-4962-962B-1C208AFA0273")))
                     {
-
+                        //DateTime x = DateTime.ParseExact(datoSolitud.FechaDefuncion.ToString(), "dd/MM/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
+                        //DateTime x = 
                         //INHUMACION INDIVIDUAL
-
+                        //Console.WriteLine(datoSolitud.FechaDefuncion);
+                        //Console.WriteLine(DateTime.Now);
+                        //Console.WriteLine(x);
 
                         var dataInhumacionIndividual = new Entities.DTOs.DetallePdfInhumacionIndividualDto
                         {
@@ -747,7 +752,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             FullNameTramitador = nombreValidador.ToUpper(),
                             FullNameFallecido = nombreFallecido.ToUpper(),
                             Nacionalidad = nacionalidad.Data.Descripcion.ToUpper(),
-                            FechaFallecido = datoSolitud.FechaDefuncion,
+                            FechaFallecido = DateTime.Parse(datoSolitud.FechaDefuncion.ToString()),
                             HoraFallecido = datoSolitud.Hora,
                             Genero = genero.Data.Descripcion.ToUpper(),
                             TipoIdentificacion = tipoIdentificacion.Data.Descripcion.ToUpper(),
