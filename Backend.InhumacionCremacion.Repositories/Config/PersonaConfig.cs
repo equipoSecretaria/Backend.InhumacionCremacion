@@ -26,6 +26,11 @@ namespace Backend.InhumacionCremacion.Repositories.Config
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Hora)
+                   .HasMaxLength(100)
+                   .IsUnicode(false);
+
+
                 entity.Property(e => e.IdEstadoCivil).HasColumnName("IdEstadoCIvil");
 
                 entity.Property(e => e.Nacionalidad)

@@ -74,6 +74,13 @@ namespace Backend.InhumacionCremacion.API.Controllers
             return StatusCode(result.Code, result);
         }
 
+        [HttpGet("ConsultarFallecidoGestion/{numero}/{id}")]
+        public async Task<ActionResult> ConsultarFallecidoGestion(string numero, string id)
+        {
+            var result = await RequestBusiness.ConsultarFallecidoGestion(numero, id);
+            return StatusCode(result.Code, result);
+        }
+
         [HttpGet("ConsultarFallecido/{numero}/{persona}")]
         public async Task<ActionResult> ConsultarFallecido(string numero,string persona)
         {

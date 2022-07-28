@@ -15,6 +15,7 @@ namespace Backend.InhumacionCremacion.Entities.Interface.Business
         /// <returns></returns>
         /// 
         Task<ResponseBase<string>> ConsultarLicencia(string numero,string tipo);
+        Task<ResponseBase<List<DTOs.ConsultarFallecidoGestionDTO>>> ConsultarFallecidoGestion(string numero,string id);
         Task<ResponseBase<string>> ConsultarCertificado(string numero);
 
         Task<ResponseBase<string>> ModificarCementerio(string numero, string tipo,string nombre);

@@ -12,6 +12,8 @@ namespace Backend.InhumacionCremacion.Entities.Models.InhumacionCremacion
         public string PrimerApellido { get; set; }
         public string SegundoApellido { get; set; }
         public string FechaNacimiento { get; set; }
+
+        public string Hora { get; set; }
         public string Nacionalidad { get; set; }
         public string SegundaNacionalidad { get; set; }
         public string OtroParentesco { get; set; }

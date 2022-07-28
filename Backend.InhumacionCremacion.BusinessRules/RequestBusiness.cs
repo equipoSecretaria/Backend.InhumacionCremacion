@@ -279,6 +279,76 @@ namespace Backend.InhumacionCremacion.BusinessRules
             }
         }
 
+        
+        public async Task<ResponseBase<List<Entities.DTOs.ConsultarFallecidoGestionDTO>>> ConsultarFallecidoGestion(string numero,string id)
+        {
+
+
+            try
+            {             
+                    
+                        var resultid = await _repositoryPersona.GetAllAsync(predicate: p => p.NumeroIdentificacion.Equals(id));
+                     var  resultRequest= new List<Entities.DTOs.ConsultarFallecidoGestionDTO>();              
+                       
+         
+                        foreach (var personas in resultid)
+                        {
+               
+                           
+                            if (personas.IdTipoPersona.Equals(Guid.Parse("01F64F02-373B-49D4-8CB1-CB677F74292C")))
+                            {
+                               
+                                var solicitud = await _repositorySolicitud.GetAsync(predicate: p => p.IdSolicitud.Equals(personas.IdSolicitud));
+                       
+                                if(solicitud.ID_Control_Tramite!=int.Parse(numero))
+                        {
+                           
+
+
+                            resultRequest.Add(new Entities.DTOs.ConsultarFallecidoGestionDTO
+                            {
+                                TipoIdentificacion=personas.TipoIdentificacion,
+                                NumeroIdentificacion=personas.NumeroIdentificacion,
+                                PrimerNombre=personas.PrimerNombre,
+                                SegundoNombre=personas.SegundoNombre,
+                                PrimerApellido=personas.PrimerApellido,
+                                SegundoApellido=personas.SegundoApellido,
+                                FechaNacimiento=personas.FechaNacimiento,
+                                Nacionalidad=personas.Nacionalidad,
+                                SegundaNacionalidad=personas.SegundaNacionalidad,
+                                OtroParentesco=personas.OtroParentesco,                                
+                                IdSolicitud = solicitud.IdSolicitud,
+                                FechaSolicitud= solicitud.FechaSolicitud.ToString("dd/MM/yyyy"),
+                                NumeroCertificado =solicitud.NumeroCertificado,
+                                ID_Control_Tramite=solicitud.ID_Control_Tramite
+                              
+                            });
+                           
+                        }
+
+                       
+                            }
+                            
+                        }
+
+                           
+                    
+                   
+            
+               
+                    return new ResponseBase<List<Entities.DTOs.ConsultarFallecidoGestionDTO>>(code: System.Net.HttpStatusCode.OK, message: "encontro", data: resultRequest,count:resultRequest.Count);
+
+              
+
+
+            }
+            catch (Exception ex)
+            {
+                _telemetryException.RegisterException(ex);
+                return new ResponseBase<List<Entities.DTOs.ConsultarFallecidoGestionDTO>>(code: System.Net.HttpStatusCode.InternalServerError, message: ex.Message);
+            }
+        }
+
         public async Task<ResponseBase<string>> ConsultarCertificado(string numero)
         {
 
@@ -622,6 +692,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             PrimerApellido = personas.PrimerApellido,
                             SegundoApellido = personas.SegundoApellido,
                             FechaNacimiento = personas.FechaNacimiento,
+                            Hora=personas.Hora,
                             Nacionalidad = personas.Nacionalidad,
                             SegundaNacionalidad= personas.SegundaNacionalidad,
                             OtroParentesco = personas.OtroParentesco,
@@ -653,6 +724,7 @@ namespace Backend.InhumacionCremacion.BusinessRules
                             PrimerApellido = personas.PrimerApellido,
                             SegundoApellido = personas.SegundoApellido,
                             FechaNacimiento = personas.FechaNacimiento,
+                            Hora = personas.Hora,
                             Nacionalidad = personas.Nacionalidad,
                             SegundaNacionalidad = personas.SegundaNacionalidad,
                             OtroParentesco = personas.OtroParentesco,
