@@ -16,12 +16,13 @@ namespace Backend.InhumacionCremacion.API.Injections
         public static void AddBusinessConfig(this IServiceCollection services)
         {
             services.AddTransient<IRequestBusiness, RequestBusiness>();
+            services.AddTransient<IPoliticaSeguridadBusiness, PoliticaSeguridadBusiness>();
             services.AddTransient<IGeneratePDFBusiness, GeneratePDFBusiness>();
             services.AddTransient<ISupportDocumentsBusiness, SupportDocumentsBusiness>();
             services.AddTransient<IUpdateRequestBusiness, UpdateRequestBusiness>();
             services.AddTransient<ISeguimientoBusiness, SeguimientoBusiness>();
             services.AddTransient<IFormatoBusiness, FormatoBusiness>();
-           
+
         }
     }
 }

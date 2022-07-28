@@ -338,6 +338,7 @@ namespace Backend.InhumacionCremacion.Utilities
         /// <typeparam name="T"></typeparam>
         /// <param name="value">The value.</param>
         /// <returns></returns>
+        /// 
         public static T ToEnum<T>(this int value)
         {
             return (T)Enum.ToObject(typeof(T), value);

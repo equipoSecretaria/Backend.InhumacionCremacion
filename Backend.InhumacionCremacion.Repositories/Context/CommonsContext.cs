@@ -12,6 +12,8 @@ namespace Backend.InhumacionCremacion.Repositories.Context
         #region Attributes        
         public virtual DbSet<Entities.Models.Commons.Dominio> Dominio { get; set; }
         public virtual DbSet<Entities.Models.Commons.TipoDominio> TipoDominio { get; set; }
+
+        public virtual DbSet<Entities.Models.Commons.PoliticaSeguridad> PoliticaSeguridad { get; set; }
         #endregion
 
         #region Constructor  
@@ -38,6 +40,7 @@ namespace Backend.InhumacionCremacion.Repositories.Context
             modelBuilder.AddTipoDominio();
             modelBuilder.AddDepartamento();
             modelBuilder.AddMunicipio();
+            modelBuilder.AddPoliticaSeguridad();
         }
         #endregion
     }

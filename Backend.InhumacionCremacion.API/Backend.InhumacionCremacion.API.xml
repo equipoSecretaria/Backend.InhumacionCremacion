@@ -64,6 +64,36 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Backend.InhumacionCremacion.API.Controllers.PoliticaSeguridadController">
+            <summary>
+            GeneratePDFController
+            </summary>
+            <seealso cref="T:Microsoft.AspNetCore.Mvc.ControllerBase" />
+        </member>
+        <member name="F:Backend.InhumacionCremacion.API.Controllers.PoliticaSeguridadController._politicaSeguridadBusiness">
+            <summary>
+            The generate PDF business
+            </summary>
+        </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.PoliticaSeguridadController.#ctor(Backend.InhumacionCremacion.Entities.Interface.Business.IPoliticaSeguridadBusiness)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backend.InhumacionCremacion.API.Controllers.PoliticaSeguridadController"/> class.
+            </summary>
+            <param name="politicaSeguridadBusiness">The generate PDF business.</param>
+        </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.PoliticaSeguridadController.AddPoliticaSeguridad(Backend.InhumacionCremacion.Entities.DTOs.PoliticaSeguridadDTO)">
+            <summary>
+            Generates the PDF.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Backend.InhumacionCremacion.API.Controllers.PoliticaSeguridadController.GetPoliticaSeguridad(System.String)">
+            <summary>
+            Generates the PDF.
+            </summary>
+            /// <param name="idPoliticaSeguridad"></param>
+            <returns></returns>
+        </member>
         <member name="T:Backend.InhumacionCremacion.API.Controllers.RequestController">
             <summary>
                 RequestController
@@ -218,13 +248,6 @@
             <returns></returns>
         </member>
         <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.GetInfoFallecidoSolicitud(System.String)">
-            <summary>
-            Execute a Query into SQL Database
-            </summary>
-            <param name="idSolicitud">The request dto.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Backend.InhumacionCremacion.API.Controllers.RequestController.getDiferencias">
             <summary>
             Execute a Query into SQL Database
             </summary>
